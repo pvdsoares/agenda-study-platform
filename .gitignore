@@ -1,0 +1,26 @@
+@"
+# Maven
+target/
+.mvn/
+
+# Maven Wrapper
+mvnw
+mvnw.cmd
+maven-wrapper.jar
+maven-wrapper.properties
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+"@ | Out-File -FilePath .gitignore -Encoding UTF8
