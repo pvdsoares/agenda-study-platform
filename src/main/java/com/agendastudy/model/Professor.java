@@ -6,7 +6,6 @@ public class Professor extends Usuario {
     private List<String> disciplinas;
     private String biografia;
     private List<String> qualificacoes;
-    private double precoHora;
     private byte[] fotoPerfil;
     private String tipoImagem;
     private boolean perfilVerificado;
@@ -28,9 +27,6 @@ public class Professor extends Usuario {
     public List<String> getQualificacoes() { return qualificacoes; }
     public void setQualificacoes(List<String> qualificacoes) { this.qualificacoes = qualificacoes; }
     
-    public double getPrecoHora() { return precoHora; }
-    public void setPrecoHora(double precoHora) { this.precoHora = precoHora; }
-    
     public byte[] getFotoPerfil() { return fotoPerfil; }
     public void setFotoPerfil(byte[] fotoPerfil, String tipoImagem) {
         this.fotoPerfil = fotoPerfil;
@@ -50,7 +46,7 @@ public class Professor extends Usuario {
         this.tipoImagem = tipoImagem;
     }
 
-     // Métodos específicos do professor
+     
     public void adicionarDisciplina(String disciplina) {
         if (disciplinas == null) {
             disciplinas = new ArrayList<>();
@@ -85,7 +81,6 @@ public class Professor extends Usuario {
                 "id='" + getId() + '\'' +
                 ", nome='" + getNome() + '\'' +
                 ", disciplinas=" + disciplinas +
-                ", precoHora=" + precoHora +
                 ", verificado=" + perfilVerificado +
                 '}';
     }
