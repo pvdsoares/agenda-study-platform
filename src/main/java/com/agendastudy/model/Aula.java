@@ -8,6 +8,7 @@ public class Aula {
     private Professor professor; // as informações de professores e alunos vão ser acessadas da suas respectivas classes, como id por exemplo.
     private Estudante estudante;
     private LocalDateTime dataHora; 
+    private boolean cancelada;
 
     public Aula(String idAula, String titulo, String descricao, Professor professor, Estudante estudante, LocalDateTime dataHora) {
         this.idAula = idAula;
@@ -16,6 +17,7 @@ public class Aula {
         this.professor = professor;
         this.estudante = estudante;
         this.dataHora = dataHora;
+        this.cancelada = false;
     }
 
     public String getIdAula() { return idAula; }
@@ -36,6 +38,13 @@ public class Aula {
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 
+    public boolean isCancelada() { return cancelada; }
+    public void setCancelada(boolean cancelada) { this.cancelada = cancelada; }
+    public void cancelar(){
+        this.cancelada = true;
+    }
+
+
     @Override
     public String toString() {
         return "Aula{" +
@@ -45,6 +54,7 @@ public class Aula {
                 ", professor=" + professor.getNome() + "(ID: " + professor.getId() + ")" +
                 ", estudante=" + estudante.getNome() + "(ID: " + estudante.getId() + ")" +
                 ", dataHora=" + dataHora +
+                ", cancelada=" + cancelada +
                 '}';
     }
 
