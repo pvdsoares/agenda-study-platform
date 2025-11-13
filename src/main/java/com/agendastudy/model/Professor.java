@@ -107,25 +107,6 @@ public class Professor extends Usuario {
         return this.avaliacoes;
     }
 
-    /**
-     * // TODO: TAREFA DE MATHEUS (Método Provisório para Teste)
-     * * Este método é uma implementação provisória.
-     * * Ele existe APENAS para permitir o teste dos métodos da *minha* tarefa
-     * * (ex: getMediaAvaliacoes, getAvaliacoesPorData).
-     * *
-     * * A implementação FINAL e correta (da task "COMO Estudante QUERO avaliar...")
-     * * será feita por MATHEUS e irá substituir este método.
-     *
-     * @author Alexandro Costa Santos
-     */
-    public void adicionarAvaliacao(Avaliacao novaAvaliacao) {
-        if (novaAvaliacao.getProfessor().getId().equals(this.getId())) {
-            this.avaliacoes.add(novaAvaliacao);
-        } else {
-            System.err.println("Erro: Tentativa de adicionar avaliação de outro professor.");
-        }
-    }
-
 
     @Override
     public void logout() {
