@@ -88,16 +88,26 @@ public class ProfessorDAO extends UsuarioDAO {
      * @param idAula O ID da aula a ser cancelada.
      * @param aulaDAO O DAO de Aula para processar o cancelamento.
      */
-    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO) {
-        try {
-            aulaDAO.cancelarAula(idAula);
-            System.out.println("Cancelamento solicitado.");
-        } catch (Exception e) {
-            System.err.println("Erro ao cancelar aula: " + e.getMessage());
-        }
+     // O método solicitarCancelamento antigo foi removido para evitar conflito.
+
+    /**
+     * Método de ação para o professor criar uma nova disponibilidade de aula.
+     */
+    public Aula criarDisponibilidadeDeAula(Professor professor, String titulo, String descricao, LocalDateTime dataHora, ServicoAgendamento servicoAgendamento) {
+        return servicoAgendamento.criarDisponibilidade(professor, titulo, descricao, dataHora);
     }
-
-
+    /**
+     * Método de ação para o professor reagendar uma aula criada ou reservada.
+     */
+    public Aula reagendarAula(String idAula, Professor professor, LocalDateTime novaDataHora, ServicoAgendamento servicoAgendamento) {
+        return servicoAgendamento.reagendarAula(idAula, professor, novaDataHora);
+    }
+    /**
+     * Método de ação para o professor cancelar uma aula.
+     */
+    public void cancelarAula(String idAula, Professor professor, ServicoAgendamento servicoAgendamento) {
+        servicoAgendamento.cancelarAgendamento(idAula, professor); 
+    }
     /**
      * Calcula e retorna a nota média das avaliações de um professor.
      *
