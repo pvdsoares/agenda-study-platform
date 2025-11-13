@@ -4,9 +4,9 @@ import com.agendastudy.model.Usuario;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UsuarioDAO {
-    private static Map<String, Usuario> usuarios = new HashMap<>();
-    private static int proximoId = 1;
+public abstract class UsuarioDAO {
+    protected static Map<String, Usuario> usuarios = new HashMap<>();
+    protected static int proximoId = 1;
 
     
     /**
