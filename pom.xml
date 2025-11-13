@@ -17,10 +17,24 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 🔥 NOVA: Versão do JavaFX -->
+        <javafx.version>17.0.6</javafx.version>
     </properties>
 
     <dependencies>
-        <!-- JUnit para testes -->
+        <!-- 🔥 JAVAFX (ADICIONAR ESTES) -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- ✅ JUnit para testes (JÁ TEM) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -28,7 +42,7 @@
             <scope>test</scope>
         </dependency>
         
-        <!-- Mockito para testes mock -->
+        <!-- ✅ Mockito para testes mock (JÁ TEM) -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -47,6 +61,16 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                </configuration>
+            </plugin>
+
+            <!-- 🔥 NOVO: Plugin do JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.agendastudy.App</mainClass>
                 </configuration>
             </plugin>
             
