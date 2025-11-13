@@ -27,8 +27,8 @@ public class AvaliacaoDAO {
     /**
      * Avalia uma aula já concluída e ainda não avaliada
      *
-     * @param estudante que irá avaliar a aula
-     * @param aula a ser avaliada
+     * @param estudante estudante que irá avaliar a aula
+     * @param aula aula a ser avaliada
      * @param nota nota da avaliação
      * @param comentario comentário da avaliação
      */
@@ -48,8 +48,8 @@ public class AvaliacaoDAO {
     /**
      * Verifica se aula pode ser avaliada
      *
-     * @param estudante que irá avaliar a aula
-     * @param aula a ser avaliada
+     * @param estudante estudante que irá avaliar a aula
+     * @param aula aula a ser a ser avaliada
      * @return true se a aula pode ser avaliada, false caso contrário
      */
     public boolean podeAvaliar(Estudante estudante, Aula aula) {
@@ -67,7 +67,7 @@ public class AvaliacaoDAO {
         List<Avaliacao> avaliacoesDoProfessor = avaliacoesPorProfessor
                 .getOrDefault(aula.getProfessor(), Collections.emptyList());
 
-        //verifica apenas as avaliações desse professor
+        //verifica apenas as avaliações desse professor. S e aula já avaliada, não pode ser avaliada novamente
         for (Avaliacao a : avaliacoesDoProfessor) {
             if (a.getAula().getIdAula().equals(aula.getIdAula()) &&
                     a.getEstudante().getId().equals(estudante.getId())) {
@@ -76,5 +76,25 @@ public class AvaliacaoDAO {
         }
 
         return true;
+    }
+
+    /**
+     * Retorna todas as avalições realizadas por um estudante
+     *
+     * @param estudante estudante cujas as avaliações devem ser retornadas
+     * @return uma lista contendo as avaliações feitas pelo estudante
+     */
+    public List<Avaliacao> getAvaliacaoPorEstudante(Estudante estudante) {
+        List<Avaliacao> resultado = new ArrayList<>();
+        
+        for (List<Avaliacao> lista : avaliacoesPorProfessor.values()) {
+            for (Avaliacao a : lista) {
+                if (a.getEstudante().getId().equals(estudante.getId())) {
+                    resultado.add(a);
+                }
+            }
+        }
+
+        return resultado;
     }
 }
