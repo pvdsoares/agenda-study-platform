@@ -13,14 +13,26 @@ public class EstudanteDAO {
      * @param idAula ID da aula a ser cancelada
      * @param aulaDAO DAO de aula para cancelar a aula
      */
-    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO){
-        try{
-            aulaDAO.cancelarAula(idAula);
-            System.out.println("Cancelamento solicitado.");
-        } catch (Exception e){
-            System.err.println("Erro ao cancelar aula: " + e.getMessage());
-        }
+    /**
+     * Método de ação para o estudante agendar uma aula (confirmar a reserva).
+     */
+    public Aula agendarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento){
+        return servicoAgendamento.agendarAula(idAula, estudante);
     }
+    /**
+     * Método de ação para o estudante reagendar uma aula que ele reservou.
+     */
+    public Aula reagendarAula(String idAula, Estudante estudante, LocalDateTime novaDataHora, ServicoAgendamento servicoAgendamento){
+        return servicoAgendamento.reagendarAula(idAula, estudante, novaDataHora);
+    }
+    /**
+     * Método de ação para o estudante cancelar uma aula.
+     */
+    public void cancelarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento) {
+        servicoAgendamento.cancelarAgendamento(idAula, estudante);
+    }
+    /* O método solicitarCancelamento antigo foi removido para evitar conflito
+       e garantir que a lógica de negócio passe pelo ServicoAgendamento. */
 
     private AvaliacaoDAO avaliacao;
 
