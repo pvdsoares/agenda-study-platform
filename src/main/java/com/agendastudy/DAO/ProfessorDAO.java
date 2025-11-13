@@ -3,7 +3,10 @@ package com.agendastudy.DAO;
 import com.agendastudy.model.Professor;
 import com.agendastudy.model.Usuario;
 import com.agendastudy.model.Avaliacao;
-
+import com.agendastudy.model.Aula;
+import com.agendastudy.service.ServicoAgendamento; // Import do serviço
+import java.time.LocalDateTime; // Import para data/hora
+// ... (outros imports mantidos e adicionados)
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
