@@ -1,7 +1,9 @@
 package com.agendastudy.DAO;
 
-import com.agendastudy.model.Aula;
 import com.agendastudy.model.Estudante;
+import com.agendastudy.model.Aula;
+import com.agendastudy.service.ServicoAgendamento; // Import do serviço
+import java.time.LocalDateTime;
 
 public class EstudanteDAO {
    
