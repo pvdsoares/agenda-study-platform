@@ -11,6 +11,11 @@ public class AulaDAO {
 
     // IMPLEMENTAR DEMAIS MÉTODOS RELACIONADOS AQUI
 
+    /**
+     * 
+     * @param idAula ID da aula a ser cancelada
+     * 
+     */
     public void cancelarAula(String idAula){
         Aula aula = aulas.get(idAula);
 

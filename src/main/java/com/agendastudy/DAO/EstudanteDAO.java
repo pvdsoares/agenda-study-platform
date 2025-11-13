@@ -4,6 +4,12 @@ public class EstudanteDAO {
    
     // IMPLEMENTAÇÃO DE DEMAIS MÉTODOS AQUI
 
+
+    /**
+     * solicita o cancelamento de uma aula previamente agendada (trata-se de um protótipo, ainda falta o método de agendar)
+     * @param idAula ID da aula a ser cancelada
+     * @param aulaDAO DAO de aula para cancelar a aula
+     */
     public void solicitarCancelamento(String idAula, AulaDAO aulaDAO){
         try{
             aulaDAO.cancelarAula(idAula);
