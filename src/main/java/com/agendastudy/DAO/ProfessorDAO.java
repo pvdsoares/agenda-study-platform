@@ -1,7 +1,78 @@
 package com.agendastudy.DAO;
-public class ProfessorDAO {
+
+import com.agendastudy.model.Professor;
+import com.agendastudy.model.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfessorDAO extends UsuarioDAO  {
     
-    //IMPLEMENTAR DEMAIS MÉTODOS AQUI
+    
+    /**
+     * Salva um professor no sistema
+     * @param professor Professor a ser salvo
+     */
+    public void salvarProfessor(Professor professor) {
+        salvar(professor);
+        System.out.println("Professor salvo: " + professor.getNome());
+    }
+
+    /**
+     * 
+     * @param id
+     * @return
+     */ 
+    public Professor buscarPorId(String id) {
+        Usuario usuario = usuarios.get(id);
+        return (usuario instanceof Professor) ? (Professor) usuario : null;
+    }
+
+    
+    /**
+     * 
+     * @param id
+     * @param foto
+     * @param tipoImagem
+     */
+
+    public void atualizarFotoPerfil(String id, byte[] foto, String tipoImagem) {
+        Professor professor = buscarPorId(id);
+        if (professor != null) {
+            professor.setFotoPerfil(foto, tipoImagem);
+            System.out.println("Foto do professor " + professor.getNome() + " atualizada");
+        }
+    }
+
+     
+    /**
+     * 
+     * @param professor
+     * @return
+     */
+    public boolean validarQualificacoes(Professor professor) {
+        if (professor.getQualificacoes() == null || professor.getQualificacoes().isEmpty()) {
+            return false;
+        }
+        
+        for (String qualificacao : professor.getQualificacoes()) {
+            if (qualificacao != null && !qualificacao.trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param professor
+     * @return
+     */
+    public boolean podeSerVerificado(Professor professor) {
+        return validarQualificacoes(professor) && 
+               professor.getDisciplinas() != null && 
+               !professor.getDisciplinas().isEmpty() &&
+               professor.temFoto();
+    }
 
     /**
      * solicita o cancelamento de uma aula previamente agendada (trata-se de um protótipo, ainda falta o método de agendar)
