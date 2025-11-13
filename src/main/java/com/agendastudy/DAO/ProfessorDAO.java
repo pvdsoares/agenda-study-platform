@@ -2,12 +2,23 @@ package com.agendastudy.DAO;
 
 import com.agendastudy.model.Professor;
 import com.agendastudy.model.Usuario;
-import java.util.ArrayList;
-import java.util.List;
+import com.agendastudy.model.Avaliacao;
 
-public class ProfessorDAO extends UsuarioDAO  {
-    
-    
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+
+/**
+ * Gerencia as operações de acesso a dados (DAO) para a entidade Professor.
+ * Inclui lógica de negócio para manipulação de dados do professor.
+ *
+ * @author PAULO VITOR DIAS SOARES
+ * @version 1.1
+ * @since 2025-11-10
+ */
+public class ProfessorDAO extends UsuarioDAO {
+
     /**
      * Salva um professor no sistema
      * @param professor Professor a ser salvo
@@ -18,23 +29,21 @@ public class ProfessorDAO extends UsuarioDAO  {
     }
 
     /**
-     * 
-     * @param id
-     * @return
-     */ 
+     * Busca um professor pelo seu ID.
+     * @param id O ID do professor.
+     * @return O objeto Professor se encontrado, ou null.
+     */
     public Professor buscarPorId(String id) {
         Usuario usuario = usuarios.get(id);
         return (usuario instanceof Professor) ? (Professor) usuario : null;
     }
 
-    
     /**
-     * 
-     * @param id
-     * @param foto
-     * @param tipoImagem
+     * Atualiza a foto de perfil de um professor.
+     * @param id O ID do professor.
+     * @param foto O array de bytes da foto.
+     * @param tipoImagem O tipo da imagem (ex: "image/png").
      */
-
     public void atualizarFotoPerfil(String id, byte[] foto, String tipoImagem) {
         Professor professor = buscarPorId(id);
         if (professor != null) {
@@ -43,17 +52,16 @@ public class ProfessorDAO extends UsuarioDAO  {
         }
     }
 
-     
     /**
-     * 
-     * @param professor
-     * @return
+     * Valida se o professor possui qualificações preenchidas.
+     * @param professor O professor a ser validado.
+     * @return true se houver qualificações válidas, false caso contrário.
      */
     public boolean validarQualificacoes(Professor professor) {
         if (professor.getQualificacoes() == null || professor.getQualificacoes().isEmpty()) {
             return false;
         }
-        
+
         for (String qualificacao : professor.getQualificacoes()) {
             if (qualificacao != null && !qualificacao.trim().isEmpty()) {
                 return true;
@@ -63,28 +71,87 @@ public class ProfessorDAO extends UsuarioDAO  {
     }
 
     /**
-     * 
-     * @param professor
-     * @return
+     * Verifica se um professor cumpre os requisitos para ser "verificado".
+     * Requisitos: ter qualificações, disciplinas e foto.
+     * @param professor O professor a ser verificado.
+     * @return true se o professor pode ser verificado, false caso contrário.
      */
     public boolean podeSerVerificado(Professor professor) {
-        return validarQualificacoes(professor) && 
-               professor.getDisciplinas() != null && 
-               !professor.getDisciplinas().isEmpty() &&
-               professor.temFoto();
+        return validarQualificacoes(professor) &&
+                professor.getDisciplinas() != null &&
+                !professor.getDisciplinas().isEmpty() &&
+                professor.temFoto();
     }
 
     /**
-     * solicita o cancelamento de uma aula previamente agendada (trata-se de um protótipo, ainda falta o método de agendar)
-     * @param idAula ID da aula a ser cancelada
-     * @param aulaDAO DAO de aula para cancelar a aula
+     * Solicita o cancelamento de uma aula.
+     * @param idAula O ID da aula a ser cancelada.
+     * @param aulaDAO O DAO de Aula para processar o cancelamento.
      */
-    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO){
-        try{
+    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO) {
+        try {
             aulaDAO.cancelarAula(idAula);
             System.out.println("Cancelamento solicitado.");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.err.println("Erro ao cancelar aula: " + e.getMessage());
         }
+    }
+
+
+    /**
+     * Calcula e retorna a nota média das avaliações de um professor.
+     *
+     * @param professor O objeto Professor do qual se deseja a média.
+     * @return A média (double) das notas das avaliações.
+     * @author Alexandro Costa Santos
+     */
+    public double getMediaAvaliacoes(Professor professor) {
+        List<Avaliacao> avaliacoes = professor.getAvaliacoes();
+
+        if (avaliacoes.isEmpty()) {
+            return 0.0;
+        }
+        double somaTotal = 0.0;
+        for (Avaliacao aval : avaliacoes) {
+            somaTotal += aval.getNota();
+        }
+        return somaTotal / (double) avaliacoes.size();
+    }
+
+    /**
+     * Retorna uma lista de avaliações de um professor, ordenada por data (mais recentes primeiro).
+     *
+     * @param professor O professor a ser consultado.
+     * @return Uma List<Avaliacao> ordenada por data.
+     * @author Alexandro Costa Santos
+     */
+    public List<Avaliacao> getAvaliacoesPorData(Professor professor) {
+        List<Avaliacao> copiaOrdenada = new ArrayList<>(professor.getAvaliacoes());
+        copiaOrdenada.sort(Comparator.comparing(Avaliacao::getDataAvaliacao).reversed());
+        return copiaOrdenada;
+    }
+
+    /**
+     * Retorna uma lista de avaliações de um professor, ordenada por relevância (maior nota primeiro).
+     * Utiliza uma PriorityQueue (MaxHeap) para garantir a ordem.
+     *
+     * @param professor O professor a ser consultado.
+     * @return Uma List<Avaliacao> ordenada por relevância.
+     * @author Alexandro Costa Santos
+     */
+    public List<Avaliacao> getAvaliacoesPorRelevancia(Professor professor) {
+        List<Avaliacao> avaliacoes = professor.getAvaliacoes();
+
+        Comparator<Avaliacao> comparadorRelevancia =
+                Comparator.comparingInt(Avaliacao::getNota).reversed();
+
+        PriorityQueue<Avaliacao> maxHeap = new PriorityQueue<>(comparadorRelevancia);
+        maxHeap.addAll(avaliacoes);
+
+        List<Avaliacao> ordenadasPorRelevancia = new ArrayList<>();
+        while (!maxHeap.isEmpty()) {
+            ordenadasPorRelevancia.add(maxHeap.poll());
+        }
+        return ordenadasPorRelevancia;
     }
 }

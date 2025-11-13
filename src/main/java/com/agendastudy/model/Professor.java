@@ -1,10 +1,16 @@
 package com.agendastudy.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 
+/**
+ * Representa um usuário do tipo Professor no sistema.
+ * Esta classe armazena os dados e estado do professor.
+ *
+ * @author VINICIUS ALVES RIBEIRO SILVA
+ * @version 1.1
+ * @since 2025-11-12
+ */
 public class Professor extends Usuario {
     private List<String> disciplinas;
     private String biografia;
@@ -19,10 +25,9 @@ public class Professor extends Usuario {
         this.disciplinas = new ArrayList<>();
         this.qualificacoes = new ArrayList<>();
         this.perfilVerificado = false;
-        this.avaliacoes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>(); // A inicialização continua aqui
     }
 
-    // Getters e Setters
     public List<String> getDisciplinas() {
         return disciplinas;
     }
@@ -90,6 +95,38 @@ public class Professor extends Usuario {
         return fotoPerfil != null && fotoPerfil.length > 0;
     }
 
+
+    /**
+     * Retorna a lista bruta de avaliações do professor.
+     * O processamento (média, ordenação) é feito pelo ProfessorDAO.
+     *
+     * @return A lista de objetos Avaliacao.
+     * @author Alexandro Costa Santos
+     */
+    public List<Avaliacao> getAvaliacoes() {
+        return this.avaliacoes;
+    }
+
+    /**
+     * // TODO: TAREFA DE MATHEUS (Método Provisório para Teste)
+     * * Este método é uma implementação provisória.
+     * * Ele existe APENAS para permitir o teste dos métodos da *minha* tarefa
+     * * (ex: getMediaAvaliacoes, getAvaliacoesPorData).
+     * *
+     * * A implementação FINAL e correta (da task "COMO Estudante QUERO avaliar...")
+     * * será feita por MATHEUS e irá substituir este método.
+     *
+     * @author Alexandro Costa Santos
+     */
+    public void adicionarAvaliacao(Avaliacao novaAvaliacao) {
+        if (novaAvaliacao.getProfessor().getId().equals(this.getId())) {
+            this.avaliacoes.add(novaAvaliacao);
+        } else {
+            System.err.println("Erro: Tentativa de adicionar avaliação de outro professor.");
+        }
+    }
+
+
     @Override
     public void logout() {
         System.out.println("Professor " + getNome() + " realizou logout.");
@@ -108,52 +145,5 @@ public class Professor extends Usuario {
                 ", disciplinas=" + disciplinas +
                 ", verificado=" + perfilVerificado +
                 '}';
-    }
-
-   /**
-     * // TODO: TAREFA DE MATHEUS (Método Provisório para Teste)
-     * *
-     * * Este método é uma implementação provisória.
-     * * Ele existe APENAS para permitir o teste dos métodos da *minha* tarefa
-     * * (ex: getMediaAvaliacoes, getAvaliacoesPorData).
-     * *
-     * * A implementação FINAL e correta (da task "COMO Estudante QUERO avaliar...")
-     * * será feita por MATHEUS e irá substituir este método.
-     */
-    public void adicionarAvaliacao(Avaliacao novaAvaliacao) {
-        if (novaAvaliacao.getProfessor().getId().equals(this.getId())) {
-            this.avaliacoes.add(novaAvaliacao);
-        } else {
-            System.err.println("Erro: Tentativa de adicionar avaliação de outro professor.");
-        }
-    }
-
-    public double getMediaAvaliacoes() {
-        if (avaliacoes.isEmpty()) {
-            return 0.0;
-        }
-        double somaTotal = 0.0;
-        for (Avaliacao aval : avaliacoes) {
-            somaTotal += aval.getNota();
-        }
-        return somaTotal / (double) avaliacoes.size();
-    }
-
-    public List<Avaliacao> getAvaliacoesPorData() {
-        List<Avaliacao> copiaOrdenada = new ArrayList<>(this.avaliacoes);
-        copiaOrdenada.sort(Comparator.comparing(Avaliacao::getDataAvaliacao).reversed());
-        return copiaOrdenada;
-    }
-
-    public List<Avaliacao> getAvaliacoesPorRelevancia() {
-        Comparator<Avaliacao> comparadorRelevancia = 
-                Comparator.comparingInt(Avaliacao::getNota).reversed();
-            PriorityQueue<Avaliacao> maxHeap = new PriorityQueue<>(comparadorRelevancia);
-            maxHeap.addAll(this.avaliacoes);
-            List<Avaliacao> ordenadasPorRelevancia = new ArrayList<>();
-            while (!maxHeap.isEmpty()) {
-            ordenadasPorRelevancia.add(maxHeap.poll());
-        }
-        return ordenadasPorRelevancia;
     }
 }
