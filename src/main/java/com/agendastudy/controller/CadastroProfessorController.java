@@ -32,6 +32,14 @@ public class CadastroProfessorController {
     private List<String> qualificacoes = new ArrayList<>();
 
     
+    @FXML
+    private void inicializar() {
+        atualizarListas();
+    }
 
-
+    private void atualizarListas() {
+        listDisciplinas.getItems().setAll(disciplinas);
+        listQualificacoes.getItems().setAll(qualificacoes);
+    }
 }
+
