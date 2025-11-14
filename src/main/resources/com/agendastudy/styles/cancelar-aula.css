@@ -1,0 +1,49 @@
+/* Fundo geral */
+.anchor-pane {
+    -fx-background-color: #e7f8f8;
+}
+
+/* Título AgendaStudy */
+.titulo-app {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #004c8c;
+}
+
+/* Card com informações */
+.card {
+    -fx-background-color: #bfe3d0;
+    -fx-padding: 20;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);
+}
+
+/* Disciplina */
+.titulo-disciplina {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Informações da aula */
+.texto-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+/* Botão azul */
+.botao-secundario {
+    -fx-background-color: #2d6cdf;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 25;
+    -fx-background-radius: 10;
+}
+
+/* Botão cancelar */
+.botao-cancelar {
+    -fx-background-color: #b22222;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 25;
+    -fx-background-radius: 10;
+}
