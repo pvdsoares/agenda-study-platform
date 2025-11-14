@@ -48,4 +48,101 @@ public abstract class UsuarioDAO {
         }
         return false;
     }
+    // --- MÉTODOS DE GERENCIAMENTO (NOVOS) ---
+
+    /**
+     * Busca um Usuário pelo seu ID. (Funcionalidade: Visualizar)
+     */
+    public Usuario buscarPorId(String id) {
+        return usuarios.get(id);
+    }
+    
+    // Método privado para registrar o log como String
+    private void registrarLog(String usuarioId, String nomeUsuario, boolean novoStatus) {
+        String statusText = novoStatus ? "Conta Ativada" : "Conta Desativada";
+        // Formata a entrada do log
+        String logEntry = String.format("[%s] Usuário %s (%s): %s", 
+                                        LocalDateTime.now().toString(), 
+                                        nomeUsuario, 
+                                        usuarioId, 
+                                        statusText);
+        logs.add(logEntry);
+    }
+    
+    /**
+     * Implementa a funcionalidade de Desativar/Ativar conta.
+     * (Funcionalidade: Desativar e Logs)
+     * @param id O ID do usuário.
+     * @param novoStatus true para Ativo, false para Desativado.
+     */
+    public boolean alterarStatus(String id, boolean novoStatus) {
+        Usuario usuario = buscarPorId(id);
+        if (usuario != null) {
+            if (usuario.isAtivo() != novoStatus) { 
+                registrarLog(usuario.getId(), usuario.getNome(), novoStatus); 
+                usuario.setAtivo(novoStatus);
+                System.out.println("Status do usuário " + usuario.getNome() + " alterado para: " + (novoStatus ? "ATIVO" : "DESATIVADO"));
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Retorna a lista de logs de alteração de status.
+     * (Funcionalidade: Logs)
+     */
+    public List<String> getLogsDeStatus() {
+        return new ArrayList<>(logs); 
+    }
+
+    // --- MÉTODOS DE BUSCA, PAGINAÇÃO E FILTROS AVANÇADOS (NOVOS) ---
+    
+    /**
+     * Realiza a busca paginada e filtrada de usuários.
+     * (Funcionalidade: Busca, Paginação e Filtros Avançados)
+     */
+    public List<Usuario> buscarPaginada(String termoBusca, String tipoUsuario, Boolean status, int pagina, int tamanhoPagina) {
+        List<Usuario> todosUsuarios = new ArrayList<>(usuarios.values()); 
+        
+        // APLICACAO DE FILTROS
+        List<Usuario> usuariosFiltrados = todosUsuarios.stream()
+            .filter(u -> {
+                boolean matchTipo = (tipoUsuario == null || tipoUsuario.isEmpty()) || u.getClass().getSimpleName().equalsIgnoreCase(tipoUsuario);
+                boolean matchStatus = (status == null) || (u.isAtivo() == status);
+                boolean matchTermo = (termoBusca == null || termoBusca.isEmpty()) || 
+                                     u.getNome().toLowerCase().contains(termoBusca.toLowerCase()) || 
+                                     u.getEmail().toLowerCase().contains(termoBusca.toLowerCase());
+                return matchTipo && matchStatus && matchTermo;
+            })
+            .collect(Collectors.toList());
+
+        // PAGINAÇÃO
+        int inicio = (pagina - 1) * tamanhoPagina;
+        int fim = Math.min(inicio + tamanhoPagina, usuariosFiltrados.size());
+        
+        if (inicio >= usuariosFiltrados.size() || inicio < 0) {
+            return Collections.emptyList();
+        }
+        
+        return usuariosFiltrados.subList(inicio, fim);
+    }
+    
+    /**
+     * Retorna o número total de usuários após a aplicação dos filtros.
+     * Útil para calcular o total de páginas.
+     */
+    public int contarUsuariosFiltrados(String termoBusca, String tipoUsuario, Boolean status) {
+        return (int) usuarios.values().stream()
+            .filter(u -> {
+                boolean matchTipo = (tipoUsuario == null || tipoUsuario.isEmpty()) || u.getClass().getSimpleName().equalsIgnoreCase(tipoUsuario);
+                boolean matchStatus = (status == null) || (u.isAtivo() == status);
+                boolean matchTermo = (termoBusca == null || termoBusca.isEmpty()) || 
+                                     u.getNome().toLowerCase().contains(termoBusca.toLowerCase()) || 
+                                     u.getEmail().toLowerCase().contains(termoBusca.toLowerCase());
+                return matchTipo && matchStatus && matchTermo;
+            })
+            .count();
+    }
+}
 }
