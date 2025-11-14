@@ -28,7 +28,18 @@ public class CancelarAulaController{
     @FXML 
     private void handleCancelarAula(){
         try{
-            
+            aulaDAO.cancelarAula(aula.getIdAula());
+            abrirTelaConfirmacao();
+        } catch (Exception e){
+            mostrarAlerta("Erro", e.getMessage());
         }
+    }
+
+    private void mostrarAlerta(String titulo, String msg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
