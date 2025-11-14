@@ -45,7 +45,7 @@ public class CadastroProfessorController {
      * configura o estado inicial da interface
      */
     @FXML
-    private void inicializar() {
+    private void initialize() {
         atualizarListas();
     }
 

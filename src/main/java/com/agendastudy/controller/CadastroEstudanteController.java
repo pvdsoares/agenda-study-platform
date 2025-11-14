@@ -38,7 +38,7 @@ public class CadastroEstudanteController {
 
     /** inicialização automática do JavaFX */
     @FXML
-    private void inicializar() {
+    private void initialize() {
         atualizarLista();
     }
 
