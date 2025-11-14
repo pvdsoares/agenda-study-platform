@@ -27,7 +27,6 @@ public class Administrador extends Usuario {
 
     /**
      * Implementação do método abstrato 'logout' da classe Usuario.
-     * Define o comportamento específico de logout para um Administrador.
      */
     @Override
     public void logout() {
@@ -36,7 +35,6 @@ public class Administrador extends Usuario {
 
     /**
      * Implementação do método abstrato 'atualizarPerfil' da classe Usuario.
-     * Define o comportamento específico de atualização de perfil para um Administrador.
      */
     @Override
     public void atualizarPerfil() {
@@ -44,8 +42,7 @@ public class Administrador extends Usuario {
     }
 
     /**
-     * Retorna uma representação em String do objeto Administrador,
-     * focando em informações públicas e relevantes.
+     * Retorna uma representação em String do objeto Administrador.
      *
      * @return Uma String formatada com o id, nome e email do administrador.
      */

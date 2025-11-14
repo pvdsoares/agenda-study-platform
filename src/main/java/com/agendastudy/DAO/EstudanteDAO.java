@@ -1,31 +1,65 @@
 package com.agendastudy.DAO;
 
-import com.agendastudy.model.Aula;
 import com.agendastudy.model.Estudante;
+import com.agendastudy.model.Aula;
+import com.agendastudy.service.ServicoAgendamento; // Import do serviço
+import java.time.LocalDateTime;
 
-public class EstudanteDAO {
+/**
+ * Gerencia as operações de acesso a dados (DAO) e ações para a entidade Estudante.
+ * Delega a lógica de negócio complexa para os serviços apropriados.
+ *
+ * @author VINICIUS ALVES RIBEIRO SILVA
+ * @version 1.0
+ * @since 2025-11-11
+ */
+public class EstudanteDAO extends UsuarioDAO{
    
-    // IMPLEMENTAÇÃO DE DEMAIS MÉTODOS AQUI
-
-
     /**
-     * solicita o cancelamento de uma aula previamente agendada (trata-se de um protótipo, ainda falta o método de agendar)
-     * @param idAula ID da aula a ser cancelada
-     * @param aulaDAO DAO de aula para cancelar a aula
+     * Método de ação para o estudante agendar uma aula (confirmar a reserva).
+     * Delega a lógica para o ServicoAgendamento.
+     * @param idAula O ID da aula (disponibilidade) a ser reservada.
+     * @param estudante O estudante que está agendando.
+     * @param servicoAgendamento O serviço que processará o agendamento.
+     * @return A Aula atualizada com o estudante.
      */
-    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO){
-        try{
-            aulaDAO.cancelarAula(idAula);
-            System.out.println("Cancelamento solicitado.");
-        } catch (Exception e){
-            System.err.println("Erro ao cancelar aula: " + e.getMessage());
-        }
+    public Aula agendarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento){
+        return servicoAgendamento.agendarAula(idAula, estudante);
     }
-
+    
+    /**
+     * Método de ação para o estudante reagendar uma aula que ele reservou.
+     * Delega a lógica para o ServicoAgendamento.
+     * @param idAula O ID da aula a ser reagendada.
+     * @param estudante O estudante (usuário) que está reagendando.
+     * @param novaDataHora A nova data e hora desejada.
+     * @param servicoAgendamento O serviço que processará o reagendamento.
+     * @return A Aula atualizada.
+     */
+    public Aula reagendarAula(String idAula, Estudante estudante, LocalDateTime novaDataHora, ServicoAgendamento servicoAgendamento){
+        return servicoAgendamento.reagendarAula(idAula, estudante, novaDataHora);
+    }
+    
+    /**
+     * Método de ação para o estudante cancelar uma aula.
+     * Delega a lógica para o ServicoAgendamento.
+     * @param idAula O ID da aula a ser cancelada.
+     * @param estudante O estudante (usuário) que está cancelando.
+     * @param servicoAgendamento O serviço que processará o cancelamento.
+     */
+    public void cancelarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento) {
+        servicoAgendamento.cancelarAgendamento(idAula, estudante);
+    }
+    
+    /**
+     * Referência para o DAO de Avaliação.
+     * ATENÇÃO: Esta variável não está inicializada e causará NullPointerException.
+     */
     private AvaliacaoDAO avaliacao;
 
     /**
-     * Permite que o estudante possa avaliar uma aula após sua conclusão
+     * Permite que o estudante possa avaliar uma aula após sua conclusão.
+     * Delega a ação para o AvaliacaoDAO.
      *
      * @param estudante estudante que irá avaliar
      * @param aula aula a ser avaliada
@@ -35,7 +69,15 @@ public class EstudanteDAO {
     public void avaliarAula(Estudante estudante, Aula aula, int nota, String comentario) {
         avaliacao.avaliar(estudante, aula, nota, comentario);
     }
-    //verão sem comentário
+
+    /**
+     * Permite que o estudante possa avaliar uma aula (versão sem comentário).
+     * Delega a ação para o AvaliacaoDAO.
+     *
+     * @param estudante estudante que irá avaliar
+     * @param aula aula a ser avaliada
+     * @param nota nota atribuída
+     */
     public void avaliarAula(Estudante estudante, Aula aula, int nota) {
         avaliacao.avaliar(estudante, aula, nota);
     }

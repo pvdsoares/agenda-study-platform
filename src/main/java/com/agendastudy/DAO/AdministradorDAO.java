@@ -30,8 +30,7 @@ public class AdministradorDAO extends UsuarioDAO {
 
     /**
      * Autentica um usuário, garantindo que ele seja um Administrador.
-     * Isso cumpre o requisito de "login único", impedindo que um Estudante
-     * ou Professor acesse o painel de administração.
+     * Isso cumpre o requisito de "login único".
      *
      * @param email O email do administrador para autenticação.
      * @param senha A senha do administrador para autenticação.
@@ -56,9 +55,7 @@ public class AdministradorDAO extends UsuarioDAO {
 
     /**
      * Retorna uma lista de todos os Professores cadastrados no sistema.
-     * Cumpre o requisito de "acesso a dados de professores e estudantes".
-     * Itera sobre o mapa global de usuários e filtra apenas as instâncias de
-     * Professor.
+     * Cumpre o requisito de "acesso a dados de professores".
      *
      * @return Uma List<Professor> contendo todos os professores cadastrados.
      */
@@ -74,9 +71,7 @@ public class AdministradorDAO extends UsuarioDAO {
 
     /**
      * Retorna uma lista de todos os Estudantes cadastrados no sistema.
-     * Cumpre o requisito de "acesso a dados de professores e estudantes".
-     * Itera sobre o mapa global de usuários e filtra apenas as instâncias de
-     * Estudante.
+     * Cumpre o requisito de "acesso a dados de... estudantes".
      *
      * @return Uma List<Estudante> contendo todos os estudantes cadastrados.
      */
@@ -89,5 +84,4 @@ public class AdministradorDAO extends UsuarioDAO {
         }
         return estudantes;
     }
-
 }

@@ -1,6 +1,14 @@
 package com.agendastudy.model;
 import java.time.LocalDateTime;
 
+/**
+ * Representa uma Aula agendada na plataforma.
+ * Conecta um Professor e um Estudante (opcionalmente) em um horário específico.
+ *
+ * @author VINICIUS ALVES RIBEIRO SILVA
+ * @version 1.0
+ * @since 2025-11-11
+ */
 public class Aula {
     private String idAula;
     private String titulo;
@@ -10,6 +18,15 @@ public class Aula {
     private LocalDateTime dataHora; 
     private boolean cancelada;
 
+    /**
+     * Construtor da classe Aula.
+     * @param idAula O ID único da aula (pode ser nulo para nova aula).
+     * @param titulo O título da aula.
+     * @param descricao Uma breve descrição do conteúdo.
+     * @param professor O Professor que ministrará a aula.
+     * @param estudante O Estudante que participará da aula (pode ser nulo se for apenas disponibilidade).
+     * @param dataHora A data e hora agendadas.
+     */
     public Aula(String idAula, String titulo, String descricao, Professor professor, Estudante estudante, LocalDateTime dataHora) {
         this.idAula = idAula;
         this.titulo = titulo;
@@ -20,6 +37,7 @@ public class Aula {
         this.cancelada = false;
     }
 
+    // --- Getters e Setters ---
     public String getIdAula() { return idAula; }
     public void setIdAula(String idAula) { this.idAula = idAula; }
 
@@ -40,6 +58,10 @@ public class Aula {
 
     public boolean isCancelada() { return cancelada; }
     public void setCancelada(boolean cancelada) { this.cancelada = cancelada; }
+    
+    /**
+     * Marca a aula como cancelada.
+     */
     public void cancelar(){
         this.cancelada = true;
     }
@@ -52,10 +74,4 @@ public class Aula {
                 ", titulo='" + titulo + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", professor=" + professor.getNome() + "(ID: " + professor.getId() + ")" +
-                ", estudante=" + estudante.getNome() + "(ID: " + estudante.getId() + ")" +
-                ", dataHora=" + dataHora +
-                ", cancelada=" + cancelada +
-                '}';
-    }
-
-}   
+                ", estudante=" + (estudante != null ? estudante.getNome() : "VAGA") + "(

@@ -1,5 +1,13 @@
 package com.agendastudy.model;
 
+/**
+ * Classe abstrata que representa um Usuário genérico no sistema.
+ * Serve como base para Estudante, Professor e Administrador.
+ *
+ * @author PAULO VITOR DIAS SOARES
+ * @version 1.0
+ * @since 2025-11-09
+ */
 public abstract class Usuario {
     private String id;
     private String nome;
@@ -8,6 +16,13 @@ public abstract class Usuario {
     private String telefone;
     private String endereco;
 
+    /**
+     * Construtor da classe Usuário.
+     * @param id O ID único do usuário.
+     * @param nome O nome completo do usuário.
+     * @param email O email de login do usuário.
+     * @param senha A senha de acesso do usuário.
+     */
     public Usuario(String id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
@@ -15,7 +30,8 @@ public abstract class Usuario {
         this.senha = senha;
     }
 
-     public String getId() { return id; }
+     // --- Getters e Setters ---
+    public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     
     public String getNome() { return nome; }
@@ -33,9 +49,16 @@ public abstract class Usuario {
     public String getEndereco() { return endereco; }
     public void setEndereco(String endereco) { this.endereco = endereco; }
 
+    // --- Métodos Abstratos ---
+    /**
+     * Define o comportamento de logout para o usuário.
+     */
     public abstract void logout();
 
-     public abstract void atualizarPerfil();
+    /**
+     * Define o comportamento de atualização de perfil para o usuário.
+     */
+    public abstract void atualizarPerfil();
     
     @Override
     public String toString() {
@@ -45,5 +68,4 @@ public abstract class Usuario {
                 ", email='" + email + '\'' +
                 '}';
     }
-
 }

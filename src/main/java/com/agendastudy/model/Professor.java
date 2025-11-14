@@ -18,8 +18,21 @@ public class Professor extends Usuario {
     private byte[] fotoPerfil;
     private String tipoImagem;
     private boolean perfilVerificado;
+    
+    /**
+     * Lista de avaliações recebidas pelo professor.
+     * Esta lista é preenchida pelo AvaliacaoDAO e lida pelo ProfessorDAO.
+     */
     private List<Avaliacao> avaliacoes;
 
+    /**
+     * Construtor da classe Professor.
+     *
+     * @param id    O ID único do professor.
+     * @param nome  O nome completo do professor.
+     * @param email O email de login do professor.
+     * @param senha A senha de acesso do professor.
+     */
     public Professor(String id, String nome, String email, String senha) {
         super(id, nome, email, senha);
         this.disciplinas = new ArrayList<>();
@@ -28,6 +41,8 @@ public class Professor extends Usuario {
         this.avaliacoes = new ArrayList<>(); // A inicialização continua aqui
     }
 
+    // --- Getters e Setters ---
+    
     public List<String> getDisciplinas() {
         return disciplinas;
     }
@@ -77,6 +92,8 @@ public class Professor extends Usuario {
         this.tipoImagem = tipoImagem;
     }
 
+    // --- Métodos de Lógica de Negócio (Modelo) ---
+
     public void adicionarDisciplina(String disciplina) {
         if (disciplinas == null) {
             disciplinas = new ArrayList<>();
@@ -107,6 +124,7 @@ public class Professor extends Usuario {
         return this.avaliacoes;
     }
 
+    // --- Métodos de Usuário (Override) ---
 
     @Override
     public void logout() {

@@ -3,7 +3,9 @@ package com.agendastudy.DAO;
 import com.agendastudy.model.Professor;
 import com.agendastudy.model.Usuario;
 import com.agendastudy.model.Avaliacao;
-
+import com.agendastudy.model.Aula;
+import com.agendastudy.service.ServicoAgendamento; // Import do serviço
+import java.time.LocalDateTime; // Import para data/hora
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -83,21 +85,47 @@ public class ProfessorDAO extends UsuarioDAO {
                 professor.temFoto();
     }
 
+    // O método solicitarCancelamento antigo foi removido.
+    // A lógica agora é tratada pelo ServicoAgendamento.
+
     /**
-     * Solicita o cancelamento de uma aula.
-     * @param idAula O ID da aula a ser cancelada.
-     * @param aulaDAO O DAO de Aula para processar o cancelamento.
+     * Método de ação para o professor criar uma nova disponibilidade de aula.
+     * Delega a lógica de negócio para o ServicoAgendamento.
+     * @param professor O professor que está criando a disponibilidade.
+     * @param titulo O título da aula.
+     * @param descricao A descrição da aula.
+     * @param dataHora A data e hora da disponibilidade.
+     * @param servicoAgendamento O serviço que validará e salvará a aula.
+     * @return A Aula criada.
      */
-    public void solicitarCancelamento(String idAula, AulaDAO aulaDAO) {
-        try {
-            aulaDAO.cancelarAula(idAula);
-            System.out.println("Cancelamento solicitado.");
-        } catch (Exception e) {
-            System.err.println("Erro ao cancelar aula: " + e.getMessage());
-        }
+    public Aula criarDisponibilidadeDeAula(Professor professor, String titulo, String descricao, LocalDateTime dataHora, ServicoAgendamento servicoAgendamento) {
+        return servicoAgendamento.criarDisponibilidade(professor, titulo, descricao, dataHora);
     }
-
-
+    
+    /**
+     * Método de ação para o professor reagendar uma aula criada ou reservada.
+     * Delega a lógica de negócio para o ServicoAgendamento.
+     * @param idAula O ID da aula a ser reagendada.
+     * @param professor O professor (usuário) que está reagendando.
+     * @param novaDataHora A nova data e hora.
+     * @param servicoAgendamento O serviço que validará e salvará a alteração.
+     * @return A Aula reagendada.
+     */
+    public Aula reagendarAula(String idAula, Professor professor, LocalDateTime novaDataHora, ServicoAgendamento servicoAgendamento) {
+        return servicoAgendamento.reagendarAula(idAula, professor, novaDataHora);
+    }
+    
+    /**
+     * Método de ação para o professor cancelar uma aula.
+     * Delega a lógica de negócio para o ServicoAgendamento.
+     * @param idAula O ID da aula a ser cancelada.
+     * @param professor O professor (usuário) que está cancelando.
+     * @param servicoAgendamento O serviço que validará e processará o cancelamento.
+     */
+    public void cancelarAula(String idAula, Professor professor, ServicoAgendamento servicoAgendamento) {
+        servicoAgendamento.cancelarAgendamento(idAula, professor); 
+    }
+    
     /**
      * Calcula e retorna a nota média das avaliações de um professor.
      *

@@ -13,25 +13,25 @@ import javafx.scene.control.TextArea;
 
 
 /**
- * controller responsável pela interface de cadastro de porfessores.
- * implementa as funcionalidades relacionadas a cadastro e validação de porfessores
- * 
+ * Controller (JavaFX) responsável pela interface de cadastro de professores.
+ * Implementa as funcionalidades relacionadas a cadastro e validação de professores.
+ *
  * @author Paulo Vitor Dias 
- * @version 3.0  
+ * @version 3.0
+ * @since 2025-11-13
  */
 public class CadastroProfessorController {
 
-    /** DAO para operações de persistência de porfessores */
+    /** DAO para operações de persistência de professores */
     private ProfessorDAO professorDAO = new ProfessorDAO();
     
-    // Campos básicos do professor
+    // --- Campos FXML ---
     @FXML private TextField fieldNome;
     @FXML private TextField fieldEmail;
     @FXML private PasswordField fieldSenha;
     @FXML private TextField fieldTelefone;
     @FXML private TextArea fieldBiografia;
 
-    // Campos para disciplinas e qualificações
     @FXML private TextField fieldNovaDisciplina;
     @FXML private TextField fieldNovaQualificacao;
     @FXML private ListView<String> listDisciplinas;
@@ -41,14 +41,19 @@ public class CadastroProfessorController {
     private List<String> disciplinas = new ArrayList<>();
     private List<String> qualificacoes = new ArrayList<>();
 
-    /**método de inicialização de controller chamado automaticamente pelo javaFX.
-     * configura o estado inicial da interface
+    /**
+     * Método de inicialização de controller chamado automaticamente pelo JavaFX.
+     * Configura o estado inicial da interface.
      */
     @FXML
-    private void inicializar() {
+    private void initialize() {
         atualizarListas();
     }
 
+    /**
+     * Manipulador do evento de clique no botão "Salvar".
+     * Valida e persiste o novo professor.
+     */
     @FXML
     private void handleSalvar(){
         try{
@@ -76,6 +81,10 @@ public class CadastroProfessorController {
         }
     }
 
+    /**
+     * Cria um objeto Professor com os dados preenchidos no formulário.
+     * @return O novo objeto Professor.
+     */
     private Professor criarProfessorComDadosFormulario(){
         Professor professor = new Professor(null, fieldNome.getText(), fieldEmail.getText(), fieldSenha.getText());
 
@@ -89,7 +98,9 @@ public class CadastroProfessorController {
     }
 
 
-   /** permite ao professor definir as disciplinas que leciona */
+   /** * Manipulador do evento para adicionar uma nova disciplina à lista.
+    * (Permite ao professor definir as disciplinas que leciona)
+    */
    @FXML
     private void handleAdicionarDisciplina() {
         String disciplina = fieldNovaDisciplina.getText().trim();
@@ -100,7 +111,10 @@ public class CadastroProfessorController {
         }
     }
 
-    /**Coleta as qualificações do professor para validação */
+    /**
+     * Manipulador do evento para adicionar uma nova qualificação à lista.
+     * (Coleta as qualificações do professor para validação)
+     */
     @FXML
     private void handleAdicionarQualificacao() {
         String qualificacao = fieldNovaQualificacao.getText().trim();
@@ -111,7 +125,8 @@ public class CadastroProfessorController {
         }
     }
 
-    /** remove disciplina selecionada */
+    /** * Manipulador do evento para remover uma disciplina selecionada.
+     */
     @FXML
     private void handleRemoverDisciplina() {
         String selecionada = listDisciplinas.getSelectionModel().getSelectedItem();
@@ -121,7 +136,8 @@ public class CadastroProfessorController {
         }
     }
 
-    /** remove qualificação selecionada */
+    /** * Manipulador do evento para remover uma qualificação selecionada.
+     */
     @FXML
     private void handleRemoverQualificacao() {
         String selecionada = listQualificacoes.getSelectionModel().getSelectedItem();
@@ -131,15 +147,18 @@ public class CadastroProfessorController {
         }
     }
 
-    /**Limpa todos os campos do formulário */
+    /**
+     * Manipulador do evento de clique no botão "Cancelar".
+     * Limpa todos os campos do formulário.
+     */
     @FXML
     private void handleCancelar() {
         limparCampos();
     }
 
-    /**valida os campos básicos obrigatorios do formulario 
-     * 
-     * @return true se campos obrigatorios validos 
+    /**
+     * Valida os campos básicos obrigatórios do formulário.
+     * * @return true se campos obrigatórios são válidos, false caso contrário.
      */
     private boolean validarCamposBasicos() {
         if (fieldNome.getText().isEmpty()) {
@@ -165,13 +184,15 @@ public class CadastroProfessorController {
         return true;
     }
 
-    /** atualiza as listas visuais da interface com os dados atuais  */
+    /** * Atualiza as listas visuais (ListViews) da interface com os dados atuais.
+     */
     private void atualizarListas() {
         listDisciplinas.getItems().setAll(disciplinas);
         listQualificacoes.getItems().setAll(qualificacoes);
     }
 
-    /** Limpa tos os campos de entrada e listas do formulario */
+    /** * Limpa todos os campos de entrada e listas do formulário.
+     */
     private void limparCampos() {
         fieldNome.clear();
         fieldEmail.clear();
@@ -185,7 +206,11 @@ public class CadastroProfessorController {
         atualizarListas();
     }
 
-
+    /**
+     * Exibe um pop-up de alerta padrão.
+     * @param titulo O título da janela de alerta.
+     * @param mensagem A mensagem a ser exibida.
+     */
     private void mostrarAlerta(String titulo, String mensagem) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
@@ -193,6 +218,4 @@ public class CadastroProfessorController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
-
 }
-
