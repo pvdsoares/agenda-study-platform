@@ -84,4 +84,27 @@ public class AdministradorDAO extends UsuarioDAO {
         }
         return estudantes;
     }
+    /**
+     * Gera um relatório com o número total de alunos (Estudante) e tutores (Professor).
+     * (Funcionalidade: Relatório - NOVO MÉTODO)
+     * @return Um Map com as chaves "Estudantes" e "Professores" e seus respectivos totais.
+     */
+    public Map<String, Integer> gerarRelatorioContagem() {
+        int totalEstudantes = 0;
+        int totalProfessores = 0;
+        
+        // Percorre o mapa 'usuarios' herdado de UsuarioDAO
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario instanceof Estudante) {
+                totalEstudantes++;
+            } else if (usuario instanceof Professor) {
+                totalProfessores++;
+            }
+        }
+        
+        Map<String, Integer> relatorio = new HashMap<>();
+        relatorio.put("Total Estudantes (Alunos)", totalEstudantes);
+        relatorio.put("Total Professores (Tutores)", totalProfessores);
+        return relatorio;
+    }
 }
