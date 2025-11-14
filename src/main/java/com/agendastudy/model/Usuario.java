@@ -48,7 +48,19 @@ public abstract class Usuario {
     
     public String getEndereco() { return endereco; }
     public void setEndereco(String endereco) { this.endereco = endereco; }
-
+    // NOVO GETTER e SETTER para o status
+    /**
+     * Verifica se o usuário está ativo.
+     */
+    public boolean isAtivo() {
+        return ativo;
+    }
+    /**
+     * Define o status de ativação do usuário (true: Ativo, false: Desativado).
+     */
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
     // --- Métodos Abstratos ---
     /**
      * Define o comportamento de logout para o usuário.
