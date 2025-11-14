@@ -4,6 +4,9 @@ import com.agendastudy.model.Usuario;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.stream.Collectors; // Necessário para filtros
+import java.util.Collections; // Necessário para listas vazias
+import java.time.LocalDateTime; // Necessário para o carimbo de data/hora do log
 /**
  * Classe DAO (Data Access Object) abstrata para Usuários.
  * Gerencia o armazenamento e recuperação de todos os tipos de usuários
