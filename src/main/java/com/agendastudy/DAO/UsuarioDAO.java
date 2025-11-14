@@ -20,7 +20,8 @@ public abstract class UsuarioDAO {
     /** Contador para gerar IDs únicos */
     protected static int proximoId = 1;
 
-    
+    // NOVO: Lista estática para logs (armazenando Strings formatadas)
+    private static final List<String> logs = new ArrayList<>();
     /**
      * Salva ou atualiza um usuário no sistema.
      * Se o usuário não tiver ID, gera um novo.
