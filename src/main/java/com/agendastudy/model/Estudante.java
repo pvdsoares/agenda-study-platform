@@ -13,6 +13,14 @@ public class Estudante extends Usuario{
         this.interesses = new ArrayList<>();
     }
 
+    public void adicionarInteresse(String interesse) {
+    if (interesse != null && !interesse.trim().isEmpty()) {
+        this.interesses.add(interesse.trim());
+    } else {
+        throw new IllegalArgumentException("Interesse inválido.");
+    }
+}
+
     public List<String> getInteresses() { return interesses; }
 
     // vai definir a lista inteira, cogitar usar método adicionar com .add

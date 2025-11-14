@@ -5,9 +5,9 @@ import com.agendastudy.model.Aula;
 import com.agendastudy.service.ServicoAgendamento; // Import do serviço
 import java.time.LocalDateTime;
 
-public class EstudanteDAO {
+public class EstudanteDAO extends UsuarioDAO{
    
-    // IMPLEMENTAÇÃO DE DEMAIS MÉTODOS AQUI
+    // IMPLEMENTAR DEMAIS MÉTODOS AQUI
 
 
     /**
