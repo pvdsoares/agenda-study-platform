@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: #e3fcfc;
+}
+
+/* Título principal */
+.titulo {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #007040;
+}
+
+/* Subtítulo */
+.subtitulo {
+    -fx-font-size: 15px;
+    -fx-text-fill: #3a3a3a;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+/* Botão de voltar */
+.botao-voltar {
+    -fx-background-color: #0b8c34;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 30;
+    -fx-background-radius: 10;
+}
