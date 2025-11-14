@@ -1,5 +1,8 @@
 package com.agendastudy.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.ListView;
@@ -7,7 +10,9 @@ import com.agendastudy.DAO.ProfessorDAO;
 import com.agendastudy.model.Professor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 
@@ -16,7 +21,7 @@ import javafx.scene.control.TextArea;
  * Controller (JavaFX) responsável pela interface de cadastro de professores.
  * Implementa as funcionalidades relacionadas a cadastro e validação de professores.
  *
- * @author Paulo Vitor Dias 
+ * @author Paulo Vitor Dias Soares
  * @version 3.0
  * @since 2025-11-13
  */
@@ -36,6 +41,10 @@ public class CadastroProfessorController {
     @FXML private TextField fieldNovaQualificacao;
     @FXML private ListView<String> listDisciplinas;
     @FXML private ListView<String> listQualificacoes;
+
+    @FXML private Label labelFotoSelecionada;
+    private byte[] fotoTemporaria;
+    private String tipoImagemTemporaria;
 
     /** Listas temporárias antes da persistência  */
     private List<String> disciplinas = new ArrayList<>();
@@ -94,6 +103,10 @@ public class CadastroProfessorController {
         disciplinas.forEach(professor:: adicionarDisciplina);
         qualificacoes.forEach(professor::adicionarQualificacao);
 
+        if (fotoTemporaria != null) {
+            professor.setFotoPerfil(fotoTemporaria, tipoImagemTemporaria);
+    }
+
         return professor;
     }
 
@@ -147,6 +160,55 @@ public class CadastroProfessorController {
         }
     }
 
+    /**
+     * Manipulador do evento para upload de foto de perfil.
+     * Implementa a funcionalidade de upload de foto (SCRUM-101)
+     */
+    @FXML
+    private void handleUploadFoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecionar Foto de Perfil");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif"),
+            new FileChooser.ExtensionFilter("Todos os arquivos", "*.*")
+        );
+        
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            try {
+                fotoTemporaria = Files.readAllBytes(file.toPath());
+                String nomeArquivo = file.getName();
+                tipoImagemTemporaria = nomeArquivo.substring(nomeArquivo.lastIndexOf(".") + 1).toLowerCase();
+                
+                labelFotoSelecionada.setText("Foto selecionada: " + nomeArquivo);
+                labelFotoSelecionada.setStyle("-fx-text-fill: green;");
+                
+            } catch (IOException e) {
+                mostrarAlerta("Erro", "Erro ao carregar imagem: " + e.getMessage());
+                limparFoto();
+            }
+        }
+    }
+
+    /**
+     * Limpa a foto temporária selecionada
+     */
+    @FXML
+    private void handleRemoverFoto() {
+        limparFoto();
+    }
+
+    /**
+     * Limpa os dados da foto
+     */
+    private void limparFoto() {
+        fotoTemporaria = null;
+        tipoImagemTemporaria = null;
+        labelFotoSelecionada.setText("Nenhuma foto selecionada");
+        labelFotoSelecionada.setStyle("-fx-text-fill: gray;");
+    }
+
+    
     /**
      * Manipulador do evento de clique no botão "Cancelar".
      * Limpa todos os campos do formulário.
@@ -203,6 +265,7 @@ public class CadastroProfessorController {
         fieldNovaQualificacao.clear();
         disciplinas.clear();
         qualificacoes.clear();
+        limparFoto();
         atualizarListas();
     }
 

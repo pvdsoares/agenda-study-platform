@@ -1,0 +1,189 @@
+/* Estilos gerais */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #000130;
+}
+
+.container {
+    -fx-background-color: #000130;
+    -fx-padding: 20;
+    -fx-alignment: top-center;
+}
+
+/* Cabeçalho */
+.header {
+    -fx-padding: 0 0 30 0;
+    -fx-alignment: center;
+}
+
+.app-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+}
+
+/* Título do formulário */
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-padding: 0 0 20 0;
+}
+
+/* Container do formulário */
+.form-container {
+    -fx-padding: 0;
+    -fx-spacing: 15;
+    -fx-max-width: 400;
+}
+
+/* Grid para organizar campos lado a lado */
+.form-grid {
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+}
+
+/* Labels dos campos */
+.field-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* Campos de texto */
+.text-field, .text-area, .password-field {
+    -fx-background-color: #1a1a4a;
+    -fx-border-color: #3498db;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 12 15 12 15;
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #a0a0c0;
+}
+
+.text-field:focused, .text-area:focused, .password-field:focused {
+    -fx-border-color: #4aa8ff;
+    -fx-effect: dropshadow(gaussian, rgba(74, 168, 255, 0.4), 8, 0, 0, 2);
+}
+
+.text-area {
+    -fx-pref-height: 80px;
+    -fx-pref-width: 400px;
+}
+
+/* Container para campos lado a lado */
+.horizontal-fields {
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
+}
+
+.field-container {
+    -fx-spacing: 8;
+}
+
+/* Seção de upload */
+.upload-section {
+    -fx-spacing: 15;
+    -fx-padding: 20 0 20 0;
+    -fx-alignment: center-left;
+}
+
+.upload-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.upload-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 10 20 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-pref-width: 150;
+}
+
+.upload-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Container dos botões principais */
+.buttons-container {
+    -fx-padding: 30 0 0 0;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+/* Botão primário - Começar */
+.primary-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 12 40 12 40;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-pref-width: 200;
+}
+
+.primary-button:hover {
+    -fx-background-color: #219653;
+}
+
+/* Botão secundário - Voltar */
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3498db;
+    -fx-font-weight: bold;
+    -fx-border-color: #3498db;
+    -fx-border-width: 2px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 10 35 10 35;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-pref-width: 200;
+}
+
+.secondary-button:hover {
+    -fx-background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Checkbox styling */
+.check-box {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+}
+
+.check-box .box {
+    -fx-background-color: #1a1a4a;
+    -fx-border-color: #3498db;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #3498db;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Para campos de preço com formatação */
+.price-field {
+    -fx-alignment: center-right;
+}

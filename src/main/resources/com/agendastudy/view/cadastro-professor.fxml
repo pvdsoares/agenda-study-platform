@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.agendastudy.controller.CadastroProfessorController" 
+      stylesheets="@../styles/cadastro-professor.css"
+      spacing="20" styleClass="container">
+   <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+   
+   <!-- Cabeçalho -->
+   <VBox alignment="CENTER" styleClass="header" spacing="10">
+      <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+         <Image url="@../image/logo.png" />
+      </ImageView>
+      <Label text="AgendaStudy" styleClass="app-title"/>
+   </VBox>
+   
+   <!-- Título do formulário -->
+   <Label text="Cadastro Professor" styleClass="form-title"/>
+   
+   <!-- Formulário -->
+   <VBox spacing="15" styleClass="form-container">
+      <!-- Nome completo -->
+      <VBox spacing="5">
+         <Label text="Nome completo" styleClass="field-label"/>
+         <TextField fx:id="fieldNome" styleClass="text-field"/>
+      </VBox>
+      
+      <!-- Email -->
+      <VBox spacing="5">
+         <Label text="Email" styleClass="field-label"/>
+         <TextField fx:id="fieldEmail" styleClass="text-field"/>
+      </VBox>
+      
+      <!-- Senha -->
+      <VBox spacing="5">
+         <Label text="Senha" styleClass="field-label"/>
+         <PasswordField fx:id="fieldSenha" styleClass="text-field"/>
+      </VBox>
+      
+      <!-- Telefone -->
+      <VBox spacing="5">
+         <Label text="Telefone" styleClass="field-label"/>
+         <TextField fx:id="fieldTelefone" styleClass="text-field"/>
+      </VBox>
+      
+      <!-- Biografia -->
+      <VBox spacing="5">
+         <Label text="Biografia" styleClass="field-label"/>
+         <TextArea fx:id="fieldBiografia" styleClass="text-area" prefRowCount="3"/>
+      </VBox>
+
+       <!-- Foto de Perfil -->
+       <VBox spacing="5">
+         <Label text="Foto de Perfil" styleClass="field-label"/>
+         <HBox spacing="10" alignment="CENTER_LEFT">
+            <VBox spacing="5">
+               <HBox spacing="10">
+                  <Button text="Selecionar Foto" styleClass="add-button" onAction="#handleUploadFoto"/>
+                  <Button text="Remover Foto" styleClass="remove-button" onAction="#handleRemoverFoto"/>
+               </HBox>
+               <Label fx:id="labelFotoSelecionada" text="Nenhuma foto selecionada" styleClass="hint-text"/>
+            </VBox>
+         </HBox>
+      </VBox>
+      
+      <!-- Disciplinas -->
+      <VBox spacing="5">
+         <Label text="Disciplinas" styleClass="field-label"/>
+         <HBox spacing="10">
+            <TextField fx:id="fieldNovaDisciplina" styleClass="text-field" HBox.hgrow="ALWAYS" 
+                       onAction="#handleAdicionarDisciplina"/>
+            <Button text="Adicionar" styleClass="add-button" onAction="#handleAdicionarDisciplina"/>
+         </HBox>
+         <ListView fx:id="listDisciplinas" styleClass="list-view" prefHeight="80"/>
+         <Button text="Remover Selecionada" styleClass="remove-button" onAction="#handleRemoverDisciplina"/>
+      </VBox>
+      
+      <!-- Qualificações -->
+      <VBox spacing="5">
+         <Label text="Qualificações" styleClass="field-label"/>
+         <HBox spacing="10">
+            <TextField fx:id="fieldNovaQualificacao" styleClass="text-field" HBox.hgrow="ALWAYS" 
+                       onAction="#handleAdicionarQualificacao"/>
+            <Button text="Adicionar" styleClass="add-button" onAction="#handleAdicionarQualificacao"/>
+         </HBox>
+         <ListView fx:id="listQualificacoes" styleClass="list-view" prefHeight="80"/>
+         <Button text="Remover Selecionada" styleClass="remove-button" onAction="#handleRemoverQualificacao"/>
+      </VBox>
+   </VBox>
+   
+   <!-- Botões de ação -->
+   <HBox spacing="20" alignment="CENTER" styleClass="buttons-container">
+      <Button text="Cancelar" styleClass="secondary-button" onAction="#handleCancelar"/>
+      <Button text="Salvar" styleClass="primary-button" onAction="#handleSalvar"/>
+   </HBox>
+</VBox>
