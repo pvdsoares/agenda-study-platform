@@ -53,9 +53,8 @@ public class EstudanteDAO extends UsuarioDAO{
     
     /**
      * Referência para o DAO de Avaliação.
-     * ATENÇÃO: Esta variável não está inicializada e causará NullPointerException.
      */
-    private AvaliacaoDAO avaliacao;
+    private AvaliacaoDAO avaliacao = new AvaliacaoDAO();
 
     /**
      * Permite que o estudante possa avaliar uma aula após sua conclusão.
@@ -65,9 +64,10 @@ public class EstudanteDAO extends UsuarioDAO{
      * @param aula aula a ser avaliada
      * @param nota nota atribuída
      * @param comentario comentário sobre a aula (opcional)
+     * @return true se a avaliação foi registrada, false caso contrário.
      */
-    public void avaliarAula(Estudante estudante, Aula aula, int nota, String comentario) {
-        avaliacao.avaliar(estudante, aula, nota, comentario);
+    public boolean avaliarAula(Estudante estudante, Aula aula, int nota, String comentario) {
+        return avaliacao.avaliar(estudante, aula, nota, comentario);
     }
 
     /**
@@ -77,8 +77,9 @@ public class EstudanteDAO extends UsuarioDAO{
      * @param estudante estudante que irá avaliar
      * @param aula aula a ser avaliada
      * @param nota nota atribuída
+     * @return true se a avaliação foi registrada, false caso contrário.
      */
-    public void avaliarAula(Estudante estudante, Aula aula, int nota) {
-        avaliacao.avaliar(estudante, aula, nota);
+    public boolean avaliarAula(Estudante estudante, Aula aula, int nota) {
+        return avaliacao.avaliar(estudante, aula, nota);
     }
 }

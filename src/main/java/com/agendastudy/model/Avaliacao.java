@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Representa a Avaliação de uma Aula feita por um Estudante.
  *
- * @author MATHEUS MARCELINO DE ARRUDA
+ * @author MATHEUS PEREIRA RODRIGUES
  * @version 1.0
  * @since 2025-11-12
  */
@@ -20,11 +20,12 @@ public class Avaliacao {
 
     /**
      * Construtor da classe Avaliação.
+     *
      * @param idAvaliacao O ID único da avaliação.
-     * @param estudante O Estudante que fez a avaliação.
-     * @param aula A Aula que foi avaliada.
-     * @param nota A nota (1-5) atribuída.
-     * @param comentario O comentário textual.
+     * @param estudante   O Estudante que fez a avaliação.
+     * @param aula        A Aula que foi avaliada.
+     * @param nota        A nota (1-5) atribuída.
+     * @param comentario  O comentário textual.
      */
     public Avaliacao(String idAvaliacao, Estudante estudante, Aula aula, int nota, String comentario) {
         this.idAvaliacao = idAvaliacao;
@@ -37,19 +38,31 @@ public class Avaliacao {
     }
 
     // --- Getters e Setters ---
-    public String getIdAvaliacao() { return idAvaliacao; }
+    public String getIdAvaliacao() {
+        return idAvaliacao;
+    }
 
-    public Estudante getEstudante() { return estudante; }
+    public Estudante getEstudante() {
+        return estudante;
+    }
 
-    public Aula getAula() { return aula; }
+    public Aula getAula() {
+        return aula;
+    }
 
-    public Professor getProfessor() { return professor; }
+    public Professor getProfessor() {
+        return professor;
+    }
 
-    public int getNota() { return nota; }
+    public int getNota() {
+        return nota;
+    }
 
     /**
      * Define a nota, garantindo que esteja entre 1 e 5.
+     *
      * @param nota A nota (1-5).
+     * @throws IllegalArgumentException se a nota estiver fora do intervalo permitido.
      */
     public void setNota(int nota) {
         if (nota < 1 || nota > 5)
@@ -57,11 +70,17 @@ public class Avaliacao {
         this.nota = nota;
     }
 
-    public String getComentario() { return comentario; }
+    public String getComentario() {
+        return comentario;
+    }
 
-    public void setComentario(String comentario) { this.comentario = comentario; }
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
-    public LocalDateTime getDataAvaliacao() { return dataAvaliacao; }
+    public LocalDateTime getDataAvaliacao() {
+        return dataAvaliacao;
+    }
 
     @Override
     public String toString() {
@@ -75,3 +94,4 @@ public class Avaliacao {
                 ", data=" + dataAvaliacao +
                 '}';
     }
+}

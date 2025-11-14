@@ -25,12 +25,13 @@ public class AvaliacaoDAO {
      * @param aula A aula a ser avaliada.
      * @param nota A nota de 1 a 5.
      * @param comentario O feedback em texto.
+     * @return true se a avaliação foi realizada com sucesso, false caso contrário.
      */
-    public void avaliar(Estudante estudante, Aula aula, int nota, String comentario) {
+    public boolean avaliar(Estudante estudante, Aula aula, int nota, String comentario) {
         if (comentario == null) {
             comentario = "";
         }
-        avaliarInterno(estudante, aula, nota, comentario);
+        return avaliarInterno(estudante, aula, nota, comentario);
     }
 
     /**
@@ -38,9 +39,10 @@ public class AvaliacaoDAO {
      * @param estudante O estudante que está avaliando.
      * @param aula A aula a ser avaliada.
      * @param nota A nota de 1 a 5.
+     * @return true se a avaliação foi realizada com sucesso, false caso contrário.
      */
-    public void avaliar(Estudante estudante, Aula aula, int nota) {
-        avaliarInterno(estudante, aula, nota, "");
+    public boolean avaliar(Estudante estudante, Aula aula, int nota) {
+        return avaliarInterno(estudante, aula, nota, "");
     }
 
     /**
@@ -51,8 +53,10 @@ public class AvaliacaoDAO {
      * @param aula A aula a ser avaliada.
      * @param nota A nota de 1 a 5.
      * @param comentario O feedback em texto.
+     * @return true se a avaliação foi criada e armazenada com sucesso, false caso contrário.
      */
-    private void avaliarInterno(Estudante estudante, Aula aula, int nota, String comentario) {
+    private boolean avaliarInterno(Estudante estudante, Aula aula, int nota, String comentario) {
+        boolean avaliado;
         if (podeAvaliar(estudante, aula)) {
             String idAvaliacao = UUID.randomUUID().toString(); //Gera novo ID para cada avaliação
             Avaliacao avaliacao = new Avaliacao(idAvaliacao, estudante, aula, nota, comentario);
@@ -67,9 +71,14 @@ public class AvaliacaoDAO {
             // (ESSENCIAL PARA OS MÉTODOS 'get' do ProfessorDAO)
             aula.getProfessor().getAvaliacoes().add(avaliacao);
 
+            avaliado = true;
+
         } else {
             System.err.println("Erro: Aula " + aula.getIdAula() + " não pode ser avaliada.");
+            avaliado = false;
         }
+
+        return avaliado;
     }
 
     /**
