@@ -37,6 +37,9 @@
     -fx-padding: 0;
     -fx-spacing: 15;
     -fx-max-width: 400;
+    -fx-border-radius: 8px;
+    -fx-background-color:#000130;
+    -fx-border-radius:8px;
 }
 
 /* Grid para organizar campos lado a lado */
@@ -60,12 +63,13 @@
     -fx-background-radius: 6px;
     -fx-padding: 12 15 12 15;
     -fx-font-size: 14px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #0a9711;
+    -fx-font-weight:bold;
     -fx-prompt-text-fill: #a0a0c0;
 }
 
 .text-field:focused, .text-area:focused, .password-field:focused {
-    -fx-border-color: #4aa8ff;
+    -fx-border-color: #98c1e7;
     -fx-effect: dropshadow(gaussian, rgba(74, 168, 255, 0.4), 8, 0, 0, 2);
 }
 
@@ -109,6 +113,8 @@
     -fx-pref-width: 150;
 }
 
+
+
 .upload-button:hover {
     -fx-background-color: #2980b9;
 }
@@ -118,6 +124,7 @@
     -fx-padding: 30 0 0 0;
     -fx-spacing: 20;
     -fx-alignment: center;
+    -fx-text-fill:#ffffff;
 }
 
 /* Botão primário - Começar */
