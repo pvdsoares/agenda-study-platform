@@ -1,8 +1,12 @@
-package com.agendastudy.controller;
+package com.agendastudy.service;
 
+
+import java.time.LocalDateTime;
+import java.time.ZoneId; 
 import java.util.*;
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Professor;
+import com.agendastudy.model.StatusAula;
 
 public class RelatoriodeRendimento {
 
@@ -14,17 +18,16 @@ public class RelatoriodeRendimento {
     }
 
     // Total de aulas concluídas por período
-    public int calcularTotalAulas(Professor tutor, Date inicio, Date fim) {
+   public int calcularTotalAulas(Professor tutor, LocalDateTime inicio, LocalDateTime fim) { 
         List<Aula> aulas = aulasPorTutor.getOrDefault(tutor, new ArrayList<>());
         int count = 0;
 
         for (Aula aula : aulas) {
-            Date data = aula.getData();
-
+LocalDateTime data = aula.getDataHora();
             boolean dentroPeriodo =
-                    !data.before(inicio) && !data.after(fim);
+ !data.isBefore(inicio) && !data.isAfter(fim);
 
-            if (dentroPeriodo && "concluida".equalsIgnoreCase(aula.getStatus())) {
+            if (dentroPeriodo && aula.getStatus() == StatusAula.CONCLUIDA) { 
                 count++;
             }
         }
@@ -37,7 +40,7 @@ public class RelatoriodeRendimento {
 
         int canceladasAluno = 0;
         for (Aula aula : aulas) {
-            if ("canceladaAluno".equalsIgnoreCase(aula.getStatus())) {
+            if (aula.getStatus() == StatusAula.CANCELADA_ALUNO) { 
                 canceladasAluno++;
             }
         }
@@ -52,7 +55,7 @@ public class RelatoriodeRendimento {
 
         int canceladasTutor = 0;
         for (Aula aula : aulas) {
-            if ("canceladaTutor".equalsIgnoreCase(aula.getStatus())) {
+            if (aula.getStatus() == StatusAula.CANCELADA_PROFESSOR) {
                 canceladasTutor++;
             }
         }
