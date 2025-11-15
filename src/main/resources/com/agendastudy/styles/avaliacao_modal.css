@@ -59,4 +59,3 @@
     -fx-background-radius: 50;
     -fx-cursor: hand;
 }
-/* OBS: O estilo ativado (#52B371) DEVE ser aplicado no Controller via Java, como conversamos. */

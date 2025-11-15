@@ -143,7 +143,6 @@ public class AvaliacaoModalController {
 
     /**
      * Abre o pop up confirmando que a avaliação da aula foi realizada com sucesso.
-     * ⚠️ CORREÇÃO ESSENCIAL: Adicionando StageStyle.TRANSPARENT e scene.setFill(Color.TRANSPARENT)
      */
     private void abrirPopupConfirmacao() {
         try {
@@ -159,10 +158,10 @@ public class AvaliacaoModalController {
             Stage popup = new Stage();
             Scene scene = new Scene(root);
 
-            // 🎯 CORREÇÃO DE FUNDO: Garante que a Scene seja transparente
+            // Garante que a Scene seja transparente
             scene.setFill(Color.TRANSPARENT);
 
-            // 🎯 CORREÇÃO DE FUNDO: Remove a decoração da janela (barra de título)
+            //  Remove a decoração da janela (barra de título)
             popup.initStyle(StageStyle.TRANSPARENT);
 
             popup.setScene(scene);
