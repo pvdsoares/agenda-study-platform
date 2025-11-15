@@ -1,13 +1,12 @@
 package com.agendastudy.DAO;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap; // Adicionado
 
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Professor;
@@ -18,16 +17,19 @@ import com.agendastudy.model.Professor;
  *
  * @author VINICIUS ALVES RIBEIRO SILVA
  * @version 1.0
- * @since 2025-11-11
  */
 public class AulaDAO {
-    private static Map<String, Aula> aulas = new HashMap<>();
+    
+    /** * 
+     * Trocado para 'ConcurrentHashMap'
+     * para que o SCRUM-114 (Notificações) e o SCRUM-35 (Agendamento)
+     * possam acessar o mapa ao mesmo tempo sem quebrar a aplicação.
+     */
+    private static Map<String, Aula> aulas = new ConcurrentHashMap<>();
     private static int proximoId = 1; //contagem de id
 
     /**
      * Busca uma aula pelo seu ID.
-     * @param id O ID da aula a ser buscada.
-     * @return O objeto Aula, ou null se não for encontrado.
      */
     public Aula buscarPorId(String id) {
         return aulas.get(id);
@@ -35,9 +37,6 @@ public class AulaDAO {
 
     /**
      * Persiste (salva ou atualiza) uma aula no sistema.
-     * Gera um novo ID se a aula for nova.
-     * @param aula A aula a ser salva.
-     * @return A aula salva (com ID, se foi gerado).
      */
     public Aula salvarOuAtualizar(Aula aula) {
         if (aula.getIdAula() == null || aula.getIdAula().isEmpty()) {
@@ -50,8 +49,6 @@ public class AulaDAO {
     /**
      * Busca todas as aulas de um professor específico.
      * Filtra apenas aulas que não foram canceladas.
-     * @param professor O professor dono das aulas.
-     * @return Uma lista de Aulas ativas do professor.
      */
     public List<Aula> buscarAulasDoProfessor(Professor professor) {
         if (professor == null) {
@@ -65,9 +62,6 @@ public class AulaDAO {
     
     /**
      * Marca uma aula como cancelada no sistema.
-     * @param idAula ID da aula a ser cancelada
-     * @throws NoSuchElementException se a aula não for encontrada.
-     * @throws IllegalStateException se a aula já estiver cancelada.
      */
     public void cancelarAula(String idAula){
         Aula aula = aulas.get(idAula);

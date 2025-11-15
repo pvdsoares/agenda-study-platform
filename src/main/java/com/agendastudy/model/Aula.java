@@ -16,7 +16,7 @@ public class Aula {
     private Professor professor; // as informações de professores e alunos vão ser acessadas da suas respectivas classes, como id por exemplo.
     private Estudante estudante;
     private LocalDateTime dataHora; 
-    private boolean cancelada;
+    private StatusAula status; // Enum criado para as estatísticas do relatório de rendimento
 
     /**
      * Construtor da classe Aula.
@@ -34,7 +34,7 @@ public class Aula {
         this.professor = professor;
         this.estudante = estudante;
         this.dataHora = dataHora;
-        this.cancelada = false;
+        this.status = StatusAula.AGENDADA;
     }
 
     // --- Getters e Setters ---
@@ -56,22 +56,38 @@ public class Aula {
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 
-    public boolean isCancelada() { return cancelada; }
-    public void setCancelada(boolean cancelada) { this.cancelada = cancelada; }
+public StatusAula getStatus() { return status; }
+public void setStatus(StatusAula status) { this.status = status; }
+
+   
+    /**
+     * Marca a aula como cancelada pelo aluno.
+     */
+    public void cancelarPorAluno(){
+        this.status = StatusAula.CANCELADA_ALUNO;
+    }
     
     /**
-     * Marca a aula como cancelada.
+     * Marca a aula como cancelada pelo professor.
      */
-    public void cancelar(){
-        this.cancelada = true;
+    public void cancelarPorProfessor(){
+        this.status = StatusAula.CANCELADA_PROFESSOR;
     }
 
 
-    @Override
+
+
+ @Override
     public String toString() {
         return "Aula{" +
                 "idAula='" + idAula + '\'' +
                 ", titulo='" + titulo + '\'' +
+                ", status=" + status + // Adiciona o status da aula
+                ", dataHora=" + dataHora + // Adiciona a data e hora
                 ", descricao='" + descricao + '\'' +
-                ", professor=" + professor.getNome() + "(ID: " + professor.getId() + ")" +
-                ", estudante=" + (estudante != null ? estudante.getNome() : "VAGA") + "(
+                ", professor=" + professor.getNome() + " (ID: " + professor.getId() + ")" +
+                ", estudante=" + (estudante != null ? estudante.getNome() : "VAGA ABERTA") + 
+                '}'; 
+    }
+
+}
