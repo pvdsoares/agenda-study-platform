@@ -1,0 +1,62 @@
+/* 1. Estilos da Raiz (AnchorPane) */
+.root-modal {
+    /* Fundo do modal: E5FFFD */
+    -fx-background-color: #E5FFFD;
+}
+
+/* 2. Estilos do Card Central (VBox) */
+.card-avaliacao {
+    -fx-background-radius: 20;
+    -fx-background-color: white;
+    -fx-padding: 30 20 30 20;
+}
+
+/* 3. Títulos */
+.titulo-finalizada {
+    -fx-text-fill: #52B371;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.titulo-avaliacao {
+    -fx-text-fill: #306BB3;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+/* 4. Retângulos das Estrelas e Comentário */
+.fundo-azul-medio { /* #306BB3 */
+    -fx-fill: #306BB3;
+}
+
+.fundo-azul-escuro { /* #0F3B71 */
+    -fx-fill: #0F3B71;
+}
+
+/* 5. Área de Comentário (Text e TextArea) */
+.texto-comentario-label {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.text-area-comentario {
+    /* Garante que o fundo do campo de texto (inner-background) seja o azul escuro */
+    -fx-control-inner-background: #0F3B71;
+    -fx-background-color: transparent; /* Remove a borda padrão do TextArea */
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+/* 6. Botão Enviar (Estilo Desativado) */
+#btnEnviar {
+    -fx-background-color: #8C857E;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: semi-bold;
+    -fx-background-radius: 50;
+    -fx-cursor: hand;
+}
+/* OBS: O estilo ativado (#52B371) DEVE ser aplicado no Controller via Java, como conversamos. */

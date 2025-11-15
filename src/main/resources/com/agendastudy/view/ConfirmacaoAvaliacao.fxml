@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
+<AnchorPane fx:id="rootPopup"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.agendastudy.controller.ConfirmacaoAvaliacaoController"
             prefWidth="280" prefHeight="200"
-            style="-fx-background-radius: 20; -fx-background-color: white;">
+            stylesheets="@../styles/confirmacao_avaliacao.css"> <VBox alignment="CENTER"
+                                                                            spacing="20"
+                                                                            AnchorPane.topAnchor="0.0"
+                                                                            AnchorPane.bottomAnchor="0.0"
+                                                                            AnchorPane.leftAnchor="0.0"
+                                                                            AnchorPane.rightAnchor="0.0">
 
-    <VBox alignment="CENTER" spacing="20" layoutX="20" layoutY="20"
-          prefWidth="240" prefHeight="160">
+    <ImageView fx:id="iconCheck"
+               fitWidth="49"
+               fitHeight="49">
+    </ImageView>
 
-        <ImageView fx:id="iconCheck" fitWidth="50" fitHeight="50"/>
+    <Label fx:id="labelMensagem"
+           text="Obrigado pela sua Avaliação!"
+           wrapText="true"
+           alignment="CENTER"
+           maxWidth="240">
+    </Label>
 
-        <Label fx:id="labelMensagem"
-               text="Obrigado pela sua Avaliação!"
-               wrapText="true"
-               alignment="CENTER"
-               style="-fx-font-size: 16; -fx-text-fill: #1A237E; -fx-font-weight: bold;"/>
-
-        <Button text="OK"
-                onAction="#fecharPopup"
-                prefWidth="100"
-                style="
-                    -fx-background-color: #2E7D32;
-                    -fx-text-fill: white;
-                    -fx-font-size: 14;
-                    -fx-background-radius: 20;
-                "/>
-
-    </VBox>
+</VBox>
 
 </AnchorPane>

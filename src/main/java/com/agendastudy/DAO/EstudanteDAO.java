@@ -14,7 +14,20 @@ import java.time.LocalDateTime;
  * @since 2025-11-11
  */
 public class EstudanteDAO extends UsuarioDAO{
-   
+
+    /**
+     * Referência para o DAO de Avaliação.
+     */
+    private AvaliacaoDAO avaliacao;
+
+    public EstudanteDAO() {
+        this.avaliacao = new AvaliacaoDAO();
+    }
+
+    public EstudanteDAO(AvaliacaoDAO avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
     /**
      * Método de ação para o estudante agendar uma aula (confirmar a reserva).
      * Delega a lógica para o ServicoAgendamento.
@@ -50,11 +63,6 @@ public class EstudanteDAO extends UsuarioDAO{
     public void cancelarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento) {
         servicoAgendamento.cancelarAgendamento(idAula, estudante);
     }
-    
-    /**
-     * Referência para o DAO de Avaliação.
-     */
-    private AvaliacaoDAO avaliacao = new AvaliacaoDAO();
 
     /**
      * Permite que o estudante possa avaliar uma aula após sua conclusão.

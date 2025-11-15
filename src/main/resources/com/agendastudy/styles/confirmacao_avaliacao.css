@@ -1,0 +1,15 @@
+#rootPopup {
+    /* Fundo (#BDFFF9), Raio e Sombra */
+    -fx-background-color: #BDFFF9;
+    -fx-background-radius: 20;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0.25, 0, 4);
+}
+
+#labelMensagem {
+    /* Cores e Fontes */
+    -fx-font-size: 25px;
+    -fx-text-fill: #306BB3;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}

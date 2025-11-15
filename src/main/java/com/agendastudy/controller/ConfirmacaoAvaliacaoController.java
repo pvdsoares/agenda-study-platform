@@ -19,9 +19,16 @@ public class ConfirmacaoAvaliacaoController {
      */
     @FXML
     private void initialize() {
-        Image check = new Image(getClass()
-                .getResourceAsStream("/com/agendastudy/image/check_icon.png"));
-        iconCheck.setImage(check);
+        try {
+            String imagePath = "/com/agendastudy/image/check_icon.png";
+
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+
+            iconCheck.setImage(image);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a imagem: " + e.getMessage());
+        }
     }
 
     /**

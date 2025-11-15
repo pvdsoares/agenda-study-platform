@@ -5,7 +5,6 @@ import com.agendastudy.DAO.EstudanteDAO;
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Estudante;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,7 +15,8 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Modality;
-
+import javafx.stage.StageStyle; // Importação NECESSÁRIA para StageStyle.TRANSPARENT
+import javafx.scene.paint.Color; // Importação NECESSÁRIA para Color.TRANSPARENT
 
 /**
  * Controller responsável pelo modal de avaliação de aula.
@@ -56,6 +56,16 @@ public class AvaliacaoModalController {
         starEmpty = new Image(getClass().getResourceAsStream("/com/agendastudy/image/star_empty.png"));
         starFilled = new Image(getClass().getResourceAsStream("/com/agendastudy/image/star_filled.png"));
 
+        // Garante que o botão use o estilo DESATIVADO inicial com as dimensões corretas
+        btnEnviar.setStyle(
+                "-fx-background-color: #8C857E;" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 24px;" +
+                        "-fx-font-weight: semi-bold;" +
+                        "-fx-background-radius: 50;" +
+                        "-fx-cursor: hand;"
+        );
+
         configurarCliqueEstrela(star1, 1);
         configurarCliqueEstrela(star2, 2);
         configurarCliqueEstrela(star3, 3);
@@ -73,6 +83,16 @@ public class AvaliacaoModalController {
             notaSelecionada = valor;
             atualizarEstrelas();
             btnEnviar.setDisable(false);
+
+            // CORREÇÃO: Define o estilo ATIVADO (verde #52B371) com as dimensões finais
+            btnEnviar.setStyle(
+                    "-fx-background-color: #52B371;" + // Cor Ativada
+                            "-fx-text-fill: white;" +
+                            "-fx-font-size: 24px;" + // Tamanho Final
+                            "-fx-font-weight: semi-bold;" +
+                            "-fx-background-radius: 50;" + // Raio Final
+                            "-fx-cursor: hand;"
+            );
         });
     }
 
@@ -122,7 +142,8 @@ public class AvaliacaoModalController {
     }
 
     /**
-     *  Abre o pop up confirmando que a avaliação da aula foi realizada com sucesso.
+     * Abre o pop up confirmando que a avaliação da aula foi realizada com sucesso.
+     * ⚠️ CORREÇÃO ESSENCIAL: Adicionando StageStyle.TRANSPARENT e scene.setFill(Color.TRANSPARENT)
      */
     private void abrirPopupConfirmacao() {
         try {
@@ -136,7 +157,15 @@ public class AvaliacaoModalController {
             controller.setMensagem("Obrigado pela sua Avaliação!");
 
             Stage popup = new Stage();
-            popup.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+
+            // 🎯 CORREÇÃO DE FUNDO: Garante que a Scene seja transparente
+            scene.setFill(Color.TRANSPARENT);
+
+            // 🎯 CORREÇÃO DE FUNDO: Remove a decoração da janela (barra de título)
+            popup.initStyle(StageStyle.TRANSPARENT);
+
+            popup.setScene(scene);
             popup.initModality(Modality.APPLICATION_MODAL);
             popup.setResizable(false);
             popup.showAndWait();  // espera fechar antes de continuar
