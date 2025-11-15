@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle; // Importação NECESSÁRIA para StageStyle.TRANSPARENT
-import javafx.scene.paint.Color; // Importação NECESSÁRIA para Color.TRANSPARENT
+import javafx.stage.StageStyle;
+import javafx.scene.paint.Color; 
 
 /**
  * Controller responsável pelo modal de avaliação de aula.
@@ -84,13 +84,13 @@ public class AvaliacaoModalController {
             atualizarEstrelas();
             btnEnviar.setDisable(false);
 
-            // CORREÇÃO: Define o estilo ATIVADO (verde #52B371) com as dimensões finais
+            // Define o estilo ATIVADO com as dimensões finais
             btnEnviar.setStyle(
-                    "-fx-background-color: #52B371;" + // Cor Ativada
+                    "-fx-background-color: #52B371;" +
                             "-fx-text-fill: white;" +
-                            "-fx-font-size: 24px;" + // Tamanho Final
+                            "-fx-font-size: 24px;" +
                             "-fx-font-weight: semi-bold;" +
-                            "-fx-background-radius: 50;" + // Raio Final
+                            "-fx-background-radius: 50;" +
                             "-fx-cursor: hand;"
             );
         });
