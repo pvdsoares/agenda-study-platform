@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class GerenciamentoUsuarios {
+public class GerenciamentoUsuariosFXController {
 
     // Usando AdministradorDAO que herda todos os métodos de UsuarioDAO
     private final AdministradorDAO administradorDAO = new AdministradorDAO(); 
