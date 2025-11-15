@@ -4,12 +4,12 @@ import java.util.*;
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Professor;
 
-public class RelatorioController {
+public class RelatoriodeRendimento {
 
     private Map<Professor, List<Aula>> aulasPorTutor;
 
     // Construtor correto
-    public RelatorioController(Map<Professor, List<Aula>> aulasPorTutor) {
+    public RelatoriodeRendimento(Map<Professor, List<Aula>> aulasPorTutor) {
         this.aulasPorTutor = aulasPorTutor;
     }
 

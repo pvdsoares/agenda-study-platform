@@ -1,30 +1,31 @@
 package com.agendastudy.DAO;
 
 import com.agendastudy.model.Usuario;
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap; // ADICIONADO (Para SCRUM-114)
+import java.util.List; // Adicionado
+import java.util.ArrayList; // Adicionado
+import java.util.concurrent.CopyOnWriteArrayList; // ADICIONADO (Para SCRUM-114)
+import java.util.stream.Collectors; 
+import java.util.Collections; 
+import java.time.LocalDateTime; 
 
-import java.util.stream.Collectors; // Necessário para filtros
-import java.util.Collections; // Necessário para listas vazias
-import java.time.LocalDateTime; // Necessário para o carimbo de data/hora do log
 /**
  * Classe DAO (Data Access Object) abstrata para Usuários.
  * Gerencia o armazenamento e recuperação de todos os tipos de usuários
  * em um mapa estático compartilhado (simulando um banco de dados).
  *
- * @author PAULO VITOR DIAS SOARES
- * @version 1.0
+ * @author PAULO VITOR DIAS SOARES 
+ * @version 1.1
  * @since 2025-11-11
  */
 public abstract class UsuarioDAO {
-    
-    /** Mapa estático para simular a tabela 'usuarios' do banco de dados */
-    protected static Map<String, Usuario> usuarios = new HashMap<>();
-    /** Contador para gerar IDs únicos */
+   
+    protected static Map<String, Usuario> usuarios = new ConcurrentHashMap<>();
     protected static int proximoId = 1;
+    private static final List<String> logs = new CopyOnWriteArrayList<>();
 
-    // NOVO: Lista estática para logs (armazenando Strings formatadas)
-    private static final List<String> logs = new ArrayList<>();
     /**
      * Salva ou atualiza um usuário no sistema.
      * Se o usuário não tiver ID, gera um novo.
@@ -51,7 +52,6 @@ public abstract class UsuarioDAO {
         }
         return false;
     }
-    // --- MÉTODOS DE GERENCIAMENTO (NOVOS) ---
 
     /**
      * Busca um Usuário pelo seu ID. (Funcionalidade: Visualizar)
@@ -63,7 +63,6 @@ public abstract class UsuarioDAO {
     // Método privado para registrar o log como String
     private void registrarLog(String usuarioId, String nomeUsuario, boolean novoStatus) {
         String statusText = novoStatus ? "Conta Ativada" : "Conta Desativada";
-        // Formata a entrada do log
         String logEntry = String.format("[%s] Usuário %s (%s): %s", 
                                         LocalDateTime.now().toString(), 
                                         nomeUsuario, 
@@ -147,5 +146,4 @@ public abstract class UsuarioDAO {
             })
             .count();
     }
-}
 }
