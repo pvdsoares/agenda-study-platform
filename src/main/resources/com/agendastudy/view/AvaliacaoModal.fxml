@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.agendastudy.controller.AvaliacaoModalController"
+            prefWidth="350" prefHeight="520"
+            style="-fx-background-color: rgba(0,0,0,0.5);">
+
+    <!-- Card central -->
+    <VBox spacing="20" alignment="TOP_CENTER"
+          layoutX="20" layoutY="40"
+          prefWidth="310" prefHeight="440"
+          style="-fx-background-radius: 20; -fx-background-color: white; -fx-padding: 20;">
+
+        <!-- Botão voltar -->
+        <ImageView fx:id="btnVoltar"
+                   fitWidth="24" fitHeight="24"
+                   pickOnBounds="true"
+                   style="-fx-cursor: hand;"
+                   AnchorPane.leftAnchor="10">
+            <image>
+                <Image url="@/com/agendastudy/image/back_icon.png"/>
+            </image>
+        </ImageView>
+
+        <!-- Ícone principal -->
+        <ImageView fitWidth="70" fitHeight="70">
+            <image>
+                <Image url="@/com/agendastudy/image/logo_vazio.png"/>
+            </image>
+        </ImageView>
+
+        <!-- Títulos -->
+        <Label text="Aula Finalizada"
+               style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #2E7D32;"/>
+
+        <Label text="Avalie como foi a sua aula"
+               wrapText="true"
+               style="-fx-font-size: 16; -fx-text-fill: #1A237E; -fx-font-weight: bold;"
+               alignment="CENTER"/>
+
+        <!-- Estrelas -->
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="star1" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+            <ImageView fx:id="star2" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+            <ImageView fx:id="star3" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+            <ImageView fx:id="star4" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+            <ImageView fx:id="star5" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+        </HBox>
+
+        <!-- Comentário -->
+        <TextArea fx:id="fieldComentario"
+                  promptText="Adicione um comentário (opcional)"
+                  prefHeight="120" wrapText="true"
+                  style="-fx-background-radius: 10;"/>
+
+        <!-- Botão Enviar -->
+        <Button fx:id="btnEnviar"
+                text="Enviar avaliação"
+                prefWidth="250" prefHeight="45"
+                onAction="#enviarAvaliacao"
+                disable="true"
+                style="
+                    -fx-background-color: #2E7D32;
+                    -fx-text-fill: white;
+                    -fx-font-size: 16;
+                    -fx-background-radius: 25;
+                "/>
+
+    </VBox>
+
+</AnchorPane>
