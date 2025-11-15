@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="30" styleClass="tela-inicial" stylesheets="@../styles/tela-inicial.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <padding><Insets bottom="80" left="50" right="50" top="80" /></padding>
+    
+    <!-- Título do Sistema -->
+    <Label styleClass="titulo-sistema" text="AgendaStudy" />
+    
+    <!-- Mensagem de boas-vindas -->
+    <Label styleClass="mensagem-boas-vindas" text="Bem-vindo!" />
+    
+    <!-- Seção Login -->
+    <VBox alignment="CENTER" spacing="15" styleClass="secao-login">
+        <Label styleClass="texto-secao" text="Já tem conta? Faça login" />
+        <Button onAction="#handleLogin" styleClass="btn-primario" text="Login" />
+    </VBox>
+    
+    <!-- Separador -->
+    <HBox alignment="CENTER" spacing="10" styleClass="separador">
+        <Label styleClass="linha-separador" text="───────────────" />
+        <Label styleClass="texto-ou" text="ou" />
+        <Label styleClass="linha-separador" text="───────────────" />
+    </HBox>
+    
+    <!-- Seção Cadastro -->
+    <VBox alignment="CENTER" spacing="15" styleClass="secao-cadastro">
+        <Label styleClass="texto-secao" text="Novo usuário? Crie sua conta" />
+        <Button onAction="#handleCadastro" styleClass="btn-secundario" text="Cadastro" />
+    </VBox>
+</VBox>

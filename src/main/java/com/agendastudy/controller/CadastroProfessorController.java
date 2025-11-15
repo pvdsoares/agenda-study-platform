@@ -16,43 +16,57 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 
-
 /**
- * Controller (JavaFX) responsável pela interface de cadastro de professores.
- * Implementa as funcionalidades relacionadas a cadastro e validação de professores.
- *
+ * Controlador para a interface de cadastro de professores.
+ * Implementa a lógica de interface para cadastro, validação e persistência de dados de professores.
+ * 
  * @author Paulo Vitor Dias Soares
- * @version 3.0
- * @since 2025-11-13
+ * @version 2.0
+ * @since 2025
  */
-public class CadastroProfessorController {
+public class CadastroProfessorController implements ScreenController {
 
-    /** DAO para operações de persistência de professores */
     private ProfessorDAO professorDAO = new ProfessorDAO();
-    
-    // --- Campos FXML ---
+    private MainApp mainApp;
+
     @FXML private TextField fieldNome;
     @FXML private TextField fieldEmail;
     @FXML private PasswordField fieldSenha;
     @FXML private TextField fieldTelefone;
     @FXML private TextArea fieldBiografia;
-
     @FXML private TextField fieldNovaDisciplina;
     @FXML private TextField fieldNovaQualificacao;
     @FXML private ListView<String> listDisciplinas;
     @FXML private ListView<String> listQualificacoes;
-
     @FXML private Label labelFotoSelecionada;
+    
     private byte[] fotoTemporaria;
     private String tipoImagemTemporaria;
-
-    /** Listas temporárias antes da persistência  */
     private List<String> disciplinas = new ArrayList<>();
     private List<String> qualificacoes = new ArrayList<>();
 
     /**
-     * Método de inicialização de controller chamado automaticamente pelo JavaFX.
-     * Configura o estado inicial da interface.
+     * Define a referência para a aplicação principal para controle de navegação.
+     *
+     * @param mainApp Instância da aplicação principal
+     */
+    @Override
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    /**
+     * Método chamado quando a tela é exibida.
+     * Realiza a limpeza dos campos do formulário.
+     */
+    @Override
+    public void onScreenShown() {
+        limparCampos();
+    }
+
+    /**
+     * Inicializa o controlador.
+     * Configura o estado inicial das listas de disciplinas e qualificações.
      */
     @FXML
     private void initialize() {
@@ -60,61 +74,53 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Manipulador do evento de clique no botão "Salvar".
-     * Valida e persiste o novo professor.
+     * Manipula o evento de salvamento do professor.
+     * Valida os dados, persiste o professor e navega para a tela de login.
      */
     @FXML
-    private void handleSalvar(){
-        try{
-           
-            // valida campos básicos com dados básicos 
-            if(!validarCamposBasicos()){
+    private void handleSalvar() {
+        try {
+            if (!validarCamposBasicos()) {
                 return;
             }
 
-            //cria um professor com dados basicos
             Professor professor = criarProfessorComDadosFormulario();
 
-            if(!professorDAO.validarQualificacoes(professor)){
-                mostrarAlerta("Atenção", "adicione ao menos uma qualificação valida.");
+            if (!professorDAO.validarQualificacoes(professor)) {
+                mostrarAlerta("Atenção", "Adicione ao menos uma qualificação válida.");
                 return;
             }
 
-            //persiste o professor no sistema
             professorDAO.salvarProfessor(professor);
-            mostrarAlerta("sucesso", "professor cadastrado com sucesso!");
+            mostrarAlerta("Sucesso", "Professor cadastrado com sucesso!");
+            
+            if (mainApp != null) {
+                mainApp.setScreen("login");
+            }
+            
             limparCampos();
 
-        } catch(Exception e){
+        } catch (Exception e) {
             mostrarAlerta("Erro", "Erro ao cadastrar professor: " + e.getMessage());
         }
     }
 
     /**
-     * Cria um objeto Professor com os dados preenchidos no formulário.
-     * @return O novo objeto Professor.
+     * Manipula o evento de voltar para a tela anterior.
+     * Navega para a tela de pré-cadastro.
      */
-    private Professor criarProfessorComDadosFormulario(){
-        Professor professor = new Professor(null, fieldNome.getText(), fieldEmail.getText(), fieldSenha.getText());
-
-        professor.setTelefone(fieldTelefone.getText());
-        professor.setBiografia(fieldBiografia.getText());
-
-        disciplinas.forEach(professor:: adicionarDisciplina);
-        qualificacoes.forEach(professor::adicionarQualificacao);
-
-        if (fotoTemporaria != null) {
-            professor.setFotoPerfil(fotoTemporaria, tipoImagemTemporaria);
+    @FXML
+    private void handleVoltar() {
+        if (mainApp != null) {
+            mainApp.setScreen("preCadastro");
+        }
     }
 
-        return professor;
-    }
-
-
-   /** * Manipulador do evento para adicionar uma nova disciplina à lista.
-    * (Permite ao professor definir as disciplinas que leciona)
-    */
-   @FXML
+    /**
+     * Manipula a adição de uma nova disciplina à lista.
+     * Adiciona a disciplina se não estiver vazia e não for duplicada.
+     */
+    @FXML
     private void handleAdicionarDisciplina() {
         String disciplina = fieldNovaDisciplina.getText().trim();
         if (!disciplina.isEmpty() && !disciplinas.contains(disciplina)) {
@@ -125,8 +131,8 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Manipulador do evento para adicionar uma nova qualificação à lista.
-     * (Coleta as qualificações do professor para validação)
+     * Manipula a adição de uma nova qualificação à lista.
+     * Adiciona a qualificação se não estiver vazia e não for duplicada.
      */
     @FXML
     private void handleAdicionarQualificacao() {
@@ -138,7 +144,8 @@ public class CadastroProfessorController {
         }
     }
 
-    /** * Manipulador do evento para remover uma disciplina selecionada.
+    /**
+     * Manipula a remoção de uma disciplina selecionada da lista.
      */
     @FXML
     private void handleRemoverDisciplina() {
@@ -149,7 +156,8 @@ public class CadastroProfessorController {
         }
     }
 
-    /** * Manipulador do evento para remover uma qualificação selecionada.
+    /**
+     * Manipula a remoção de uma qualificação selecionada da lista.
      */
     @FXML
     private void handleRemoverQualificacao() {
@@ -161,8 +169,8 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Manipulador do evento para upload de foto de perfil.
-     * Implementa a funcionalidade de upload de foto (SCRUM-101)
+     * Manipula o upload de foto de perfil.
+     * Abre um seletor de arquivos e carrega a imagem selecionada.
      */
     @FXML
     private void handleUploadFoto() {
@@ -179,10 +187,8 @@ public class CadastroProfessorController {
                 fotoTemporaria = Files.readAllBytes(file.toPath());
                 String nomeArquivo = file.getName();
                 tipoImagemTemporaria = nomeArquivo.substring(nomeArquivo.lastIndexOf(".") + 1).toLowerCase();
-                
                 labelFotoSelecionada.setText("Foto selecionada: " + nomeArquivo);
                 labelFotoSelecionada.setStyle("-fx-text-fill: green;");
-                
             } catch (IOException e) {
                 mostrarAlerta("Erro", "Erro ao carregar imagem: " + e.getMessage());
                 limparFoto();
@@ -191,7 +197,7 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Limpa a foto temporária selecionada
+     * Manipula a remoção da foto de perfil selecionada.
      */
     @FXML
     private void handleRemoverFoto() {
@@ -199,28 +205,35 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Limpa os dados da foto
-     */
-    private void limparFoto() {
-        fotoTemporaria = null;
-        tipoImagemTemporaria = null;
-        labelFotoSelecionada.setText("Nenhuma foto selecionada");
-        labelFotoSelecionada.setStyle("-fx-text-fill: gray;");
-    }
-
-    
-    /**
-     * Manipulador do evento de clique no botão "Cancelar".
-     * Limpa todos os campos do formulário.
+     * Manipula o evento de cancelamento do cadastro.
+     * Navega de volta para a tela anterior.
      */
     @FXML
     private void handleCancelar() {
-        limparCampos();
+        handleVoltar();
+    }
+
+    /**
+     * Cria um objeto Professor com os dados preenchidos no formulário.
+     *
+     * @return Objeto Professor com os dados do formulário
+     */
+    private Professor criarProfessorComDadosFormulario() {
+        Professor professor = new Professor(null, fieldNome.getText(), fieldEmail.getText(), fieldSenha.getText());
+        professor.setTelefone(fieldTelefone.getText());
+        professor.setBiografia(fieldBiografia.getText());
+        disciplinas.forEach(professor::adicionarDisciplina);
+        qualificacoes.forEach(professor::adicionarQualificacao);
+        if (fotoTemporaria != null) {
+            professor.setFotoPerfil(fotoTemporaria, tipoImagemTemporaria);
+        }
+        return professor;
     }
 
     /**
      * Valida os campos básicos obrigatórios do formulário.
-     * * @return true se campos obrigatórios são válidos, false caso contrário.
+     *
+     * @return true se todos os campos obrigatórios são válidos, false caso contrário
      */
     private boolean validarCamposBasicos() {
         if (fieldNome.getText().isEmpty()) {
@@ -246,14 +259,16 @@ public class CadastroProfessorController {
         return true;
     }
 
-    /** * Atualiza as listas visuais (ListViews) da interface com os dados atuais.
+    /**
+     * Atualiza as listas visuais de disciplinas e qualificações.
      */
     private void atualizarListas() {
         listDisciplinas.getItems().setAll(disciplinas);
         listQualificacoes.getItems().setAll(qualificacoes);
     }
 
-    /** * Limpa todos os campos de entrada e listas do formulário.
+    /**
+     * Limpa todos os campos do formulário e listas.
      */
     private void limparCampos() {
         fieldNome.clear();
@@ -270,9 +285,20 @@ public class CadastroProfessorController {
     }
 
     /**
-     * Exibe um pop-up de alerta padrão.
-     * @param titulo O título da janela de alerta.
-     * @param mensagem A mensagem a ser exibida.
+     * Limpa os dados da foto de perfil.
+     */
+    private void limparFoto() {
+        fotoTemporaria = null;
+        tipoImagemTemporaria = null;
+        labelFotoSelecionada.setText("Nenhuma foto selecionada");
+        labelFotoSelecionada.setStyle("-fx-text-fill: gray;");
+    }
+
+    /**
+     * Exibe um alerta na interface.
+     *
+     * @param titulo Título do alerta
+     * @param mensagem Mensagem do alerta
      */
     private void mostrarAlerta(String titulo, String mensagem) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
