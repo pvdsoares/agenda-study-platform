@@ -1,232 +1,124 @@
 package com.agendastudy.controller;
 
-import com.agendastudy.DAO.AdministradorDAO;
 import com.agendastudy.DAO.UsuarioDAO;
 import com.agendastudy.model.Usuario;
-import com.agendastudy.model.Estudante;
-import com.agendastudy.model.Professor;
-import com.agendastudy.model.Administrador;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
-public class GerenciamentoUsuariosFXController {
+@Named
+@ViewScoped
+public class GerenciamentoUsuariosController implements Serializable {
 
-    // Instancia o DAO (Em produção, usaria injeção de dependência)
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO() {}; 
-    private final AdministradorDAO administradorDAO = new AdministradorDAO();
+    @Inject
+    private UsuarioDAO usuarioDAO;
 
-    // --- Componentes FXML injetados ---
-    @FXML private TextField termoBuscaField;
-    @FXML private ChoiceBox<String> tipoUsuarioChoiceBox;
-    @FXML private ChoiceBox<String> statusUsuarioChoiceBox;
-    @FXML private TableView<Usuario> tabelaUsuarios;
-    @FXML private TableColumn<Usuario, String> nomeColumn;
-    @FXML private TableColumn<Usuario, String> emailColumn;
-    @FXML private TableColumn<Usuario, String> tipoColumn;
-    @FXML private TableColumn<Usuario, String> statusColumn;
-    @FXML private TableColumn<Usuario, Void> acoesColumn;
-    @FXML private Label infoPaginacaoLabel;
-    @FXML private Button anteriorButton;
-    @FXML private Button proximaButton;
-    @FXML private VBox relatorioContainer;
-
-    // --- Variáveis de Paginação e Dados ---
-    private ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
+    // --- Variáveis de Paginação e Listagem ---
+    private List<Usuario> usuarios;
     private int paginaAtual = 1;
-    private final int tamanhoPagina = 10;
-    private int totalPaginas = 1;
+    private int tamanhoPagina = 10; // Exibir 10 usuários por página
+    private int totalUsuarios;
+    private int totalPaginas;
 
-    // --- Inicialização (Chamado após o FXML ser carregado) ---
-    @FXML
-    public void initialize() {
-        configurarFiltros();
-        configurarTabela();
-        aplicarFiltros(); // Carrega a lista inicial
-        gerarRelatorio(); // Gera e exibe o relatório de contagem
-    }
-    
-    // --- Lógica de Inicialização ---
-    private void configurarFiltros() {
-        // Opções de Tipo
-        tipoUsuarioChoiceBox.getItems().addAll("Todos", "Aluno", "Tutor", "Administrador");
-        tipoUsuarioChoiceBox.setValue("Todos");
+    // --- Variáveis de Filtro Avançado ---
+    private String termoBusca; // Nome ou E-mail
+    private String tipoUsuario; // "Estudante" ou "Professor"
+    private Boolean statusUsuario; // true (Ativo), false (Inativo), null (Todos)
 
-        // Opções de Status
-        statusUsuarioChoiceBox.getItems().addAll("Todos", "Ativo", "Inativo");
-        statusUsuarioChoiceBox.setValue("Todos");
+    // --- Inicialização ---
+    @PostConstruct
+    public void init() {
+        carregarUsuarios();
     }
 
-    private void configurarTabela() {
-        // Liga as colunas aos getters da classe Usuario
-        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        
-        // Coluna Tipo (Customizada)
-        tipoColumn.setCellValueFactory(cellData -> {
-            String tipo = getTipoUsuarioLegivel(cellData.getValue());
-            return new javafx.beans.property.SimpleStringProperty(tipo);
-        });
+    // --- Métodos de Controle ---
 
-        // Coluna Status (Customizada)
-        statusColumn.setCellValueFactory(cellData -> {
-            String status = cellData.getValue().isAtivo() ? "Ativo" : "Inativo";
-            return new javafx.beans.property.SimpleStringProperty(status);
-        });
-        
-        // Coluna Ações com Botão (Customizada)
-        acoesColumn.setCellFactory(col -> new TableCell<Usuario, Void>() {
-            private final Button btn = new Button();
-            {
-                btn.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    handleAlterarStatus(usuario);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow().getItem() == null) {
-                    setGraphic(null);
-                } else {
-                    Usuario usuario = getTableRow().getItem();
-                    // Define texto e classe CSS do botão
-                    boolean ativo = usuario.isAtivo();
-                    btn.setText(ativo ? "Desativar" : "Ativar");
-                    btn.getStyleClass().clear();
-                    btn.getStyleClass().addAll("btn", "btn-alterar-status", ativo ? "btn-desativar" : "btn-ativar");
-                    setGraphic(btn);
-                }
-            }
-        });
-
-        tabelaUsuarios.setItems(listaUsuarios);
-    }
-
-    // --- Lógica de Filtros e Paginação ---
-
-    @FXML
-    private void handleAplicarFiltros() {
-        paginaAtual = 1;
-        aplicarFiltros();
-    }
-    
-    @FXML
-    private void handleLimparFiltros() {
-        termoBuscaField.clear();
-        tipoUsuarioChoiceBox.setValue("Todos");
-        statusUsuarioChoiceBox.setValue("Todos");
-        paginaAtual = 1;
-        aplicarFiltros();
-    }
-
-    private void aplicarFiltros() {
-        String termo = termoBuscaField.getText();
-        
-        // Mapeia o valor da ChoiceBox para o formato esperado pelo DAO
-        String tipo = tipoUsuarioChoiceBox.getValue();
-        String tipoParaDAO = tipo.equals("Todos") ? null : 
-                             tipo.equals("Aluno") ? "Estudante" : 
-                             tipo.equals("Tutor") ? "Professor" : tipo;
-                             
-        Boolean statusParaDAO = null;
-        if (statusUsuarioChoiceBox.getValue().equals("Ativo")) {
-            statusParaDAO = true;
-        } else if (statusUsuarioChoiceBox.getValue().equals("Inativo")) {
-            statusParaDAO = false;
-        }
-
-        // 1. Contagem total
-        int totalUsuarios = usuarioDAO.contarUsuariosFiltrados(termo, tipoParaDAO, statusParaDAO);
+    public void carregarUsuarios() {
+        totalUsuarios = usuarioDAO.contarUsuariosFiltrados(termoBusca, tipoUsuario, statusUsuario);
         totalPaginas = (int) Math.ceil((double) totalUsuarios / tamanhoPagina);
-        if (totalPaginas == 0) totalPaginas = 1;
 
-        // 2. Ajuste de página
-        if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
-        if (paginaAtual < 1) paginaAtual = 1;
+        // Garante que a página atual não exceda o limite
+        if (paginaAtual > totalPaginas && totalPaginas > 0) {
+            paginaAtual = totalPaginas;
+        } else if (paginaAtual < 1) {
+            paginaAtual = 1;
+        }
 
-        // 3. Busca paginada
-        List<Usuario> resultados = usuarioDAO.buscarPaginada(termo, tipoParaDAO, statusParaDAO, paginaAtual, tamanhoPagina);
-        listaUsuarios.setAll(resultados);
-
-        // 4. Atualiza paginação na interface
-        atualizarPaginacaoUI();
+        usuarios = usuarioDAO.buscarPaginada(termoBusca, tipoUsuario, statusUsuario, paginaAtual, tamanhoPagina);
     }
 
-    private void atualizarPaginacaoUI() {
-        infoPaginacaoLabel.setText("Página " + paginaAtual + " de " + totalPaginas);
-        anteriorButton.setDisable(paginaAtual == 1);
-        proximaButton.setDisable(paginaAtual == totalPaginas);
+    public void aplicarFiltros() {
+        // Reinicia para a primeira página ao aplicar novos filtros
+        paginaAtual = 1; 
+        carregarUsuarios();
     }
     
-    @FXML
-    private void handlePaginaAnterior() {
-        if (paginaAtual > 1) {
-            paginaAtual--;
-            aplicarFiltros();
-        }
+    public void limparFiltros() {
+        termoBusca = null;
+        tipoUsuario = null;
+        statusUsuario = null;
+        paginaAtual = 1;
+        carregarUsuarios();
     }
 
-    @FXML
-    private void handleProximaPagina() {
-        if (paginaAtual < totalPaginas) {
-            paginaAtual++;
-            aplicarFiltros();
-        }
-    }
-    
-    // --- Lógica de Ações ---
-
-    private void handleAlterarStatus(Usuario usuario) {
+    /**
+     * Alterna o status do usuário e recarrega a lista.
+     * @param usuario O objeto usuário a ser alterado.
+     */
+    public void alterarStatusUsuario(Usuario usuario) {
         boolean novoStatus = !usuario.isAtivo();
         if (usuarioDAO.alterarStatus(usuario.getId(), novoStatus)) {
-            // Atualiza o modelo na tabela e força um refresh na linha para atualizar o botão/status
-            usuario.setAtivo(novoStatus); 
-            tabelaUsuarios.refresh(); 
-            // Você pode adicionar uma notificação Toast ou Alert aqui
+            // Atualiza a propriedade do modelo na view imediatamente
+            usuario.setAtivo(novoStatus);
+            // Mensagem de sucesso aqui (via FacesContext.addMessage)
+            System.out.println("Status de " + usuario.getNome() + " alterado para " + (novoStatus ? "ATIVO" : "INATIVO"));
         }
+        // Não é necessário carregarUsuarios() novamente, apenas o status na linha muda.
     }
-    
-    // --- Lógica de Relatório ---
 
-    private void gerarRelatorio() {
-        Map<String, Integer> relatorio = administradorDAO.gerarRelatorioContagem();
-
-        relatorioContainer.getChildren().clear();
-        
-        Label titulo = new Label("Relatório de Usuários Cadastrados");
-        titulo.getStyleClass().add("relatorio-titulo");
-        relatorioContainer.getChildren().add(titulo);
-
-        for (Map.Entry<String, Integer> entry : relatorio.entrySet()) {
-            HBox item = new HBox(10);
-            Label chave = new Label(entry.getKey() + ":");
-            chave.getStyleClass().add("relatorio-chave");
-            Label valor = new Label(entry.getValue().toString());
-            valor.getStyleClass().add("relatorio-valor");
-            item.getChildren().addAll(chave, valor);
-            relatorioContainer.getChildren().add(item);
+    public void proximaPagina() {
+        if (paginaAtual < totalPaginas) {
+            paginaAtual++;
+            carregarUsuarios();
         }
     }
 
-    // --- Métodos Auxiliares ---
-    
-    private String getTipoUsuarioLegivel(Usuario usuario) {
-        if (usuario instanceof Estudante) {
-            return "Aluno";
-        } else if (usuario instanceof Professor) {
-            return "Tutor";
-        } else if (usuario instanceof Administrador) {
-            return "Administrador";
+    public void paginaAnterior() {
+        if (paginaAtual > 1) {
+            paginaAtual--;
+            carregarUsuarios();
         }
-        return "Outro";
     }
+
+    // --- Getters auxiliares para a View ---
+
+    /**
+     * Converte o nome da classe para um tipo de usuário legível.
+     */
+    public String getTipoUsuarioLegivel(Usuario usuario) {
+        String tipo = usuario.getClass().getSimpleName();
+        return switch (tipo) {
+            case "Estudante" -> "Aluno";
+            case "Professor" -> "Tutor";
+            case "Administrador" -> "Admin";
+            default -> tipo;
+        };
+    }
+
+    // --- Getters e Setters (Necessários para JSF/View) ---
+
+    public List<Usuario> getUsuarios() { return usuarios; }
+    public int getPaginaAtual() { return paginaAtual; }
+    public int getTotalPaginas() { return totalPaginas; }
+    public String getTermoBusca() { return termoBusca; }
+    public void setTermoBusca(String termoBusca) { this.termoBusca = termoBusca; }
+    public String getTipoUsuario() { return tipoUsuario; }
+    public void setTipoUsuario(String tipoUsuario) { this.tipoUsuario = tipoUsuario; }
+    public Boolean getStatusUsuario() { return statusUsuario; }
+    public void setStatusUsuario(Boolean statusUsuario) { this.statusUsuario = statusUsuario; }
 }
