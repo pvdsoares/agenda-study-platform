@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.AgendamentoController"
+            prefHeight="600.0" prefWidth="400.0"
+            styleClass="main-container">
+
+    <stylesheets>
+        <URL value="@agendamento_aula.css" />
+    </stylesheets>
+
+    <top>
+        <Label text="Agendar Nova Aula" styleClass="header-label" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <Label text="Título da Aula" styleClass="input-label"/>
+            <TextField fx:id="tituloField" promptText="Ex: Introdução à POO" styleClass="text-field-custom"/>
+
+            <Label text="Descrição" styleClass="input-label"/>
+            <TextArea fx:id="descricaoArea" promptText="Descreva o conteúdo da aula..." styleClass="text-area-custom" prefHeight="80"/>
+
+            <HBox spacing="10" alignment="CENTER">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Data" styleClass="input-label"/>
+                    <DatePicker fx:id="dataPicker" styleClass="date-picker-custom" HBox.hgrow="ALWAYS"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Horário (HH:MM)" styleClass="input-label"/>
+                    <TextField fx:id="horaField" promptText="Ex: 14:00" styleClass="text-field-custom"/>
+                </VBox>
+            </HBox>
+
+            <Label text="Sua Agenda (Disponibilidade)" styleClass="input-label"/>
+            <ScrollPane fitToWidth="true" styleClass="agenda-scroll-pane">
+                <VBox fx:id="agendaContainer" spacing="5" minHeight="100">
+                    <Label text="Carregando agenda..." styleClass="agenda-placeholder"/>
+                </VBox>
+            </ScrollPane>
+            
+            <Label fx:id="mensagemErroLabel" styleClass="error-message-label" wrapText="true"/>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox alignment="CENTER" spacing="10">
+            <Button fx:id="agendarButton" text="AGENDAR DISPONIBILIDADE" onAction="#handleAgendarDisponibilidade" styleClass="primary-button"/>
+            <Button fx:id="cancelarButton" text="VOLTAR" onAction="#handleCancelar" styleClass="secondary-button"/>
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+        </VBox>
+    </bottom>
+</BorderPane>
