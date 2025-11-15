@@ -1,0 +1,86 @@
+.main-container {
+    -fx-background-color: #f4f7fa; /* Fundo claro da tela */
+}
+
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+    -fx-padding: 20px 0 10px 0;
+}
+
+.input-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a4a4a;
+    -fx-alignment: CENTER_LEFT;
+    -fx-min-width: 100%;
+}
+
+/* Campos de entrada */
+.text-field-custom, .text-area-custom, .date-picker-custom {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+}
+
+.text-area-custom {
+    -fx-padding: 5px;
+}
+
+/* Botão Primário (Agendar) */
+.primary-button {
+    -fx-background-color: #007bff; /* Azul vibrante */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-pref-width: 100%;
+}
+
+.primary-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Botão Secundário (Cancelar/Voltar) */
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #007bff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-border-color: #007bff;
+    -fx-border-radius: 10px;
+    -fx-cursor: hand;
+    -fx-pref-width: 100%;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #e6f0ff;
+}
+
+/* Estilos da Agenda/Calendário */
+.agenda-scroll-pane {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.agenda-placeholder {
+    -fx-text-fill: #999999;
+    -fx-font-style: italic;
+    -fx-padding: 10px;
+}
+
+/* Mensagens de erro */
+.error-message-label {
+    -fx-text-fill: #dc3545; /* Vermelho */
+    -fx-font-weight: bold;
+    -fx-padding: 5px 0 0 0;
+}
