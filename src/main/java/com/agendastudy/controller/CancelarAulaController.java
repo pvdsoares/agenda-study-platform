@@ -4,6 +4,7 @@ import com.agendastudy.DAO.AulaDAO;
 import com.agendastudy.model.Aula;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
@@ -29,7 +30,8 @@ public class CancelarAulaController{
     private void handleCancelarAula(){
         try{
             aulaDAO.cancelarAula(aula.getIdAula());
-            abrirTelaConfirmacao();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/cancelar-aula-confirmacao.fxml"));
         } catch (Exception e){
             mostrarAlerta("Erro", e.getMessage());
         }
