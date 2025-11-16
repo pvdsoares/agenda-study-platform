@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.AdministradorDashboardController"
+            prefHeight="640.0" prefWidth="360.0"
+            styleClass="admin-main-container">
+
+    <stylesheets>
+        <URL value="@admin_gerenciamento.css" />
+    </stylesheets>
+
+    <top>
+        <VBox alignment="TOP_CENTER" spacing="5">
+            <padding>
+                <Insets top="30" bottom="20"/>
+            </padding>
+            <Label text="ACESSO MASTER" styleClass="header-title-admin"/>
+            <Label fx:id="welcomeLabel" text="Bem-vindo, Administrador!" styleClass="detail-label-admin"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20">
+            <padding>
+                <Insets left="20" right="20"/>
+            </padding>
+            
+            <Button text="GERENCIAR USUÁRIOS (SCRUM-113)" onAction="#handleGerenciarUsuarios" styleClass="admin-button"/>
+
+            <Button text="RELATÓRIOS ADMINISTRATIVOS (SCRUM-73)" onAction="#handleRelatorios" styleClass="admin-button"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <Button text="SAIR / LOGOUT" onAction="#handleLogout" styleClass="secondary-button-admin" prefWidth="200"/>
+        </VBox>
+    </center>
+</BorderPane>
