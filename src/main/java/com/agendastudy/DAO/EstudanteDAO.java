@@ -48,7 +48,8 @@ public class EstudanteDAO extends UsuarioDAO{
      * @param idAula O ID da aula (disponibilidade) a ser reservada.
      * @param estudante O estudante que está agendando.
      * @param servicoAgendamento O serviço que processará o agendamento.
-     * @return A Aula atualizada com o estudante.
+     * @return A Aula atualizada com o estudante.-
+     * 
      */
     public Aula agendarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento){
         return servicoAgendamento.agendarAula(idAula, estudante);
