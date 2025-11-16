@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import com.agendastud.controller.BuscaController?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.agendastud.controller.BuscaController"
+      alignment="TOP_LEFT" spacing="20.0" style="-fx-background-color: #e5fbe3;">
+
+    <padding>
+        <Insets top="30.0" right="30.0" bottom="30.0" left="30.0" />
+    </padding>
+
+    <Label text="Disciplinas" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <VBox spacing="10.0">
+        <CheckBox fx:id="chkMatematica" text="[matemática]" />
+        <CheckBox fx:id="chkPortugues" text="[português]" />
+        <CheckBox fx:id="chkQuimica" text="[química]" />
+        <CheckBox fx:id="chkHistoria" text="[história]" />
+    </VBox>
+
+    <Label text="Preço" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <Label text="De" />
+        <TextField fx:id="txtPrecoMin" prefWidth="80" promptText="50,00" />
+        <Label text="até" />
+        <TextField fx:id="txtPrecoMax" prefWidth="80" promptText="200,00" />
+    </HBox>
+
+    <Label text="Localização" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <Label text="Até" />
+        <TextField fx:id="txtDistanciaMax" prefWidth="60" promptText="5km" />
+    </HBox>
+
+    <Button fx:id="btnAplicarFiltros" text="Aplicar filtros" onAction="#aplicarFiltros"
+            prefWidth="200" style="-fx-background-color: #3b73b5; -fx-text-fill: white; -fx-font-weight: bold;">
+        <VBox.margin>
+            <Insets top="20.0" />
+        </VBox.margin>
+    </Button>
+</VBox>

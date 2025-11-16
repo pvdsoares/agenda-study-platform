@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      style="-fx-background-color: #1a4266; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10;"
+      spacing="5.0">
+
+    <Label fx:id="lblNome" text="[prof. nome]" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label fx:id="lblDisciplina" text="[disciplina]" style="-fx-text-fill: #99c2ff;" />
+
+    <HBox spacing="5.0" alignment="CENTER_LEFT">
+        <Label text="⭐" style="-fx-font-size: 14px;" />
+        <Label fx:id="lblAvaliacao" text="[avaliação (ex. 4,9)]" style="-fx-text-fill: white;" />
+    </HBox>
+
+    <HBox spacing="5.0" alignment="CENTER_LEFT">
+        <Label text="&#36;" style="-fx-text-fill: #ffd700; -fx-font-size: 14px;" />
+        <Label fx:id="lblPreco" text="[preço]" style="-fx-text-fill: white;" />
+    </HBox>
+
+    <HBox spacing="5.0" alignment="CENTER_LEFT">
+        <Label text="📍" style="-fx-font-size: 14px;" />
+        <Label fx:id="lblLocalizacao" text="[localização]" style="-fx-text-fill: white;" />
+    </HBox>
+
+    <Button text="Ver perfil" style="-fx-background-color: #38b000; -fx-text-fill: white; -fx-font-weight: bold;">
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin>
+    </Button>
+</VBox>
