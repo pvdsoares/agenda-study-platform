@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="798.0" prefWidth="356.0" styleClass="root-modal" stylesheets="@../styles/avaliacao_modal.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.controller.AvaliacaoModalController">
+<AnchorPane prefHeight="545.0" prefWidth="350.0" styleClass="root-modal" stylesheets="@../styles/avaliacao_modal.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.controller.AvaliacaoModalController">
 
        <Label fx:id="btnVoltar" onMouseClicked="#voltar" styleClass="botao-voltar" text="⮜" />
 

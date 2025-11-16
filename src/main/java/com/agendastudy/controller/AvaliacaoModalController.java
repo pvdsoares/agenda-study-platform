@@ -6,6 +6,7 @@ import com.agendastudy.model.Aula;
 import com.agendastudy.model.Estudante;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -42,6 +43,19 @@ public class AvaliacaoModalController {
         configurarClique(star5, 5);
 
         btnVoltar.setOnMouseClicked(e -> fechar());
+    }
+
+    /**
+     * Método chamado ao clicar no botão de voltar.
+     * Fecha a tela atual.
+     *
+     * @param event Evento do clique do mouse
+     */
+    @FXML
+    private void voltar(MouseEvent event) {
+        // Fecha a janela atual
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     private void configurarClique(Label estrela, int valor) {

@@ -3,264 +3,405 @@ package com.agendastudy.controller;
 import com.agendastudy.DAO.AvaliacaoDAO;
 import com.agendastudy.DAO.EstudanteDAO;
 import com.agendastudy.model.Aula;
+import com.agendastudy.model.Avaliacao;
 import com.agendastudy.model.Estudante;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 
 /**
- * Controller para a tela "Suas Aulas", onde o estudante pode visualizar suas aulas concluídas
- * e avaliar aulas pendentes.
+ * Controller da tela "Suas Aulas", onde mostra as aulas agendadas do estudante,
+ * aulas concluídas para serem avaliadas e o histórico de aulas feitas.
  *
  * @author MATHEUS PEREIRA RODRIGUES
- * @version 2.1
+ * @version 3.0
  * @since 2025-11-16
  */
 public class TelaSuasAulasController {
 
-    @FXML
-    private VBox containerAulasConcluidas;
+    @FXML private Label btnVoltar;
 
     private Estudante estudante;
     private final EstudanteDAO estudanteDAO = new EstudanteDAO(new AvaliacaoDAO());
 
+    @FXML private VBox cardAulaPrincipal;
+    @FXML private HBox containerRestantes;
+    @FXML private Label labelStatusAula;
 
-    //     ==== SEÇÃO AULAS AULAS AGENDADAS ======
+    @FXML private VBox containerAulasConcluidas;
 
+    @FXML private VBox containerHistorico;
+    @FXML private VBox vboxHistorico;
 
+    @FXML private Label btnHome;
+    @FXML private Label btnSuasAulas;
+    @FXML private Label btnBuscarAulas;
+    @FXML private Label btnPerfil;
 
-    @FXML
-    private VBox containerAulasAgendadas; // VBox que vai receber os cards de aulas agendadas
 
     /**
-     * Carrega as aulas agendadas do estudante e cria os cards dinamicamente.
-     * Caso não haja aulas agendadas, exibe uma mensagem de "nenhuma aula agendada".
-     */
-    private void carregarAulasAgendadas() {
-        containerAulasAgendadas.getChildren().clear();
-
-        List<Aula> aulasAgendadas = estudanteDAO.getAulasAgendadas(estudante); // supondo que estudanteDAO tenha esse método
-
-        if (aulasAgendadas.isEmpty()) {
-            VBox cardVazio = criarCardSemAulasAgendadas();
-            containerAulasAgendadas.getChildren().add(cardVazio);
-            return;
-        }
-
-        for (Aula aula : aulasAgendadas) {
-            VBox card = criarCardAulaAgendada(aula);
-            containerAulasAgendadas.getChildren().add(card);
-        }
-    }
-
-    /**
-     * Cria um card para cada aula agendada.
-     *
-     * @param aula Aula a ser exibida
-     * @return VBox representando o card
-     */
-    private VBox criarCardAulaAgendada(Aula aula) {
-        VBox card = new VBox();
-        card.setSpacing(10);
-        card.setPrefSize(311, 160);
-        card.setAlignment(Pos.CENTER_LEFT);
-        card.setStyle("-fx-background-color: #3B7BD9; -fx-background-radius: 25; -fx-padding: 15;"); // cor de exemplo
-
-        Label titulo = new Label("Aula Agendada");
-        titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label nomeAula = new Label(aula.getTitulo());
-        nomeAula.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: white;");
-
-        Label professor = new Label(aula.getProfessor().getNome());
-        professor.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: white;");
-
-        // Botão de detalhes ou entrar na aula
-        Button btnDetalhes = new Button("Ver Detalhes");
-        btnDetalhes.setPrefSize(176, 45);
-        btnDetalhes.setStyle("-fx-background-color: #0F3B71; -fx-background-radius: 50; -fx-font-size: 16px; -fx-font-weight: semibold; -fx-text-fill: white;");
-
-        btnDetalhes.setOnAction(e -> abrirDetalhesAula(aula));
-
-        card.getChildren().addAll(titulo, nomeAula, professor, btnDetalhes);
-        return card;
-    }
-
-    /**
-     * Cria um card exibido quando não há aulas agendadas.
-     *
-     * @return VBox representando o card de "nenhuma aula agendada"
-     */
-    private VBox criarCardSemAulasAgendadas() {
-        VBox card = new VBox();
-        card.setSpacing(10);
-        card.setPrefSize(311, 160);
-        card.setAlignment(Pos.CENTER); // centraliza tudo
-        card.setStyle("-fx-background-color: #3B7BD9; -fx-background-radius: 25; -fx-padding: 15;");
-
-        Label titulo = new Label("Nenhuma aula agendada.");
-        titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label mensagem = new Label("Aproveite para se planejar!");
-        mensagem.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: white;");
-
-        card.getChildren().addAll(titulo, mensagem);
-        return card;
-    }
-
-    /**
-     * Método chamado ao clicar em "Ver Detalhes" de uma aula agendada.
-     *
-     * @param aula Aula selecionada
-     */
-    private void abrirDetalhesAula(Aula aula) {
-        // Aqui você pode abrir um modal ou outra tela com informações da aula
-        System.out.println("Abrir detalhes da aula: " + aula.getTitulo());
-    }
-
-
-
-    //     ==== SEÇÃO AULAS CONCLUÍDAS ======
-
-    // ----- SUB-SECÇÃO AUALAS A AVALIAR -------
-
-    /**
-     * Configura o estudante logado e carrega as aulas concluídas.
+     * Configura o estudante atual e recarrega todas as seções da tela.
      *
      * @param estudante Estudante logado
      */
     public void configurarEstudante(Estudante estudante) {
         this.estudante = estudante;
+
+        carregarAulasAgendadas();
         carregarAulasConcluidas();
+        carregarHistorico();
     }
 
     /**
-     * Carrega as aulas concluídas do estudante e cria os cards dinamicamente.
-     * Se houver avaliações pendentes, cria os cards de avaliação.
-     * Caso contrário, exibe card de "nenhuma avaliação pendente".
-     */
-    private void carregarAulasConcluidas() {
-        containerAulasConcluidas.getChildren().clear();
-
-        List<Aula> aulasConcluidas = estudanteDAO.getAulasConcluidas(estudante);
-
-        boolean temPendentes = false;
-
-        for (Aula aula : aulasConcluidas) {
-            if (!estudanteDAO.jaAvaliouAula(estudante, aula)) {
-                VBox card = criarCardAvaliacao(aula);
-                containerAulasConcluidas.getChildren().add(card);
-                temPendentes = true;
-            }
-        }
-
-        if (!temPendentes) {
-            VBox cardSemPendentes = criarCardSemPendentes();
-            containerAulasConcluidas.getChildren().add(cardSemPendentes);
-        }
-    }
-
-    /**
-     * Cria um card de avaliação para uma aula pendente.
+     * Evento do botão de voltar.
+     * Fecha a janela atual.
      *
-     * @param aula Aula a ser avaliada
-     * @return VBox representando o card
+     * @param event clique do mouse
      */
-    private VBox criarCardAvaliacao(Aula aula) {
+    @FXML
+    private void voltar(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    // SEÇÃO: AULAS AGENDADAS
+    /**
+     * Carrega e exibe as aulas agendadas (card principal + cards restantes).
+     */
+    private void carregarAulasAgendadas() {
+        cardAulaPrincipal.getChildren().clear();
+        containerRestantes.getChildren().clear();
+
+        List<Aula> aulas = estudanteDAO.getAulasAgendadas(estudante);
+
+        if (aulas.isEmpty()) {
+            Label nenhum = new Label("Nenhuma aula agendada");
+            nenhum.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+            cardAulaPrincipal.getChildren().add(nenhum);
+            return;
+        }
+
+        Aula aulaPrincipal = aulas.get(0);
+        cardAulaPrincipal.getChildren().add(criarCardAulaPrincipal(aulaPrincipal));
+        labelStatusAula.setText(aulaPrincipal.getStatus().name());
+
+        if (aulas.size() > 1) {
+            aulas.subList(1, aulas.size())
+                    .forEach(a -> containerRestantes.getChildren().add(criarCardAulaMenor(a)));
+        }
+    }
+
+    /**
+     * Cria o card principal da aula mais próxima.
+     *
+     * @param aula Aula exibida
+     * @return VBox com o card
+     */
+    private VBox criarCardAulaPrincipal(Aula aula) {
         VBox card = new VBox();
-        card.setSpacing(10);
-        card.setPrefSize(311, 160);
-        card.setAlignment(Pos.CENTER_LEFT); // centraliza vertical e horizontalmente os elementos
-        card.setStyle("-fx-background-color: #52B371; -fx-background-radius: 25; -fx-padding: 15;");
+        card.setPrefSize(322, 163);
+        card.setSpacing(8);
+        card.setStyle("-fx-background-color: #9395FF; -fx-background-radius: 20; -fx-padding: 15;");
 
-        Label titulo = new Label("Avalie sua última aula!");
-        titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
-        titulo.setAlignment(Pos.CENTER_LEFT);
-
-        Label nomeAula = new Label(aula.getTitulo());
-        nomeAula.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: white;");
+        Label titulo = new Label(aula.getTitulo());
+        titulo.setStyle("-fx-font-size: 26px; -fx-font-weight: semibold;");
 
         Label professor = new Label(aula.getProfessor().getNome());
-        professor.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: white;");
+        professor.setStyle("-fx-font-size: 16px;");
 
-        // Botão "Avaliar agora" com estrela alinhada no centro
-        Button btnAvaliar = new Button();
-        btnAvaliar.setPrefSize(176, 45);
-        btnAvaliar.setStyle("-fx-background-color: #0F3B71; -fx-background-radius: 50; -fx-font-size: 16px; -fx-font-weight: semibold;");
+        Label data = new Label(aula.getDataHora().toLocalDate().toString());
+        data.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");
 
-        Label textoBotao = new Label("Avaliar agora");
-        textoBotao.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: semibold;");
+        Button btnDetalhes = new Button("⋮");
+        btnDetalhes.setStyle("-fx-background-color: transparent; -fx-font-size: 18px;");
+        btnDetalhes.setOnAction(e -> abrirDetalhesAula(aula));
 
-        Label estrela = new Label("★");
-        estrela.setStyle("-fx-font-size: 24px; -fx-text-fill: #FFDF00;");
+        HBox top = new HBox(btnDetalhes);
+        top.setAlignment(Pos.TOP_RIGHT);
 
-        HBox hBoxBotao = new HBox(10, textoBotao, estrela);
-        hBoxBotao.setAlignment(Pos.CENTER);
-        btnAvaliar.setGraphic(hBoxBotao);
-
-        btnAvaliar.setOnAction(e -> abrirModalAvaliacao(aula));
-
-        card.getChildren().addAll(titulo, nomeAula, professor, btnAvaliar);
+        card.getChildren().addAll(top, titulo, professor, data);
         return card;
     }
 
     /**
-     * Cria o card exibido quando não há avaliações pendentes.
+     * Cria card menor para outras aulas agendadas.
      *
-     * @return VBox representando o card de "nenhuma avaliação pendente"
+     * @param aula Aula
+     * @return VBox representando o card
+     */
+    private VBox criarCardAulaMenor(Aula aula) {
+        VBox card = new VBox();
+        card.setPrefSize(100.5, 64);
+        card.setSpacing(4);
+
+        card.setStyle("""
+                -fx-background-color: #D9D9D9;
+                -fx-border-color: #306BB3;
+                -fx-border-width: 1;
+                -fx-padding: 5;
+                """);
+
+        Label titulo = new Label(aula.getTitulo());
+        titulo.setStyle("-fx-font-size: 12px;");
+
+        Label data = new Label(aula.getDataHora().toLocalDate().toString());
+        data.setStyle("-fx-font-size: 12px;");
+
+        Button btnDetalhes = new Button("⋮");
+        btnDetalhes.setStyle("-fx-background-color: transparent;");
+        btnDetalhes.setOnAction(e -> abrirDetalhesAula(aula));
+
+        card.setOnMouseClicked(e -> abrirDetalhesAula(aula));
+
+        card.getChildren().addAll(btnDetalhes, titulo, data);
+        return card;
+    }
+
+    /**
+     * Abre detalhes da aula selecionada.
+     *
+     * @param aula Aula clicada
+     */
+    private void abrirDetalhesAula(Aula aula) {
+        System.out.println("Abrir detalhes da aula: " + aula.getTitulo());
+    }
+
+    // SEÇÃO: A AVALIAR
+    /**
+     * Carrega cards de aulas já concluídas mas ainda não avaliadas.
+     * Exibe card especial caso não existam.
+     */
+    private void carregarAulasConcluidas() {
+        containerAulasConcluidas.getChildren().clear();
+
+        List<Aula> aulas = estudanteDAO.getAulasConcluidas(estudante);
+
+        boolean temPendentes = false;
+
+        for (Aula aula : aulas) {
+            if (!estudanteDAO.jaAvaliouAula(estudante, aula)) {
+                temPendentes = true;
+                containerAulasConcluidas.getChildren().add(criarCardAvaliacao(aula));
+            }
+        }
+
+        if (!temPendentes) {
+            containerAulasConcluidas.getChildren().add(criarCardSemPendentes());
+        }
+    }
+
+    /**
+     * Cria card verde para avaliar aula.
+     *
+     * @param aula Aula pendente
+     * @return VBox com card
+     */
+    private VBox criarCardAvaliacao(Aula aula) {
+        VBox card = new VBox(10);
+        card.setPrefSize(311, 160);
+        card.setStyle("-fx-background-color: #52B371; -fx-background-radius: 25; -fx-padding: 15;");
+
+        Label titulo = new Label("Avalie sua última aula!");
+        titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label nomeAula = new Label(aula.getTitulo());
+        nomeAula.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        Label prof = new Label(aula.getProfessor().getNome());
+        prof.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        Button btn = new Button();
+        btn.setPrefSize(176, 45);
+        btn.setStyle("-fx-background-color: #0F3B71; -fx-background-radius: 50;");
+
+        Label txt = new Label("Avaliar agora");
+        txt.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: semibold;");
+
+        Label star = new Label("★");
+        star.setStyle("-fx-font-size: 24px; -fx-text-fill: #FFDF00;");
+
+        HBox box = new HBox(10, txt, star);
+        box.setAlignment(Pos.CENTER);
+        btn.setGraphic(box);
+
+        btn.setOnAction(e -> abrirModalAvaliacao(aula));
+
+        card.getChildren().addAll(titulo, nomeAula, prof, btn);
+        return card;
+    }
+
+    /**
+     * Card exibido quando não há aulas pendentes de avaliação.
+     *
+     * @return VBox card
      */
     private VBox criarCardSemPendentes() {
-        VBox card = new VBox();
-        card.setSpacing(10);
+        VBox card = new VBox(10);
+        card.setAlignment(Pos.CENTER);
         card.setPrefSize(311, 160);
-        card.setAlignment(Pos.CENTER); // centraliza tudo
         card.setStyle("-fx-background-color: #52B371; -fx-background-radius: 25; -fx-padding: 15;");
 
         Label titulo = new Label("Nenhuma avaliação pendente.");
         titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label mensagem = new Label("Bom trabalho!");
-        mensagem.setStyle("-fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: white;");
+        Label msg = new Label("Bom trabalho!");
+        msg.setStyle("-fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        card.getChildren().addAll(titulo, mensagem);
+        card.getChildren().addAll(titulo, msg);
         return card;
     }
 
     /**
-     * Abre o modal de avaliação da aula.
+     * Abre modal de avaliação.
      *
-     * @param aula Aula a ser avaliada
+     * @param aula Aula
      */
     private void abrirModalAvaliacao(Aula aula) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/AvaliacaoModal.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
+
+            AvaliacaoModalController c = loader.getController();
+            c.configurarDados(estudante, aula);
+
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            AvaliacaoModalController controller = loader.getController();
-            controller.configurarDados(estudante, aula);
-
             stage.showAndWait();
 
-            // Recarrega os cards após fechar o modal
             carregarAulasConcluidas();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // SEÇÃO: HISTÓRICO
+    /**
+     * Carrega os 3 cards mais recentes de aulas concluídas.
+     */
+    private void carregarHistorico() {
+        containerHistorico.getChildren().clear();
+
+        List<Aula> aulas = estudanteDAO.getAulasConcluidas(estudante)
+                .stream()
+                .sorted(Comparator.comparing(Aula::getDataHora).reversed())
+                .limit(3)
+                .toList();
+
+        aulas.forEach(a -> containerHistorico.getChildren().add(criarCardHistorico(a)));
+    }
+
+    /**
+     * Cria card azul do histórico.
+     *
+     * @param aula Aula concluída
+     * @return HBox card
+     */
+    private HBox criarCardHistorico(Aula aula) {
+        HBox card = new HBox(10);
+        card.setPrefSize(313, 112);
+        card.setStyle("-fx-background-color: #306BB3; -fx-background-radius: 15; -fx-padding: 15;");
+
+        VBox info = new VBox(5);
+
+        Label titulo = new Label(aula.getTitulo());
+        titulo.setStyle("-fx-font-size: 16px;");
+
+        Label prof = new Label(aula.getProfessor().getNome());
+        prof.setStyle("-fx-font-size: 16px;");
+
+        Label dataHora = new Label(aula.getDataHora()
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        dataHora.setStyle("-fx-font-size: 16px;");
+
+        info.getChildren().addAll(titulo, prof, dataHora);
+
+        Button btn = new Button("Ver Resumo");
+        btn.setPrefSize(72, 64);
+        btn.setStyle("-fx-background-color: #CEFADA; -fx-font-weight: bold;");
+        btn.setOnAction(e -> abrirResumoAula(aula));
+
+        HBox.setHgrow(info, Priority.ALWAYS);
+        card.getChildren().addAll(info, btn);
+
+        return card;
+    }
+
+    /**
+     * Abre o resumo da aula.
+     *
+     * @param aula Aula
+     */
+    private void abrirResumoAula(Aula aula) {
+        System.out.println("Abrir resumo: " + aula.getTitulo());
+    }
+
+
+    /**
+     * Abre a tela de Menu.
+     */
+    @FXML
+    private void abrirHome() {
+        trocarTela("/view/TelaMenu.fxml");
+    }
+
+    /**
+     * Recarrega a tela atual (Suas Aulas).
+     */
+    @FXML
+    private void abrirSuasAulas() {
+        trocarTela("/view/TelaSuasAulas.fxml");
+    }
+
+    /**
+     * Vai para a tela de busca de aulas.
+     */
+    @FXML
+    private void abrirBuscarAulas() {
+        trocarTela("/view/TelaBuscar.fxml");
+    }
+
+    /**
+     * Vai para o perfil do estudante.
+     */
+    @FXML
+    private void abrirPerfil() {
+        trocarTela("/view/TelaPerfil.fxml");
+    }
+
+    /**
+     * Troca a cena atual pela FXML informada.
+     *
+     * @param caminho caminho do arquivo FXML desejado
+     */
+    private void trocarTela(String caminho) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) vboxHistorico.getScene().getWindow();
+            stage.setScene(new Scene(root));
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-
-    // ----- SUB-SECÇÃO HISTÓRICO -------
-
 }

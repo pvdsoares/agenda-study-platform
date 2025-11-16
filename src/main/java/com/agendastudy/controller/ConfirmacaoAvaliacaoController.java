@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 
 /**
  * Controller para o pop-up de confirmação após enviar avaliação.
+ *
+ * @author MATHEUS PEREIRA RODRIGUES
+ * @since 2025-11-15
+ * @version 1.2
  */
 public class ConfirmacaoAvaliacaoController {
 

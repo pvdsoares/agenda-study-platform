@@ -1,30 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.agendastudy.controller.TelaSuasAulasController"
-            prefWidth="360" prefHeight="640">
+<AnchorPane prefHeight="1000" prefWidth="360" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.controller.TelaSuasAulasController">
 
-    <!-- Retângulo de fundo azul com opacidade 12% -->
-    <Pane layoutX="0" layoutY="70" prefWidth="360" prefHeight="570"
-          style="-fx-background-color: #0C10FF; -fx-opacity: 0.12;" />
+    <ScrollPane fitToWidth="true" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="78.0">
+        <content>
+            <VBox prefHeight="998.0" prefWidth="358.0" spacing="25">
 
-    <!-- Título da seção -->
-    <Label text="Aulas Concluídas" layoutX="20" layoutY="20"
-           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #107932;" />
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
 
-    <!-- Subtítulo: Aulas a Avaliar -->
-    <Label text="Aulas a Avaliar" layoutX="20" layoutY="90"
-           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #07081F;" />
+                <!-- ==== SEÇÃO AULAS AGENDADAS ==== -->
 
-    <!-- VBox que conterá os cards dinâmicos gerados pelo controller -->
-    <VBox fx:id="containerAulasConcluidas" layoutX="20" layoutY="130"
-          prefWidth="320" spacing="15" alignment="TOP_CENTER">
-        <padding>
-            <Insets top="0" right="0" bottom="20" left="0"/>
-        </padding>
-    </VBox>
+                <!-- Botão voltar e logo -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label fx:id="btnVoltar" onMouseClicked="#voltar" prefHeight="55.0" prefWidth="59.0" styleClass="botao-voltar" text="⮜" />
+                    <ImageView fitHeight="50.0" fitWidth="200.0">
+                        <image>
+                            <Image url="@../image/logo.png" />
+                        </image>
+                    </ImageView>
+                </HBox>
+
+                <!-- Título da seção -->
+                <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #107932;" text="Aulas Agendadas" />
+
+                <!-- Status da aula mais próxima -->
+                <Label fx:id="labelStatusAula" alignment="CENTER" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #FA0505;" text="Status (hoje, amanhã, etc.)" />
+
+                <!-- Card principal da aula mais próxima -->
+                <VBox fx:id="cardAulaPrincipal" prefHeight="163" prefWidth="322" spacing="8"
+                      style="-fx-background-color: #9395FF; -fx-background-radius: 20; -fx-padding: 15;" />
+
+                <!-- Título Restantes -->
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: black;" text="Restantes" />
+
+                <!-- Cards menores das próximas aulas -->
+                <HBox fx:id="containerRestantes" alignment="TOP_LEFT" spacing="10" />
+
+                <!-- ==== SEÇÃO AULAS CONCLUÍDAS ==== -->
+
+                <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #107932;" text="Aulas Concluídas" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #07081F;" text="Aulas a Avaliar" />
+
+                <VBox fx:id="containerAulasConcluidas" alignment="TOP_CENTER" spacing="15">
+                    <padding>
+                        <Insets bottom="20" left="0" right="0" top="0" />
+                    </padding>
+                </VBox>
+
+                <!-- ==== HISTÓRICO ==== -->
+                <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #107932;" text="Histórico" />
+
+                <VBox fx:id="containerHistorico" alignment="TOP_CENTER" spacing="15" />
+
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <HBox spacing="0" alignment="CENTER" style="-fx-background-color: white;"
+          prefHeight="78.0" prefWidth="360"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <ImageView fx:id="btnHome" onMouseClicked="#abrirHome"
+                   fitHeight="79.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../image/home.png" /></image>
+        </ImageView>
+
+        <ImageView fx:id="btnSuasAulas" onMouseClicked="#abrirSuasAulas"
+                   fitHeight="78.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../image/suas_aulas.png" /></image>
+        </ImageView>
+
+        <ImageView fx:id="btnBuscarAulas" onMouseClicked="#abrirBuscarAulas"
+                   fitHeight="81.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../image/buscar_aulas.png" /></image>
+        </ImageView>
+
+        <ImageView fx:id="btnPerfil" onMouseClicked="#abrirPerfil"
+                   fitHeight="79.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../image/perfil.png" /></image>
+        </ImageView>
+
+    </HBox>
 
 </AnchorPane>
