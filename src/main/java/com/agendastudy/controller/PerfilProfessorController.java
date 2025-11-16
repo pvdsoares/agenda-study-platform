@@ -15,6 +15,7 @@ import javafx.scene.shape.Circle;
 
 /**
  * Controller para a tela de Perfil do Professor (ProfessorProfile.fxml).
+ * USA DADOS FALSOS (DUMMY DATA) ENQUANTO O BACKEND ESTIVER QUEBRADO.
  *
  * @author Alexandro Costa Santos
  * @version 1.0
@@ -91,11 +92,12 @@ public class PerfilProfessorController {
 
     /**
      * Manipulador do clique no botão "Ver todas avaliações".
+     * (Parte da sua tarefa 0.txt)
      */
     @FXML
     private void handleVerTodasAvaliacoes() {
         System.out.println("Botão 'Ver Todas Avaliações' clicado.");
-        // TODO: Adicionar lógica para carregar a tela 'lista-avaliacoes.fxml'
+        // TODO: Adicionar lógica para carregar a tela 'AllReviewsScreen.fxml'
     }
 
     /**

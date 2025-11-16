@@ -23,6 +23,11 @@
             </graphic>
         </Button>
         <HBox styleClass="logo-container" HBox.hgrow="ALWAYS">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="calendar-icon">
+                <image>
+                    <Image url="@../image/Logo_Menu.png" />
+                </image>
+            </ImageView>
             <Label styleClass="logo-text" text="Agenda&amp;Study" />
         </HBox>
     </HBox>
@@ -40,27 +45,27 @@
                 </StackPane>
             </VBox>
 
-            <Label fx:id="labelNome" styleClass="professor-name" text="[Nome Professor]" />
+            <Label fx:id="labelNome" styleClass="professor-name" text="[Carregando...]" />
 
             <VBox alignment="TOP_CENTER" styleClass="info-section">
                 <Label styleClass="section-title" text="Sobre o(a) professor(a)" />
-                <Label fx:id="labelSobre1" styleClass="section-text" text="Formado(a) em xxxxxxxxxxxxxxx pela Universidade xxxxxxxxxxxxxx" wrapText="true" />
-                <Label fx:id="labelSobre2" styleClass="section-text" text="x anos de experiência, especialista em xxxxxxxxxx e xxxxxxxx." wrapText="true" />
+                <Label fx:id="labelSobre1" styleClass="section-text" text="[...]" wrapText="true" />
+                <Label fx:id="labelSobre2" styleClass="section-text" text="[...]" wrapText="true" />
             </VBox>
 
             <VBox alignment="TOP_CENTER" styleClass="info-section">
                 <Label styleClass="section-title" text="Disciplina(s) Lecionada(s)" />
-                <Label fx:id="labelDisciplinas" styleClass="section-text" text="Disciplina A, Disciplina B" />
+                <Label fx:id="labelDisciplinas" styleClass="section-text" text="[...]" />
             </VBox>
 
             <VBox alignment="TOP_CENTER" styleClass="info-section">
                 <Label styleClass="section-title" text="Preço das Aulas" />
-                <Label fx:id="labelPreco" styleClass="section-text" text="[preço] - [preço]" />
+                <Label fx:id="labelPreco" styleClass="section-text" text="[...]" />
             </VBox>
 
             <VBox alignment="TOP_CENTER" styleClass="info-section">
                 <Label styleClass="section-title" text="Localização" />
-                <Label fx:id="labelLocalizacao" styleClass="section-text" text="[cidade], [estado], [CEP]" />
+                <Label fx:id="labelLocalizacao" styleClass="section-text" text="[...]" />
             </VBox>
 
             <VBox alignment="TOP_CENTER" styleClass="info-section">
@@ -72,17 +77,17 @@
                 <HBox styleClass="reviews-header">
                     <Label styleClass="reviews-title" text="Avaliações" />
                     <HBox styleClass="rating-container" HBox.hgrow="ALWAYS">
-                        <Label fx:id="labelMediaEstrelas" prefHeight="18.0" prefWidth="50.0" styleClass="stars-filled" text="★★★★" />
+                        <Label fx:id="labelMediaEstrelas" prefHeight="18.0" prefWidth="50.0" styleClass="stars-filled" text="[...]" />
                         <Label styleClass="stars-empty" text="★" />
-                        <Label fx:id="labelMediaNum" prefHeight="18.0" prefWidth="127.0" styleClass="rating-number" text="4,7" />
+                        <Label fx:id="labelMediaNum" prefHeight="18.0" prefWidth="127.0" styleClass="rating-number" text="[...]" />
                     </HBox>
                 </HBox>
 
                 <HBox styleClass="review-item">
                     <Circle fx:id="imgAluno" radius="20" styleClass="reviewer-photo" />
                     <VBox prefHeight="44.0" prefWidth="342.0" styleClass="review-content" HBox.hgrow="ALWAYS">
-                        <Label fx:id="labelAlunoNome" styleClass="reviewer-name" text="Aluno [nome]" />
-                        <Label fx:id="labelAlunoComentario" styleClass="review-text" text="Aula boa, professora explica o assunto de forma linear e não fui" wrapText="true" />
+                        <Label fx:id="labelAlunoNome" styleClass="reviewer-name" text="[...]" />
+                        <Label fx:id="labelAlunoComentario" styleClass="review-text" text="[...]" wrapText="true" />
                     </VBox>
                 </HBox>
 
@@ -114,7 +119,7 @@
         <VBox fx:id="navBuscar" onMouseClicked="#handleNavBuscar" styleClass="nav-item-active">
             <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon-active">
                 <image>
-               <Image url="@../image/Search_Classes_Button.png" />
+                   <Image url="@../image/Search_Classes_Button.png" />
                 </image>
             </ImageView>
             <Label styleClass="nav-label-active" text="Buscar aulas" />
