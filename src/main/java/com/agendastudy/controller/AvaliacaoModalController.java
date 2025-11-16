@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+/**
+ * @author MATHEUS PEREIRA RODRIGUES
+ */
 public class AvaliacaoModalController {
 
     private Aula aula;

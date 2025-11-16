@@ -1,8 +1,5 @@
 package com.agendastudy.DAO;
-import com.agendastudy.model.Aula;
-import com.agendastudy.model.Avaliacao;
-import com.agendastudy.model.Estudante;
-import com.agendastudy.model.Professor;
+import com.agendastudy.model.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -97,7 +94,8 @@ public class AvaliacaoDAO {
         }
 
         //se aula cancelada, não pode ser avaliada
-        if (aula.isCancelada()) {
+        if ((aula.getStatus() == StatusAula.CANCELADA_ALUNO)
+                || (aula.getStatus() == StatusAula.CANCELADA_PROFESSOR)) {
             return false;
         }
 
