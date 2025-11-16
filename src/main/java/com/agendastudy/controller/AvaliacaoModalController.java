@@ -11,6 +11,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
+ * Controller para o modal avaliação após estudante clicar em avaliar um aula
+ * ainda não avaliada.
+ *
  * @author MATHEUS PEREIRA RODRIGUES
  */
 public class AvaliacaoModalController {
