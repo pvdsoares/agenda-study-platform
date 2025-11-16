@@ -1,105 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.agendastudy.controller.AvaliacaoModalController"
-            prefWidth="350" prefHeight="520"
-            styleClass="root-modal"
-            stylesheets="@../styles/avaliacao_modal.css"> <ImageView fx:id="btnVoltar"
-                                                                           fitWidth="24" fitHeight="24"
-                                                                           pickOnBounds="true"
-                                                                           style="-fx-cursor: hand;"
-                                                                           AnchorPane.topAnchor="50.0"
-                                                                           AnchorPane.leftAnchor="30.0">
-    <image>
-        <Image url="@/com/agendastudy/image/back_icon.png"/>
-    </image>
-</ImageView>
+<AnchorPane prefHeight="798.0" prefWidth="356.0" styleClass="root-modal" stylesheets="@../styles/avaliacao_modal.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.controller.AvaliacaoModalController">
 
-    <VBox spacing="15" alignment="TOP_CENTER"
-          prefWidth="310" prefHeight="440"
-          styleClass="card-avaliacao"
-          AnchorPane.topAnchor="40.0"
-          AnchorPane.bottomAnchor="40.0"
-          AnchorPane.leftAnchor="20.0"
-          AnchorPane.rightAnchor="20.0">
+       <Label fx:id="btnVoltar" onMouseClicked="#voltar" styleClass="botao-voltar" text="⮜" />
 
-        <Region prefHeight="0" VBox.vgrow="NEVER"/>
+    <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="50.0" prefHeight="751.0" prefWidth="316.0" spacing="15" styleClass="card-avaliacao" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+      <ImageView fitHeight="101.0" fitWidth="99.0">
+         <image>
+            <Image url="@../image/logo_vazio.png" />
+         </image>
+      </ImageView>
 
-        <ImageView fitWidth="70" fitHeight="70">
-            <image>
-                <Image url="@/com/agendastudy/image/logo_vazio.png"/>
-            </image>
-        </ImageView>
+        <Region prefHeight="0" VBox.vgrow="NEVER" />
 
-        <Label text="Aula Finalizada" styleClass="titulo-finalizada">
-            <font><Font size="32" name="System Bold" /></font>
+        <Label styleClass="titulo-finalizada" text="Aula Finalizada">
+            <font><Font name="System Bold" size="32" /></font>
         </Label>
 
-        <Label text="Avalie como foi"
-               alignment="CENTER"
-               styleClass="titulo-avaliacao">
-            <font><Font size="32" name="System Bold" /></font>
-            <VBox.margin>
-                <Insets top="-5" /> </VBox.margin>
+        <Label alignment="CENTER" styleClass="titulo-avaliacao" text="Avalie como foi">
+            <font><Font name="System Bold" size="32" /></font>
+            <VBox.margin><Insets top="-5" /></VBox.margin>
         </Label>
 
-        <Label text="a sua aula"
-               alignment="CENTER"
-               styleClass="titulo-avaliacao">
-            <font><Font size="32" name="System Bold" /></font>
-            <VBox.margin>
-                <Insets top="-25" /> </VBox.margin>
+        <Label alignment="CENTER" styleClass="titulo-avaliacao" text="a sua aula">
+            <font><Font name="System Bold" size="32" /></font>
+            <VBox.margin><Insets top="-25" /></VBox.margin>
         </Label>
 
-        <Region prefHeight="10" VBox.vgrow="NEVER"/>
+        <Region prefHeight="10" />
 
-        <StackPane alignment="CENTER" prefWidth="274.27" prefHeight="86">
-            <Rectangle width="274.27" height="86" arcWidth="30" arcHeight="30" styleClass="fundo-azul-medio"/>
-            <HBox spacing="10" alignment="CENTER">
-                <ImageView fx:id="star1" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
-                <ImageView fx:id="star2" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
-                <ImageView fx:id="star3" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
-                <ImageView fx:id="star4" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
-                <ImageView fx:id="star5" fitWidth="32" fitHeight="32" pickOnBounds="true" style="-fx-cursor: hand;"/>
+        <StackPane alignment="CENTER" prefHeight="86" prefWidth="274.27">
+            <Rectangle arcHeight="30" arcWidth="30" height="86" styleClass="fundo-azul-medio" width="274.27" />
+            <HBox alignment="CENTER" spacing="10">
+
+                <Label fx:id="star1" styleClass="estrela" text="★" />
+                <Label fx:id="star2" styleClass="estrela" text="★" />
+                <Label fx:id="star3" styleClass="estrela" text="★" />
+                <Label fx:id="star4" styleClass="estrela" text="★" />
+                <Label fx:id="star5" styleClass="estrela" text="★" />
+
             </HBox>
         </StackPane>
 
-        <StackPane prefWidth="275.22" prefHeight="134" VBox.vgrow="ALWAYS">
-            <Rectangle width="275.22" height="134" arcWidth="30" arcHeight="30" styleClass="fundo-azul-medio" StackPane.alignment="CENTER"/>
+        <StackPane prefHeight="134" prefWidth="275.22" VBox.vgrow="ALWAYS">
+            <Rectangle arcHeight="30" arcWidth="30" height="134" styleClass="fundo-azul-medio" width="275.22" />
 
-            <Rectangle width="235.36" height="97" arcWidth="30" arcHeight="30" styleClass="fundo-azul-escuro" StackPane.alignment="BOTTOM_CENTER">
-                <StackPane.margin><Insets bottom="10"/></StackPane.margin>
+            <Rectangle arcHeight="30" arcWidth="30" height="97" styleClass="fundo-azul-escuro" width="235.36" StackPane.alignment="BOTTOM_CENTER">
+                <StackPane.margin><Insets bottom="10" /></StackPane.margin>
             </Rectangle>
 
-            <Text text="Comentário" styleClass="texto-comentario-label" StackPane.alignment="TOP_LEFT">
-                <StackPane.margin><Insets top="15" left="25"/></StackPane.margin>
+            <Text styleClass="texto-comentario-label" text="Comentário" StackPane.alignment="TOP_LEFT">
+                <StackPane.margin><Insets left="25" top="15" /></StackPane.margin>
             </Text>
 
-            <TextArea fx:id="fieldComentario"
-                      promptText="Adicione um comentário (opcional)"
-                      wrapText="true"
-                      prefWidth="235.36" prefHeight="97"
-                      StackPane.alignment="BOTTOM_CENTER"
-                      styleClass="text-area-comentario">
-                <StackPane.margin><Insets bottom="10"/></StackPane.margin>
+            <TextArea fx:id="fieldComentario" prefHeight="97" prefWidth="235.36" promptText="Adicione um comentário (opcional)" styleClass="text-area-comentario" wrapText="true" StackPane.alignment="BOTTOM_CENTER">
+                <StackPane.margin><Insets bottom="10" /></StackPane.margin>
             </TextArea>
         </StackPane>
 
-        <Region VBox.vgrow="ALWAYS"/>
+        <Region VBox.vgrow="ALWAYS" />
 
-        <Button fx:id="btnEnviar"
-                text="Enviar avaliação"
-                prefWidth="220" prefHeight="70"
-                onAction="#enviarAvaliacao"
-                disable="true"/>
+        <Button fx:id="btnEnviar" disable="true" onAction="#enviarAvaliacao" prefHeight="70" prefWidth="220" text="Enviar avaliação" />
     </VBox>
 
 </AnchorPane>

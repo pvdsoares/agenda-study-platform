@@ -20,10 +20,24 @@ public class EstudanteDAO extends UsuarioDAO{
      */
     private AvaliacaoDAO avaliacao;
 
+    /**
+     * Construtor padrão da EstudanteDAO.
+     *
+     * Inicializa a classe EstudanteDAO criando uma nova instância interna
+     * de AvaliacaoDAO para gerenciar as operações de avaliação.
+     */
     public EstudanteDAO() {
         this.avaliacao = new AvaliacaoDAO();
     }
 
+    /**
+     * Construtor com parâmetro.
+     *
+     * Permite que a instância de AvaliacaoDAO seja fornecida externamente.
+     * Ideal para testes unitários.
+     *
+     * @param avaliacao A instância de AvaliacaoDAO a ser utilizada.
+     */
     public EstudanteDAO(AvaliacaoDAO avaliacao) {
         this.avaliacao = avaliacao;
     }

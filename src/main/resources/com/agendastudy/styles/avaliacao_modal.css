@@ -1,17 +1,24 @@
-/* 1. Estilos da Raiz (AnchorPane) */
+/* Raiz */
 .root-modal {
-    /* Fundo do modal: E5FFFD */
     -fx-background-color: #E5FFFD;
+    -fx-background-radius: 20;
 }
 
-/* 2. Estilos do Card Central (VBox) */
+/* Card */
 .card-avaliacao {
-    -fx-background-radius: 20;
-    -fx-background-color: white;
+    -fx-background-color: E5FFFD;
     -fx-padding: 30 20 30 20;
 }
+ /* botão voltar */
+.botao-voltar {
+    -fx-font-size: 32px;
+    -fx-text-fill: #306BB3;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 5 10;
+}
 
-/* 3. Títulos */
+/* Títulos */
 .titulo-finalizada {
     -fx-text-fill: #52B371;
     -fx-font-size: 32px;
@@ -24,16 +31,11 @@
     -fx-font-weight: bold;
 }
 
-/* 4. Retângulos das Estrelas e Comentário */
-.fundo-azul-medio { /* #306BB3 */
-    -fx-fill: #306BB3;
-}
+/* Retângulos */
+.fundo-azul-medio { -fx-fill: #306BB3; }
+.fundo-azul-escuro { -fx-fill: #0F3B71; }
 
-.fundo-azul-escuro { /* #0F3B71 */
-    -fx-fill: #0F3B71;
-}
-
-/* 5. Área de Comentário (Text e TextArea) */
+/* TextArea */
 .texto-comentario-label {
     -fx-fill: white;
     -fx-font-size: 14px;
@@ -41,16 +43,15 @@
 }
 
 .text-area-comentario {
-    /* Garante que o fundo do campo de texto (inner-background) seja o azul escuro */
     -fx-control-inner-background: #0F3B71;
-    -fx-background-color: transparent; /* Remove a borda padrão do TextArea */
+    -fx-background-color: transparent;
     -fx-padding: 5;
     -fx-font-size: 14px;
     -fx-text-fill: white;
     -fx-border-color: transparent;
 }
 
-/* 6. Botão Enviar (Estilo Desativado) */
+/* Botão enviado */
 #btnEnviar {
     -fx-background-color: #8C857E;
     -fx-text-fill: white;
@@ -58,4 +59,25 @@
     -fx-font-weight: semi-bold;
     -fx-background-radius: 50;
     -fx-cursor: hand;
+}
+
+/* Estrela base */
+.estrela {
+    -fx-font-size: 45px;
+    -fx-text-fill: #0E407C;
+    -fx-opacity: 0.3;
+    -fx-cursor: hand;
+}
+
+/* Hover */
+.estrela:hover {
+    -fx-font-size: 45px;
+    -fx-opacity: 0.6;
+}
+
+/* Quando selecionada */
+.estrela-selecionada {
+    -fx-font-size: 45px;
+    -fx-opacity: 1;
+    -fx-text-fill: #FFDF00;
 }

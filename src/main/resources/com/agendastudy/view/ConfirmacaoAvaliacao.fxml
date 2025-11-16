@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.Label?>
 
-<AnchorPane fx:id="rootPopup"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.agendastudy.controller.ConfirmacaoAvaliacaoController"
-            prefWidth="280" prefHeight="200"
-            stylesheets="@../styles/confirmacao_avaliacao.css"> <VBox alignment="CENTER"
-                                                                            spacing="20"
-                                                                            AnchorPane.topAnchor="0.0"
-                                                                            AnchorPane.bottomAnchor="0.0"
-                                                                            AnchorPane.leftAnchor="0.0"
-                                                                            AnchorPane.rightAnchor="0.0">
+<AnchorPane fx:id="rootPopup" prefHeight="200" prefWidth="280" stylesheets="@../styles/confirmacao_avaliacao.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="com.agendastudy.controller.ConfirmacaoAvaliacaoController"> <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="52.0" fitWidth="58.0">
+         <image>
+            <Image url="@../image/check_icon.png" />
+         </image>
+      </ImageView>
 
-    <ImageView fx:id="iconCheck"
-               fitWidth="49"
-               fitHeight="49">
-    </ImageView>
-
-    <Label fx:id="labelMensagem"
-           text="Obrigado pela sua Avaliação!"
-           wrapText="true"
-           alignment="CENTER"
-           maxWidth="240">
+    <Label fx:id="labelMensagem" alignment="CENTER" maxWidth="240" text="Obrigado pela sua Avaliação!" wrapText="true">
     </Label>
 
 </VBox>
