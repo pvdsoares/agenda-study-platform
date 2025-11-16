@@ -1,0 +1,150 @@
+/* Paleta base */
+.container {
+    -fx-background-color: #FFFFFF;
+}
+
+.header-bar {
+    -fx-background-color: #4CAF50;
+    -fx-padding: 0 15 0 15;
+}
+
+.back-arrow {
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Conteúdo */
+.content-box {
+    -fx-background-color: #FFFFFF;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10 0 5 0;
+}
+
+.label-data {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.date-field {
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150px;
+    -fx-padding: 5;
+}
+
+/* Linha separadora */
+.separator-line {
+    -fx-fill: #CFCFCF;
+    -fx-stroke: transparent;
+}
+
+/* Cards */
+.metric-card-total,
+.metric-card-tutor {
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-spacing: 5;
+    -fx-max-width: 330px;
+}
+
+.metric-card-total {
+    -fx-background-color: #384A65;
+}
+
+.metric-card-tutor {
+    -fx-background-color: #4CAF50;
+}
+
+.metric-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.metric-value {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Bloco de cancelamento */
+.aluno-cancellation-box {
+    -fx-background-color: #384A65;
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-max-width: 330px;
+}
+
+.aluno-cancellation-title {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.aluno-cancellation-item {
+    -fx-text-fill: #E0E0E0;
+    -fx-font-size: 14px;
+}
+
+/* Footer */
+.footer-bar {
+    -fx-background-color: #5BC0DE;
+    -fx-padding: 10 0 10 0;
+}
+
+.nav-item {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 100px;
+    -fx-alignment: center;
+}
+
+.nav-item.selected {
+    -fx-underline: true;
+}
+
+/* --------------------------------------------------------
+   BOTÃO / ABA DE RELATÓRIO COM ÍCONE (NOVO ESTILO)
+---------------------------------------------------------*/
+
+/* Contêiner do botão */
+.relatorios-btn {
+    -fx-background-color: #4CAF50; 
+    -fx-background-radius: 12;
+    -fx-padding: 10 18;
+    -fx-spacing: 8;
+    -fx-alignment: center-left;
+}
+
+/* Hover corporativo */
+.relatorios-btn:hover {
+    -fx-background-color: #3F8C44;
+    -fx-cursor: hand;
+}
+
+/* Ícone dentro do botão */
+.relatorios-icon {
+    -fx-fit-height: 22px;
+    -fx-fit-width: 22px;
+}
+
+/* Texto do botão */
+.relatorios-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

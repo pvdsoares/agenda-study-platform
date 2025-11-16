@@ -12,7 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-/**
+/**P
  * Controller (JavaFX) responsável pela interface de cadastro de estudantes.
  * Implementa as funcionalidades de validação, coleta de dados
  * e interação com o EstudanteDAO.

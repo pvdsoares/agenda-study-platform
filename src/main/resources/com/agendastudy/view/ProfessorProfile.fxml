@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox styleClass="root-container" stylesheets="@../styles/professor-profile.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.agendastudy.controller.PerfilProfessorController">
+
+    <HBox styleClass="header">
+        <Button fx:id="btnVoltar" onAction="#handleVoltar" styleClass="back-button">
+            <graphic>
+                <ImageView fitHeight="24" fitWidth="24">
+               <image>
+                  <Image url="@../image/Logo_Menu.png" />
+               </image></ImageView>
+            </graphic>
+        </Button>
+        <HBox styleClass="logo-container" HBox.hgrow="ALWAYS">
+            <Label styleClass="logo-text" text="Agenda&amp;Study" />
+        </HBox>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" styleClass="content-scroll" VBox.vgrow="ALWAYS">
+        <VBox styleClass="content-container">
+
+            <VBox styleClass="photo-container">
+                <StackPane styleClass="photo-wrapper">
+                    <Circle radius="60" styleClass="photo-circle" />
+                    <ImageView fx:id="imgProfessor" fitHeight="120" fitWidth="120" preserveRatio="true" styleClass="professor-photo">
+                  <image>
+                     <Image url="@../image/professor.png" />
+                  </image></ImageView>
+                </StackPane>
+            </VBox>
+
+            <Label fx:id="labelNome" styleClass="professor-name" text="[Nome Professor]" />
+
+            <VBox alignment="TOP_CENTER" styleClass="info-section">
+                <Label styleClass="section-title" text="Sobre o(a) professor(a)" />
+                <Label fx:id="labelSobre1" styleClass="section-text" text="Formado(a) em xxxxxxxxxxxxxxx pela Universidade xxxxxxxxxxxxxx" wrapText="true" />
+                <Label fx:id="labelSobre2" styleClass="section-text" text="x anos de experiência, especialista em xxxxxxxxxx e xxxxxxxx." wrapText="true" />
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" styleClass="info-section">
+                <Label styleClass="section-title" text="Disciplina(s) Lecionada(s)" />
+                <Label fx:id="labelDisciplinas" styleClass="section-text" text="Disciplina A, Disciplina B" />
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" styleClass="info-section">
+                <Label styleClass="section-title" text="Preço das Aulas" />
+                <Label fx:id="labelPreco" styleClass="section-text" text="[preço] - [preço]" />
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" styleClass="info-section">
+                <Label styleClass="section-title" text="Localização" />
+                <Label fx:id="labelLocalizacao" styleClass="section-text" text="[cidade], [estado], [CEP]" />
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" styleClass="info-section">
+                <Label styleClass="section-title" text="Disponibilidade e Agendamento" />
+                <Button fx:id="btnVerHorario" onAction="#handleVerHorario" styleClass="schedule-button" text="Ver dia e horário" />
+            </VBox>
+
+            <VBox fx:id="reviewCard" alignment="TOP_CENTER" prefHeight="147.0" prefWidth="444.0" styleClass="reviews-card">
+                <HBox styleClass="reviews-header">
+                    <Label styleClass="reviews-title" text="Avaliações" />
+                    <HBox styleClass="rating-container" HBox.hgrow="ALWAYS">
+                        <Label fx:id="labelMediaEstrelas" prefHeight="18.0" prefWidth="50.0" styleClass="stars-filled" text="★★★★" />
+                        <Label styleClass="stars-empty" text="★" />
+                        <Label fx:id="labelMediaNum" prefHeight="18.0" prefWidth="127.0" styleClass="rating-number" text="4,7" />
+                    </HBox>
+                </HBox>
+
+                <HBox styleClass="review-item">
+                    <Circle fx:id="imgAluno" radius="20" styleClass="reviewer-photo" />
+                    <VBox prefHeight="44.0" prefWidth="342.0" styleClass="review-content" HBox.hgrow="ALWAYS">
+                        <Label fx:id="labelAlunoNome" styleClass="reviewer-name" text="Aluno [nome]" />
+                        <Label fx:id="labelAlunoComentario" styleClass="review-text" text="Aula boa, professora explica o assunto de forma linear e não fui" wrapText="true" />
+                    </VBox>
+                </HBox>
+
+                <Button fx:id="btnVerTodas" onAction="#handleVerTodasAvaliacoes" prefHeight="7.0" prefWidth="202.0" styleClass="view-all-button" text="Ver todas avaliações" />
+            </VBox>
+
+            <VBox prefHeight="5.0" prefWidth="444.0" styleClass="bottom-spacer" />
+
+        </VBox>
+    </ScrollPane>
+
+    <HBox styleClass="bottom-nav">
+        <VBox fx:id="navInicio" onMouseClicked="#handleNavInicio" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/home_button.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Início" />
+        </VBox>
+        <VBox fx:id="navAulas" onMouseClicked="#handleNavAulas" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/Your_Classes_Button.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Suas aulas" />
+        </VBox>
+        <VBox fx:id="navBuscar" onMouseClicked="#handleNavBuscar" styleClass="nav-item-active">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon-active">
+                <image>
+               <Image url="@../image/Search_Classes_Button.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label-active" text="Buscar aulas" />
+        </VBox>
+        <VBox fx:id="navPerfil" onMouseClicked="#handleNavPerfil" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/User_Icon.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Perfil" />
+        </VBox>
+    </HBox>
+
+</VBox>
