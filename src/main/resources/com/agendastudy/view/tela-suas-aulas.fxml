@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.agendastudy.controller.TelaSuasAulasController"
+            prefWidth="360" prefHeight="640">
+
+    <!-- Retângulo de fundo azul com opacidade 12% -->
+    <Pane layoutX="0" layoutY="70" prefWidth="360" prefHeight="570"
+          style="-fx-background-color: #0C10FF; -fx-opacity: 0.12;" />
+
+    <!-- Título da seção -->
+    <Label text="Aulas Concluídas" layoutX="20" layoutY="20"
+           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #107932;" />
+
+    <!-- Subtítulo: Aulas a Avaliar -->
+    <Label text="Aulas a Avaliar" layoutX="20" layoutY="90"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #07081F;" />
+
+    <!-- VBox que conterá os cards dinâmicos gerados pelo controller -->
+    <VBox fx:id="containerAulasConcluidas" layoutX="20" layoutY="130"
+          prefWidth="320" spacing="15" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="0" right="0" bottom="20" left="0"/>
+        </padding>
+    </VBox>
+
+</AnchorPane>

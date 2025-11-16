@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap; // Adicionado
 
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Professor;
+import com.agendastudy.model.StatusAula;
 
 /**
  * Gerencia as operações de acesso a dados (DAO) para a entidade Aula.
@@ -70,10 +71,19 @@ public class AulaDAO {
             throw new NoSuchElementException("Aula de ID: " + idAula + "não encontrada!");
         }
 
-        if (aula.isCancelada()){
+        if ((aula.getStatus() == StatusAula.CANCELADA_ALUNO) || (aula.getStatus() == StatusAula.CANCELADA_PROFESSOR)){
             throw new IllegalStateException("Aula de ID: " + idAula + "já está cancelada!");
         }
-        aula.cancelar();
+        aula.setStatus(StatusAula.CANCELADA_ALUNO);
         System.out.println("Aula: " + idAula + " cancelada com sucesso.");
     }
+
+    /**
+     * Retorna todas as aulas cadastradas no sistema.
+     * @return Lista de todas as aulas
+     */
+    public List<Aula> buscarTodasAulas() {
+        return new ArrayList<>(aulas.values());
+    }
+
 }

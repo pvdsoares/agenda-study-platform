@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane prefHeight="700.0" prefWidth="400.0" 
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.RelatorioController"
+            stylesheets="@../styles/relatorio.css"
+            styleClass="container">
+
+<top>
+    <HBox alignment="CENTER_LEFT" prefHeight="70.0"
+          styleClass="relatorios-btn" BorderPane.alignment="CENTER">
+        <children>
+
+            <!-- ÍCONE -->
+       <ImageView fitHeight="24" fitWidth="24"
+           styleClass="relatorios-icon"
+           pickOnBounds="true" preserveRatio="true">
+    <image>
+        <Image url="@/com/agendastudy/image/iconeagendastudy.png" />
+    </image>
+</ImageView>
+
+            <!-- TEXTO "Relatório" -->
+            <Label text="Relatório" styleClass="relatorios-label" />
+
+        </children>
+    </HBox>
+</top>
+
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15.0"
+              styleClass="content-box" BorderPane.alignment="CENTER">
+
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+            </padding>
+
+            <Label styleClass="section-title" text="Defina o período de tempo" />
+
+            <VBox spacing="10.0">
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label text="Data de início:" styleClass="label-data" />
+                    <TextField fx:id="dataInicioField"
+                               promptText="DD/MM/AAAA"
+                               styleClass="date-field" />
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label text="Data de fim:" styleClass="label-data" />
+                    <TextField fx:id="dataFimField"
+                               promptText="DD/MM/AAAA"
+                               styleClass="date-field" />
+                </HBox>
+            </VBox>
+
+            <Rectangle height="1.0" width="360.0" styleClass="separator-line" />
+
+            <Label styleClass="section-title" text="Resultados do período informado" />
+
+            <VBox alignment="CENTER" styleClass="metric-card-total">
+                <Label styleClass="metric-label" text="Total de aulas ministradas:" />
+                <Label fx:id="totalAulasLabel" styleClass="metric-value" text="xx" />
+            </VBox>
+
+            <Label styleClass="subsection-title" text="Taxa de cancelamento" />
+
+            <VBox alignment="CENTER" styleClass="metric-card-tutor">
+                <Label styleClass="metric-label" text="Iniciada pelo professor:" />
+                <Label fx:id="taxaCancelamentoTutorLabel"
+                       styleClass="metric-value" text="x%" />
+            </VBox>
+
+            <VBox styleClass="aluno-cancellation-box">
+                <Label styleClass="aluno-cancellation-title" text="Por aluno:" />
+                <VBox fx:id="alunoCancelamentoList" spacing="5.0">
+                    <Label text="Aluno nome - x% - x de xx aulas"
+                           styleClass="aluno-cancellation-item" />
+                </VBox>
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="60.0"
+              styleClass="footer-bar" BorderPane.alignment="CENTER">
+            <Label styleClass="nav-item" text="🏠 Home" />
+            <Label styleClass="nav-item" text="🧑‍🎓 Alunos" />
+            <Label styleClass="nav-item selected" text="👨‍🏫 Professores" />
+            <Label styleClass="nav-item" text="📚 Aulas" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

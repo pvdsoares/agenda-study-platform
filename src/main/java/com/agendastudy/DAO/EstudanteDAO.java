@@ -4,6 +4,9 @@ import com.agendastudy.model.Estudante;
 import com.agendastudy.model.Aula;
 import com.agendastudy.service.ServicoAgendamento; // Import do serviço
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import com.agendastudy.model.StatusAula;
 
 /**
  * Gerencia as operações de acesso a dados (DAO) e ações para a entidade Estudante.
@@ -21,20 +24,26 @@ public class EstudanteDAO extends UsuarioDAO{
     private AvaliacaoDAO avaliacao;
 
     /**
+     * Referência para o DAO de Avaliação.
+     */
+    private AulaDAO aulaDAO;
+
+    /**
      * Construtor padrão da EstudanteDAO.
      *
-     * Inicializa a classe EstudanteDAO criando uma nova instância interna
-     * de AvaliacaoDAO para gerenciar as operações de avaliação.
+     * Inicializa a classe EstudanteDAO e AulaDAO criando uma nova instância interna
+     * de AvaliacaoDAO para gerenciar as operações de avaliação e de AulaDAO para gerenciar
+     * as operaões de aula.
      */
     public EstudanteDAO() {
         this.avaliacao = new AvaliacaoDAO();
+        this.aulaDAO = new AulaDAO();
     }
 
     /**
      * Construtor com parâmetro.
      *
      * Permite que a instância de AvaliacaoDAO seja fornecida externamente.
-     * Ideal para testes unitários.
      *
      * @param avaliacao A instância de AvaliacaoDAO a ser utilizada.
      */
@@ -48,7 +57,8 @@ public class EstudanteDAO extends UsuarioDAO{
      * @param idAula O ID da aula (disponibilidade) a ser reservada.
      * @param estudante O estudante que está agendando.
      * @param servicoAgendamento O serviço que processará o agendamento.
-     * @return A Aula atualizada com o estudante.
+     * @return A Aula atualizada com o estudante.-
+     * 
      */
     public Aula agendarAula(String idAula, Estudante estudante, ServicoAgendamento servicoAgendamento){
         return servicoAgendamento.agendarAula(idAula, estudante);
@@ -104,4 +114,42 @@ public class EstudanteDAO extends UsuarioDAO{
     public boolean avaliarAula(Estudante estudante, Aula aula, int nota) {
         return avaliacao.avaliar(estudante, aula, nota);
     }
+
+    /**
+     * Verifica se o estudante já avaliou uma determinada aula.
+     *
+     * @param estudante o estudante que será verificado.
+     * @param aula a aula que será verificada se já foi avaliada.
+     * @return true se a aula foi avaliada, false caso contrário.
+     */
+    public boolean jaAvaliouAula(Estudante estudante, Aula aula) {
+        return avaliacao.getAvaliacaoPorEstudante(estudante).stream()
+                .anyMatch(a -> a.getAula().getIdAula().equals(aula.getIdAula()));
+    }
+
+
+    /**
+     * Retorna todas as aulas concluídas por um determinado estudante.
+     *
+     * @param estudante O estudante cujas aulas concluídas serão retornadas.
+     * @return Lista de aulas com status CONCLUIDA.
+     */
+    public List<Aula> getAulasConcluidas(Estudante estudante) {
+        return aulaDAO.buscarTodasAulas().stream()
+                .filter(a -> estudante.equals(a.getEstudante()) && a.getStatus() == StatusAula.CONCLUIDA)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Retorna todas as aulas agendadas por um determinado estudante.
+     *
+     * @param estudante O estudante cujas aulas agendadas serão retornadas.
+     * @return Lista de aulas com status AGENDADA.
+     */
+    public List<Aula> getAulasAgendadas(Estudante estudante) {
+        return aulaDAO.buscarTodasAulas().stream()
+                .filter(a -> estudante.equals(a.getEstudante()) && a.getStatus() == StatusAula.AGENDADA)
+                .collect(Collectors.toList());
+    }
+
 }

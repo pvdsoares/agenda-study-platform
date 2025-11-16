@@ -1,10 +1,8 @@
 package com.agendastudy.service;
 
 import com.agendastudy.DAO.AulaDAO;
-import com.agendastudy.model.Aula;
-import com.agendastudy.model.Professor;
-import com.agendastudy.model.Estudante;
-import com.agendastudy.model.Usuario;
+import com.agendastudy.model.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -109,7 +107,7 @@ public class ServicoAgendamento {
     public Aula agendarAula(String idAula, Estudante estudante) {
         Aula aula = aulaDAO.buscarPorId(idAula);
 
-        if (aula == null || aula.isCancelada()) {
+        if (aula == null || aula.getStatus() == StatusAula.CANCELADA_ALUNO) {
             throw new NoSuchElementException("Disponibilidade de aula não encontrada ou cancelada.");
         }
         if (aula.getEstudante() != null) {
