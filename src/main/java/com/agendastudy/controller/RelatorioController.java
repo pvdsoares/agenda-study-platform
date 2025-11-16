@@ -3,13 +3,26 @@ package com.agendastudy.controller;
 import com.agendastudy.model.Professor;
 import com.agendastudy.service.RelatoriodeRendimento;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+
+/* @author Luara gabrielli guimarães araujo
+ * @version 1.0
+ * @since 2025
+  */
 public class RelatorioController {
 
     @FXML private TextField dataInicioField;
@@ -90,8 +103,19 @@ public class RelatorioController {
     }
 
     @FXML
-    private void handleVoltar() {
-        System.out.println("Voltar para tela anterior...");
-        // Aqui você troca a cena
+ 
+    private void voltarParaPerfil(javafx.event.ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/agendastudy/view/PerfilProfessor.fxml"));
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao voltar para a tela de perfil do professor.");
+        }
     }
+
 }

@@ -74,6 +74,12 @@ public void setStatus(StatusAula status) { this.status = status; }
         this.status = StatusAula.CANCELADA_PROFESSOR;
     }
 
+    
+    public boolean isCancelada() {
+        return this.status == StatusAula.CANCELADA_ALUNO || this.status == StatusAula.CANCELADA_PROFESSOR;
+    }
+
+
 
 
 

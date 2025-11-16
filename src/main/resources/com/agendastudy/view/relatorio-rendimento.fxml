@@ -25,7 +25,7 @@
               prefHeight="70">
 
             <children>
-                <Button text="❮" onAction="#handleVoltar" styleClass="back-button"/>
+                <Button fx:id="btnVoltar" onAction="#voltarParaPerfil" styleClass="back-button text="&lt;"/>
 
                 <HBox alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS">
                     <ImageView fitHeight="30" fitWidth="30">
