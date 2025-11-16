@@ -1,0 +1,134 @@
+/* =========================================================
+ * ESTILOS ADMIN (admin_gerenciamento.css)
+ * ========================================================= */
+
+.admin-main-container {
+    -fx-background-color: #f0f2f5;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+.header-title-admin {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976d2;
+}
+
+.detail-label-admin {
+    -fx-font-size: 14px;
+    -fx-text-fill: #777777;
+}
+
+/* --- Botões de Navegação Admin (Dashboard e Relatórios) --- */
+.admin-button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 60px;
+    -fx-max-width: infinity;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.admin-button-report {
+    -fx-background-color: #4caf50; /* Verde para Relatórios */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 50px;
+    -fx-max-width: infinity;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+/* --- Componentes de Listagem e Filtro (SCRUM-113) --- */
+.admin-header-list {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.search-field-admin {
+    -fx-pref-height: 35px;
+    -fx-background-color: #f7f7f7;
+    -fx-background-radius: 4px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+}
+
+.list-view-admin {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.placeholder-text-admin {
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+    -fx-padding: 10px;
+}
+
+/* --- Edição/Bloqueio (SCRUM-111, 112) --- */
+.action-button-toggle {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 40px;
+    -fx-padding: 0 15px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+.toggle-block {
+    -fx-background-color: #e53935; /* Vermelho para Bloquear */
+    -fx-text-fill: white;
+}
+.toggle-unblock {
+    -fx-background-color: #4caf50; /* Verde para Desbloquear */
+    -fx-text-fill: white;
+}
+
+/* --- Relatórios (SCRUM-72, 75) --- */
+.admin-card-container {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+.report-card-total {
+    -fx-padding: 15px;
+    -fx-background-color: #e3f2fd; /* Azul Claro */
+    -fx-background-radius: 6px;
+}
+.report-card-detail {
+    -fx-padding: 8px 0;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 1px 0;
+}
+.report-label-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+.report-label-title-detail {
+    -fx-font-size: 16px;
+    -fx-text-fill: #1976d2;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0 0 0;
+}
+.report-label-value-total {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976d2;
+}
+.report-label-value-detail {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4caf50;
+}
+
+/* --- Botões de Ação Comuns --- */
+.secondary-button-admin {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 6px;
+    -fx-max-width: infinity;
+}

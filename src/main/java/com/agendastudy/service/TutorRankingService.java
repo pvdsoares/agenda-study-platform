@@ -1,60 +1,80 @@
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * TutorRakingService (SCRUM-76).
+ *
+ *
+ * @author Lucas Chagas
+ * @version 1.0
+ */
+
 public class TutorRankingService {
 
-    private TutorRepository tutorRepo;
-    private AvaliacaoRepository avaliacaoRepo;
-    private DisponibilidadeService dispService;
+    private final TutorRepository tutorRepo;
+    private final AvaliacaoRepository avaliacaoRepo;
+    private final DisponibilidadeService dispService;
 
-    private class TutorScore {
-        public Tutor tutor;
-        public double score;
+    private static final double W_AVALIACAO = 0.5;
+    private static final double W_COMPATIBILIDADE = 0.4;
+    private static final double W_CANCELAMENTO = 0.1;
+    
+    // Constante para normalizar a pontuação (assumindo um sistema de 5 estrelas)
+    private static final double MAX_AVALIACAO_SCORE = 5.0;
 
-        public TutorScore(Tutor t, double s) {
-            this.tutor = t;
-            this.score = s;
-        }
+    // Construtor para injeção de dependência (Ex: @Autowired no Spring)
+    public TutorRankingService(TutorRepository tutorRepo, 
+                             AvaliacaoRepository avaliacaoRepo, 
+                             DisponibilidadeService dispService) {
+        this.tutorRepo = tutorRepo;
+        this.avaliacaoRepo = avaliacaoRepo;
+        this.dispService = dispService;
     }
+
+    private record TutorScore(Tutor tutor, double score) {}
 
     public List<Tutor> getTopNTutores(Estudante estudante, Disciplina disciplina, int N) {
         
         List<Tutor> todosOsTutores = tutorRepo.findByDisciplina(disciplina);
-        
-        List<TutorScore> tutoresComPontuacao = new ArrayList<>();
 
-        for (Tutor tutor : todosOsTutores) {
+        // O processo original (loop + stream) foi refatorado para um pipeline de stream único,
+        // que é mais funcional e legível.
+        return todosOsTutores.stream()
+            // 1. Filtra apenas os que têm disponibilidade (lógica original mantida)
+            .filter(tutor -> dispService.temDisponibilidadeProximas72h(tutor))
             
-            if (!dispService.temDisponibilidadeProximas72h(tutor)) {
-                continue; 
-            }
-
-            double score = calcularScoreRanking(tutor, estudante);
+            // 2. Mapeia o Tutor para um objeto TutorScore, calculando a pontuação
+            .map(tutor -> new TutorScore(tutor, calcularScoreRanking(tutor, estudante)))
             
-            tutoresComPontuacao.add(new TutorScore(tutor, score));
-        }
-
-        tutoresComPontuacao.sort((ts1, ts2) -> Double.compare(ts2.score, ts1.score));
-
-        return tutoresComPontuacao.stream()
-                .limit(N)
-                .map(ts -> ts.tutor)
-                .collect(Collectors.toList());
+            // 3. Ordena pelo score (do maior para o menor)
+            .sorted(Comparator.comparingDouble(TutorScore::score).reversed())
+            
+            // 4. Limita aos N melhores resultados
+            .limit(N)
+            
+            // 5. Mapeia de volta para o objeto Tutor
+            .map(TutorScore::tutor)
+            
+            // 6. Coleta o resultado final em uma lista
+            .collect(Collectors.toList());
     }
 
     private double calcularScoreRanking(Tutor tutor, Estudante estudante) {
         
-        double mediaAvaliacoes = avaliacaoRepo.getMediaAvaliacoes(tutor.getId()); 
+        double mediaAvaliacoes = avaliacaoRepo.getMediaAvaliacoes(tutor.getId());
+        double taxaCancelamento = tutor.getTaxaCancelamento();
+        double indiceCompatibilidade = dispService.calcularCompatibilidadeHorarios(tutor, estudante);
         
-        double taxaCancelamento = tutor.getTaxaCancelamento(); 
+        double scoreAvaliacaoNormalizado = (mediaAvaliacoes / MAX_AVALIACAO_SCORE);
+
+        // Assumindo que 'indiceCompatibilidade' e 'taxaCancelamento' já estão na escala 0.0 - 1.0
         
-        double indiceCompatibilidade = dispService.calcularCompatibilidadeHorarios(tutor, estudante); 
-
-        double W_AVALIACAO = 0.5;
-        double W_COMPATIBILIDADE = 0.4;
-        double W_CANCELAMENTO = 0.1;
-
-        double score = (mediaAvaliacoes * W_AVALIACAO) +
+        double score = (scoreAvaliacaoNormalizado * W_AVALIACAO) +
                        (indiceCompatibilidade * W_COMPATIBILIDADE) -
-                       (taxaCancelamento * W_CANCELAMENTO);
+                       (taxaCancelamento * W_CANCELAMENTO); // Penalidade por cancelamento
         
-        return score;
+        // Garante que o score não seja negativo (caso a taxa de cancelamento seja muito alta)
+        return Math.max(0.0, score);
     }
 }
