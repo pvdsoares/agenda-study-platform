@@ -1,5 +1,7 @@
 package com.agendastudy.model;
 
+
+
 /**
  * Classe abstrata que representa um Usuário genérico no sistema.
  * Serve como base para Estudante, Professor e Administrador.
@@ -15,6 +17,7 @@ public abstract class Usuario {
     private String senha;
     private String telefone;
     private String endereco;
+    private boolean ativo = true; 
 
     /**
      * Construtor da classe Usuário.

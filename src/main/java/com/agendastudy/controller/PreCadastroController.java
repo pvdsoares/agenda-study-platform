@@ -1,6 +1,9 @@
+package com.agendastudy.controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+
 
 /**
  * Controlador para a tela de pré-cadastro da aplicação AgendaStudy.
