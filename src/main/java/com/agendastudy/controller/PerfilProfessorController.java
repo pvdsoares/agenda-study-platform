@@ -91,7 +91,6 @@ public class PerfilProfessorController {
 
     /**
      * Manipulador do clique no botão "Ver todas avaliações".
-     * (Parte da sua tarefa 0.txt)
      */
     @FXML
     private void handleVerTodasAvaliacoes() {
