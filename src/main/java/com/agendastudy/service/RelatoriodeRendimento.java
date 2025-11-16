@@ -11,10 +11,10 @@ import com.agendastudy.model.StatusAula;
  * A classe consolida indicadores como total de aulas concluídas por período
  * e taxas de cancelamento, baseando-se no mapa de aulas fornecido no construtor.
  *
- * @author LUARA GABRIELLI 
- * @version 1.1
- * @since 2025-11-14
- */
+/* @author Luara gabrielli guimarães araujo
+ * @version 1.0
+ * @since 2025
+  */
 public class RelatoriodeRendimento {
 
     private Map<Professor, List<Aula>> aulasPorProfessor;

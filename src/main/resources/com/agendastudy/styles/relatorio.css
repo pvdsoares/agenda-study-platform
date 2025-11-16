@@ -1,13 +1,36 @@
 /* Paleta base */
+/*
+* @author LUARA GABRIELLI 
+ * @version 1.1
+ * @since 2025-11-14
+ */
 .container {
     -fx-background-color: #FFFFFF;
 }
-
-.header-bar {
-    -fx-background-color: #4CAF50;
-    -fx-padding: 0 15 0 15;
+.header-container {
+    -fx-background-color: #5BC0DE; 
+    -fx-background-radius: 0 0 30 30;    -fx-alignment: CENTER; 
+    -fx-min-width: 0; 
 }
 
+.header-title-text {
+    -fx-text-fill: #3F8C44; /* Cor do texto verde */
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+.header-bar {
+    -fx-background-color: #5BC0DE;
+    -fx-padding: 0 15 0 15;
+    align-items: center;
+    text-align: center;
+}
+.back-button {
+    -fx-background-color: transparent; /* Remove qualquer cor de fundo */
+    -fx-text-fill: #333333; /* Cor do texto escuro para a seta */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+}
 .back-arrow {
     -fx-text-fill: white;
     -fx-font-size: 30px;
@@ -52,8 +75,7 @@
 }
 
 /* Cards */
-.metric-card-total,
-.metric-card-tutor {
+.metric-card-total {
     -fx-background-radius: 10;
     -fx-padding: 15;
     -fx-spacing: 5;
@@ -63,14 +85,28 @@
 .metric-card-total {
     -fx-background-color: #384A65;
 }
-
 .metric-card-tutor {
     -fx-background-color: #4CAF50;
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-spacing: 5;
+    -fx-max-width: 330px;
+    /* Alinha o conteúdo à esquerda dentro do card */
+    -fx-alignment: CENTER_LEFT; 
+}
+
+/* Classe para Subtítulos como "Taxa de cancelamento" */
+.subsection-title {
+    -fx-font-size: 16px; 
+    -fx-font-weight: bold; /* Esta linha torna o texto negrito */
+    -fx-text-fill: #384A65; 
+    -fx-underline: true; 
 }
 
 .metric-label {
     -fx-text-fill: white;
-    -fx-font-size: 16px;
+    -fx-font-size: 16px; /* Ajuste o tamanho da fonte para 16px */
+    -fx-font-weight: bold; /* Deixe o texto em negrito */
 }
 
 .metric-value {
@@ -118,7 +154,7 @@
 }
 
 /* --------------------------------------------------------
-   BOTÃO / ABA DE RELATÓRIO COM ÍCONE (NOVO ESTILO)
+   BOTÃO  ABA DE RELATÓRIO COM ÍCONE
 ---------------------------------------------------------*/
 
 /* Contêiner do botão */
@@ -128,9 +164,9 @@
     -fx-padding: 10 18;
     -fx-spacing: 8;
     -fx-alignment: center-left;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
-
-/* Hover corporativo */
 .relatorios-btn:hover {
     -fx-background-color: #3F8C44;
     -fx-cursor: hand;
@@ -145,6 +181,35 @@
 /* Texto do botão */
 .relatorios-label {
     -fx-text-fill: white;
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
+}
+
+
+.nav-item {
+    -fx-alignment: center;
+    -fx-spacing: 5;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-hgrow: always;
+}
+
+.nav-item-active {
+    -fx-alignment: center;
+    -fx-spacing: 3;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+    -fx-hgrow: always;
+    -fx-background-color: #5BC0DE;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+
+.nav-icon {
+    -fx-opacity: 0.6;
+}
+
+.nav-icon-active {
+    -fx-opacity: 1.0;
 }

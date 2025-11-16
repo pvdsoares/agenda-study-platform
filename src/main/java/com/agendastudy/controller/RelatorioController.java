@@ -10,12 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-/**
- * Controller para a visualização de Relatórios de Rendimento.
- * @author LUARA GABRIELLI
- * @version 1.1
- * @since 2025-11-14
- */
 public class RelatorioController {
 
     @FXML private TextField dataInicioField;
@@ -33,13 +27,11 @@ public class RelatorioController {
 
     @FXML
     public void initialize() {
-        // Opcional: mensagens iniciais
         totalAulasLabel.setText("—");
         taxaCancelamentoTutorLabel.setText("—");
         taxaCancelamentoAlunoLabel.setText("—");
     }
 
-    // Usado por outro controller para configurar dependências
     public void setRelatorioService(RelatoriodeRendimento service) {
         this.relatorioService = service;
     }
@@ -48,83 +40,58 @@ public class RelatorioController {
         this.professorAtual = professor;
     }
 
-    /**
-     * Converte "dd/MM/yyyy" para LocalDateTime.
-     */
     private LocalDateTime parseDate(String dateText, boolean fimDoDia) {
         try {
-            String fullText = fimDoDia ?
-                    dateText + " 23:59:59" :
-                    dateText + " 00:00:00";
-
-            return LocalDateTime.parse(fullText, DATE_FORMAT);
+            String full = fimDoDia ? dateText + " 23:59:59" : dateText + " 00:00:00";
+            return LocalDateTime.parse(full, DATE_FORMAT);
         } catch (Exception e) {
             System.err.println("Data inválida: " + dateText);
             return null;
         }
     }
 
-    /**
-     * Método principal acionado pelo botão "Gerar Relatório".
-     */
     @FXML
     public void calcularEExibirRelatorio() {
 
-        // Valida dependências
         if (relatorioService == null || professorAtual == null) {
-            System.err.println("Erro: Service ou Professor não configurados.");
+            System.err.println("Service ou Professor não definidos.");
             return;
         }
 
-        // Converte datas
         LocalDateTime inicio = parseDate(dataInicioField.getText(), false);
         LocalDateTime fim = parseDate(dataFimField.getText(), true);
 
         if (inicio == null || fim == null) {
-            System.err.println("Datas inválidas.");
+            System.err.println("Erro nas datas.");
             return;
         }
 
         if (fim.isBefore(inicio)) {
-            System.err.println("Data final não pode ser menor que a inicial.");
+            System.err.println("Data final menor que inicial.");
             return;
         }
 
-        // -----------------------------
-        //  MÉTODOS DO RELATORIO SERVICE
-        // -----------------------------
-
         int totalAulas = relatorioService.calcularTotalAulas(professorAtual, inicio, fim);
-
         double taxaTutor = relatorioService.calcularTaxaCancelamentoProfessor(professorAtual);
-
         double taxaAluno = relatorioService.calcularTaxaCancelamentoAluno(professorAtual);
-
-        Map<String, Integer> cancelamentosPorAluno =
-                relatorioService.calcularCancelamentosPorAluno(professorAtual);
-
-        // -------------------------
-        //  ATUALIZAÇÃO DA INTERFACE
-        // -------------------------
+        Map<String,Integer> cancelamentos = relatorioService.calcularCancelamentosPorAluno(professorAtual);
 
         totalAulasLabel.setText(String.valueOf(totalAulas));
         taxaCancelamentoTutorLabel.setText(String.format("%.1f%%", taxaTutor));
         taxaCancelamentoAlunoLabel.setText(String.format("%.1f%%", taxaAluno));
 
-        // Limpa lista antiga
         alunoCancelamentoList.getChildren().clear();
 
-        // Preenche dinamicamente
-        for (Map.Entry<String, Integer> entry : cancelamentosPorAluno.entrySet()) {
-            Label item = new Label(entry.getKey() + ": " + entry.getValue() + " cancelamento(s)");
-            item.setStyle("-fx-font-size: 14px; -fx-padding: 4 0 4 0;");
+        cancelamentos.forEach((aluno, qtd) -> {
+            Label item = new Label(aluno + ": " + qtd + " cancelamento(s)");
+            item.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-padding: 3;");
             alunoCancelamentoList.getChildren().add(item);
-        }
+        });
     }
 
     @FXML
     private void handleVoltar() {
-        System.out.println("Navegar para tela anterior...");
-        // Implemente a lógica de troca de cena aqui.
+        System.out.println("Voltar para tela anterior...");
+        // Aqui você troca a cena
     }
 }
