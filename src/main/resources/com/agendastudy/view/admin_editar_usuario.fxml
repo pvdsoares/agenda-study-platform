@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.AdminEditarUsuarioController"
+            prefHeight="640.0" prefWidth="360.0"
+            styleClass="admin-main-container">
+
+    <stylesheets>
+        <URL value="@admin_gerenciamento.css" />
+    </stylesheets>
+
+    <top>
+        <Label fx:id="headerTitle" text="EDITAR CONTA DE USUÁRIO" styleClass="header-title-admin" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="30.0" bottom="10.0"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="admin-scroll-pane">
+            <VBox spacing="15" maxWidth="320.0">
+                <padding>
+                    <Insets top="20" right="10" bottom="20" left="10" />
+                </padding>
+                
+                <Label fx:id="userIdLabel" styleClass="detail-label-admin"/>
+                <Label fx:id="userTypeLabel" styleClass="detail-label-admin"/>
+
+                <Label text="Nome Completo (SCRUM-111)" styleClass="input-label-admin"/>
+                <TextField fx:id="nomeField" styleClass="text-field-admin"/>
+
+                <Label text="Email (SCRUM-111)" styleClass="input-label-admin"/>
+                <TextField fx:id="emailField" editable="false" styleClass="text-field-admin"/>
+                
+                <Label text="Telefone (SCRUM-111)" styleClass="input-label-admin"/>
+                <TextField fx:id="telefoneField" promptText="Telefone" styleClass="text-field-admin"/>
+                
+                <Label text="Status da Conta (SCRUM-112)" styleClass="input-label-admin-status"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="statusLabel" text="Status Atual: ATIVO" styleClass="detail-label-status"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="toggleStatusButton" text="BLOQUEAR CONTA" onAction="#handleToggleStatus" styleClass="action-button-toggle"/>
+                </HBox>
+                
+                <Button fx:id="salvarButton" text="SALVAR ALTERAÇÕES (SCRUM-111)" onAction="#handleSalvar" styleClass="primary-button-admin"/>
+                
+            </VBox>
+        </ScrollPane>
+    </center>
+    
+    <bottom>
+        <Button text="VOLTAR PARA LISTA" onAction="#handleVoltar" styleClass="secondary-button-admin" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+</BorderPane>
