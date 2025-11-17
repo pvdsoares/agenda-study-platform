@@ -11,8 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-
-
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -117,5 +116,36 @@ public class RelatorioController {
             System.out.println("Erro ao voltar para a tela inicial");
         }
     }
+private void trocarTela(String caminhoFXML, MouseEvent event) {
+    try {
+        Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.out.println("Erro ao trocar de tela: " + caminhoFXML);
+    }
+}
+
+@FXML
+private void handleNavInicio(MouseEvent event) {
+    trocarTela("/com/agendastudy/view/administrador_dashboard.fxml", event);
+}
+
+@FXML
+private void handleNavAlunos(MouseEvent event) {
+    trocarTela("/com/agendastudy/view/admin_total_usuariosfxml", event);
+}
+
+@FXML
+private void handleNavProfessores(MouseEvent event) {
+    trocarTela("/com/agendastudy/view/AdminRelatoriosController.fxml", event);
+}
+
+@FXML
+private void handleNavAulas(MouseEvent event) {
+    trocarTela("/com/agendastudy/view/administrador_aulas.fxml", event);
+}
 
 }
