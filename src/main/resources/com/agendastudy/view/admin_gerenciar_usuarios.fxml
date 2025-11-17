@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.AdminGerenciarUsuariosController"
+            prefHeight="640.0" prefWidth="360.0"
+            styleClass="admin-main-container">
+
+    <stylesheets>
+        <URL value="@admin_gerenciamento.css" />
+    </stylesheets>
+
+    <top>
+        <VBox spacing="10" styleClass="admin-header-list">
+            <padding>
+                <Insets top="30" right="20" bottom="15" left="20" />
+            </padding>
+            <Label text="GERENCIAMENTO DE USUÁRIOS" styleClass="header-title-admin"/>
+
+            <TextField fx:id="searchField" promptText="Buscar por Nome, Email ou ID..." onAction="#handleSearch" styleClass="search-field-admin"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Tipo:" styleClass="filter-label"/>
+                <ChoiceBox fx:id="tipoChoiceBox" prefWidth="100.0" styleClass="filter-choice-box"/>
+                <Label text="Status:" styleClass="filter-label"/>
+                <ChoiceBox fx:id="statusChoiceBox" prefWidth="100.0" styleClass="filter-choice-box"/>
+                <Button text="Filtrar" onAction="#handleFilter" styleClass="filter-button"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ListView fx:id="usuariosListView" VBox.vgrow="ALWAYS" styleClass="list-view-admin">
+            <placeholder>
+                <Label text="Nenhum usuário encontrado com os filtros selecionados." styleClass="placeholder-text-admin"/>
+            </placeholder>
+        </ListView>
+    </center>
+    
+    <bottom>
+        <Button text="VOLTAR AO DASHBOARD" onAction="#handleVoltar" styleClass="secondary-button-admin" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+</BorderPane>
