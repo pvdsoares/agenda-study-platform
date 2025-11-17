@@ -1,0 +1,13 @@
+package com.agendastudy;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AgendaStudyApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AgendaStudyApplication.class, args);
+    }
+
+}

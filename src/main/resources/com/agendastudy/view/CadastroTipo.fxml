@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="350.0" style="-fx-background-color: #F8F9FA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.LoginController">
+    <children>
+        <Button onAction="#handleVoltar" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <graphic>
+            </graphic>
+        </Button>
+
+        <VBox alignment="CENTER" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+            <children>
+                <Label text="AgendaStudy" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+
+        <VBox alignment="CENTER" layoutY="200.0" prefHeight="450.0" prefWidth="350.0" spacing="20.0" style="-fx-background-color: #f0f0ff; -fx-border-radius: 30 30 0 0; -fx-background-radius: 30 30 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <padding>
+                <Insets bottom="30.0" left="40.0" right="40.0" top="50.0" />
+            </padding>
+            <children>
+                <Label text="Como gostaria de se cadastrar?" textFill="#2c3e50" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Label>
+
+                <Button onAction="#handleCadastroEstudante" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #1E8449; -fx-background-radius: 8;" text="Como estudante" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+
+                <Button onAction="#handleCadastroProfessor" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #1E8449; -fx-background-radius: 8;" text="Como professor" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Line endX="50.0" startX="-50.0" stroke="#cccccc" />
+                        <Label text="ou" textFill="#888888" />
+                        <Line endX="50.0" startX="-50.0" stroke="#cccccc" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+
+                <Label text="Já tem conta? Faça o login" textFill="#555555">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Button onAction="#handleLogin" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: #1E8449; -fx-border-radius: 8; -fx-border-width: 1;" text="Login" textFill="#1E8449">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
