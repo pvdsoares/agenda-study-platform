@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.agendastudy.controller.AdminRankingProfessoresController"
+            prefHeight="640.0" prefWidth="360.0"
+            styleClass="admin-main-container">
+
+    <stylesheets>
+        <URL value="@admin_gerenciamento.css" />
+    </stylesheets>
+
+    <top>
+        <VBox spacing="10" styleClass="admin-header-list">
+            <padding>
+                <Insets top="30" right="20" bottom="15" left="20" />
+            </padding>
+            <Label text="RANKING DE PROFESSORES" styleClass="header-title-admin"/>
+            <Label text="Total de Agendamentos (SCRUM-72, 74)" styleClass="detail-label-admin"/>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Período:" styleClass="filter-label"/>
+                <DatePicker fx:id="dataInicioPicker" promptText="Início"/>
+                <DatePicker fx:id="dataFimPicker" promptText="Fim"/>
+                <Button text="Gerar" onAction="#handleGerarRanking" styleClass="filter-button"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="rankingTableView" VBox.vgrow="ALWAYS" styleClass="table-view-admin">
+            <columns>
+                <TableColumn fx:id="posicaoCol" text="Pos." prefWidth="40"/>
+                <TableColumn fx:id="nomeProfCol" text="Professor" prefWidth="200"/>
+                <TableColumn fx:id="agendamentosCol" text="Agendamentos" prefWidth="120"/>
+            </columns>
+            <placeholder>
+                <Label text="Gerando ranking..." styleClass="placeholder-text-admin"/>
+            </placeholder>
+        </TableView>
+    </center>
+    
+    <bottom>
+        <Button text="VOLTAR PARA RELATÓRIOS" onAction="#handleVoltar" styleClass="secondary-button-admin" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+</BorderPane>
