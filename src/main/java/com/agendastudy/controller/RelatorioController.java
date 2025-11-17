@@ -106,7 +106,7 @@ public class RelatorioController {
  
     private void voltarParaPerfil(javafx.event.ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/agendastudy/view/PerfilProfessor.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/agendastudy/view/administrador_dashboard.fxml"));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -114,7 +114,7 @@ public class RelatorioController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Erro ao voltar para a tela de perfil do professor.");
+            System.out.println("Erro ao voltar para a tela inicial");
         }
     }
 

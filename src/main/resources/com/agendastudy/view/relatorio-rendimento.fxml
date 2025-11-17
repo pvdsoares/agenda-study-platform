@@ -11,87 +11,118 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane prefHeight="700" prefWidth="400"
-            styleClass="container"
-            stylesheets="@../styles/relatorio.css"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.agendastudy.controller.RelatorioController">
+<BorderPane prefHeight="700.0" prefWidth="400.0" styleClass="container" stylesheets="@../styles/relatorio.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.agendastudy.controller.RelatorioController">
 
-    <!-- TOPO -->
-    <top>
-        <HBox alignment="CENTER"
-              styleClass="header-container"
-              prefHeight="70">
+<top>
+    <HBox alignment="CENTER" prefHeight="70.0" styleClass="header-container" BorderPane.alignment="CENTER">
+        <children>
 
-            <children>
-                <Button fx:id="btnVoltar" onAction="#voltarParaPerfil" styleClass="back-button text="&lt;"/>
+            <Button styleClass="back-button" text="❮" BorderPane.alignment="CENTER_LEFT" />
 
-                <HBox alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS">
-                    <ImageView fitHeight="30" fitWidth="30">
-                        <image>
-                            <Image url="@../image/Logo_Menu.png" />
-                        </image>
-                    </ImageView>
-                    <Label text="Relatório" styleClass="header-title-text"/>
-                </HBox>
-            </children>
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="360.0" spacing="10" HBox.hgrow="ALWAYS">
+                <ImageView fitHeight="30" fitWidth="30">
+                    <image>
+                        <Image url="@../image/Logo_Menu.png" />
+                    </image>
+                </ImageView>
+                <Label styleClass="header-title-text" text="Relatório" />
+            </HBox>
 
-            <padding>
-                <Insets left="15" right="15"/>
-            </padding>
-        </HBox>
-    </top>
+        </children>
+        <padding>
+            <Insets left="15" right="15" />
+        </padding>
+    </HBox>
+</top>
 
-    <!-- CENTRO -->
+
     <center>
-        <VBox alignment="TOP_CENTER" spacing="15" styleClass="content-box">
+        <VBox alignment="TOP_CENTER" spacing="15.0" styleClass="content-box" BorderPane.alignment="CENTER">
+
             <padding>
-                <Insets top="20" bottom="20" left="20" right="20"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
 
-            <Label text="Defina o período" styleClass="section-title"/>
+            <Label styleClass="section-title" text="Defina o período de tempo" />
 
-            <VBox spacing="10">
-                <HBox spacing="10">
-                    <Label text="Data de início:" styleClass="label-data"/>
-                    <TextField fx:id="dataInicioField" promptText="02/05/2025" styleClass="date-field"/>
+            <VBox spacing="10.0">
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label styleClass="label-data" text="Data de início:" />
+                    <TextField fx:id="dataInicioField" promptText="02/05/2025" styleClass="date-field" />
                 </HBox>
 
-                <HBox spacing="10">
-                    <Label text="Data de fim:" styleClass="label-data"/>
-                    <TextField fx:id="dataFimField" promptText="02/06/2025" styleClass="date-field"/>
-                    <Button text="Gerar" onAction="#calcularEExibirRelatorio" styleClass="relatorios-btn"/>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label styleClass="label-data" text="Data de fim:" />
+                    <TextField fx:id="dataFimField" promptText="02/06/2025" styleClass="date-field" />
                 </HBox>
             </VBox>
 
-            <Rectangle height="1" width="360" styleClass="separator-line"/>
+            <Rectangle height="1.0" styleClass="separator-line" width="360.0" />
+                         <Button onAction="#calcularEExibirRelatorio" styleClass="relatorios-btn" text="Gerar Relatório" />
 
-            <Label text="Resultados" styleClass="section-title"/>
+            <Label styleClass="section-title" text="Resultados do período informado" />
 
             <VBox alignment="CENTER" styleClass="metric-card-total">
-                <Label text="Total de aulas:" styleClass="metric-label"/>
-                <Label fx:id="totalAulasLabel" text="—" styleClass="metric-value"/>
+                <Label styleClass="metric-label" text="Total de aulas ministradas: " />
+                <Label styleClass="metric-value-large" text=" " /> 
             </VBox>
 
-            <Label text="Taxas de cancelamento" styleClass="subsection-title"/>
+            <Label styleClass="subsection-title" text="Taxa de cancelamento" />
 
             <VBox alignment="CENTER" styleClass="metric-card-tutor">
-                <Label text="Pelo professor:" styleClass="metric-label"/>
-                <Label fx:id="taxaCancelamentoTutorLabel" text="—" styleClass="metric-value"/>
-            </VBox>
+                <Label styleClass="metric-label" text="Iniciada pelo professor:  " />
+                </VBox>
 
-            <VBox alignment="CENTER" styleClass="metric-card-tutor">
-                <Label text="Pelo aluno:" styleClass="metric-label"/>
-                <Label fx:id="taxaCancelamentoAlunoLabel" text="—" styleClass="metric-value"/>
-            </VBox>
-
-            <VBox styleClass="aluno-cancellation-box" spacing="10">
-                <Label text="Cancelamentos por aluno:" styleClass="aluno-cancellation-title"/>
-                <VBox fx:id="alunoCancelamentoList" spacing="5" styleClass="aluno-cancellation-list"/>
+            <VBox styleClass="aluno-cancellation-box">
+                <Label styleClass="aluno-cancellation-title" text="Por aluno:" />
+                <VBox fx:id="alunoCancelamentoList" spacing="5.0" styleClass="aluno-cancellation-list">
+                   
+                </VBox>
             </VBox>
 
         </VBox>
     </center>
+
+ <bottom>
+    <HBox alignment="CENTER" prefHeight="70.0" styleClass="bottom-nav" BorderPane.alignment="CENTER">
+
+        <VBox fx:id="navInicio" onMouseClicked="#handleNavInicio" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/home_button.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Início" />
+        </VBox>
+
+        <VBox fx:id="navAulas" onMouseClicked="#handleNavAlunos" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/navalunos.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Alunos" />
+        </VBox>
+
+        <VBox fx:id="navProfessores" onMouseClicked="#handleNavProfessores" prefHeight="86.0" prefWidth="115.0" styleClass="nav-item-active">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon-active">
+                <image>
+                    <Image url="@../image/navprofessores.png" />
+                </image>
+            </ImageView>
+            <Label prefHeight="17.0" prefWidth="115.0" styleClass="nav-label-active" text="Professores" />
+        </VBox>
+
+        <VBox fx:id="navAulas" onMouseClicked="#handleNavAulas" styleClass="nav-item">
+            <ImageView fitHeight="24" fitWidth="24" styleClass="nav-icon">
+                <image>
+                    <Image url="@../image/Your_Classes_Button.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="nav-label" text="Aulas" />
+        </VBox>
+
+    </HBox>
+</bottom>
 
 </BorderPane>
