@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-
 /**
  * Controlador para a tela de pré-cadastro da aplicação AgendaStudy.
  * Responsável pela seleção do tipo de usuário (Estudante ou Professor)
@@ -20,10 +19,10 @@ public class PreCadastroController implements ScreenController {
 
     @FXML
     private RadioButton radioEstudante;
-    
+
     @FXML
     private RadioButton radioProfessor;
-    
+
     @FXML
     private ToggleGroup grupoTipo;
 
@@ -55,11 +54,24 @@ public class PreCadastroController implements ScreenController {
      */
     @FXML
     private void handleContinuar() {
-        String tipoUsuario = getTipoUsuarioSelecionado();
-        
-        if (mainApp != null) {
-            mainApp.setScreen("cadastro", tipoUsuario);
+        if (mainApp == null)
+            return;
+
+        String telaDestino;
+
+        // Mapeia o RadioButton selecionado para o nome da tela no MainApp
+        if (radioProfessor.isSelected()) {
+            telaDestino = "cadastroProfessor";
+        } else if (radioEstudante.isSelected()) {
+            telaDestino = "cadastroEstudante";
+        } else {
+            // Caso nenhum esteja selecionado (embora o ToggleGroup deva evitar isso)
+            return;
         }
+
+        // Navega diretamente para a tela correta (ex:
+        // mainApp.setScreen("cadastroProfessor"))
+        mainApp.setScreen(telaDestino);
     }
 
     /**
