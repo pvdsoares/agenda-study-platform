@@ -15,10 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
+import com.agendastudy.service.ProfessorService;
 
 /**
  * Controlador para a interface de cadastro de professores.
- * Implementa a lógica de interface para cadastro, validação e persistência de dados de professores.
+ * Implementa a lógica de interface para cadastro, validação e persistência de
+ * dados de professores.
  * 
  * @author Paulo Vitor Dias Soares
  * @version 2.0
@@ -26,20 +28,30 @@ import javafx.scene.control.TextArea;
  */
 public class CadastroProfessorController implements ScreenController {
 
-    private ProfessorDAO professorDAO = new ProfessorDAO();
+    private final ProfessorService professorService = new ProfessorService(new ProfessorDAO());
     private MainApp mainApp;
 
-    @FXML private TextField fieldNome;
-    @FXML private TextField fieldEmail;
-    @FXML private PasswordField fieldSenha;
-    @FXML private TextField fieldTelefone;
-    @FXML private TextArea fieldBiografia;
-    @FXML private TextField fieldNovaDisciplina;
-    @FXML private TextField fieldNovaQualificacao;
-    @FXML private ListView<String> listDisciplinas;
-    @FXML private ListView<String> listQualificacoes;
-    @FXML private Label labelFotoSelecionada;
-    
+    @FXML
+    private TextField fieldNome;
+    @FXML
+    private TextField fieldEmail;
+    @FXML
+    private PasswordField fieldSenha;
+    @FXML
+    private TextField fieldTelefone;
+    @FXML
+    private TextArea fieldBiografia;
+    @FXML
+    private TextField fieldNovaDisciplina;
+    @FXML
+    private TextField fieldNovaQualificacao;
+    @FXML
+    private ListView<String> listDisciplinas;
+    @FXML
+    private ListView<String> listQualificacoes;
+    @FXML
+    private Label labelFotoSelecionada;
+
     private byte[] fotoTemporaria;
     private String tipoImagemTemporaria;
     private List<String> disciplinas = new ArrayList<>();
@@ -79,29 +91,37 @@ public class CadastroProfessorController implements ScreenController {
      */
     @FXML
     private void handleSalvar() {
-        try {
-            if (!validarCamposBasicos()) {
-                return;
-            }
+        // 1. Validação simples de interface (se campos básicos estão vazios)
+        if (!validarCamposBasicos()) {
+            return;
+        }
 
+        try {
+            // 2. Cria o objeto Professor (Model)
             Professor professor = criarProfessorComDadosFormulario();
 
-            if (!professorDAO.validarQualificacoes(professor)) {
-                mostrarAlerta("Atenção", "Adicione ao menos uma qualificação válida.");
-                return;
-            }
+            // 3. Chama o Service. Ele fará a validação de email, qualificações, etc.
+            professorService.cadastrarProfessor(professor);
 
-            professorDAO.salvarProfessor(professor);
+            // 4. Sucesso
             mostrarAlerta("Sucesso", "Professor cadastrado com sucesso!");
-            
+
             if (mainApp != null) {
                 mainApp.setScreen("login");
             }
-            
+
             limparCampos();
 
+            // O Service lança exceções específicas que o Controller captura e exibe
+        } catch (IllegalArgumentException e) {
+            // Captura erros de regra de negócio, como e-mail duplicado
+            mostrarAlerta("Erro de Cadastro", e.getMessage());
+        } catch (IllegalStateException e) {
+            // Captura erros de estado, como senha fraca ou dados essenciais
+            mostrarAlerta("Dados Incompletos", e.getMessage());
         } catch (Exception e) {
-            mostrarAlerta("Erro", "Erro ao cadastrar professor: " + e.getMessage());
+            // Captura erros inesperados (ex: IO, problemas de persistência)
+            mostrarAlerta("Erro Inesperado", "Erro ao cadastrar professor: " + e.getMessage());
         }
     }
 
@@ -177,10 +197,9 @@ public class CadastroProfessorController implements ScreenController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecionar Foto de Perfil");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif"),
-            new FileChooser.ExtensionFilter("Todos os arquivos", "*.*")
-        );
-        
+                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif"),
+                new FileChooser.ExtensionFilter("Todos os arquivos", "*.*"));
+
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             try {
@@ -222,8 +241,9 @@ public class CadastroProfessorController implements ScreenController {
         Professor professor = new Professor(null, fieldNome.getText(), fieldEmail.getText(), fieldSenha.getText());
         professor.setTelefone(fieldTelefone.getText());
         professor.setBiografia(fieldBiografia.getText());
-        disciplinas.forEach(professor::adicionarDisciplina);
-        qualificacoes.forEach(professor::adicionarQualificacao);
+        professor.setDisciplinas(new ArrayList<>(disciplinas));
+        professor.setQualificacoes(new ArrayList<>(qualificacoes));
+
         if (fotoTemporaria != null) {
             professor.setFotoPerfil(fotoTemporaria, tipoImagemTemporaria);
         }
@@ -233,29 +253,25 @@ public class CadastroProfessorController implements ScreenController {
     /**
      * Valida os campos básicos obrigatórios do formulário.
      *
-     * @return true se todos os campos obrigatórios são válidos, false caso contrário
+     * @return true se todos os campos obrigatórios são válidos, false caso
+     *         contrário
      */
     private boolean validarCamposBasicos() {
-        if (fieldNome.getText().isEmpty()) {
+        if (fieldNome.getText().trim().isEmpty()) {
             mostrarAlerta("Atenção", "O nome é obrigatório.");
             return false;
         }
-        
-        if (fieldEmail.getText().isEmpty()) {
+
+        if (fieldEmail.getText().trim().isEmpty()) {
             mostrarAlerta("Atenção", "O email é obrigatório.");
             return false;
         }
-        
-        if (fieldSenha.getText().isEmpty()) {
+
+        if (fieldSenha.getText().trim().isEmpty()) {
             mostrarAlerta("Atenção", "A senha é obrigatória.");
             return false;
         }
-        
-        if (professorDAO.emailExiste(fieldEmail.getText())) {
-            mostrarAlerta("Atenção", "Este email já está cadastrado.");
-            return false;
-        }
-        
+
         return true;
     }
 
@@ -297,7 +313,7 @@ public class CadastroProfessorController implements ScreenController {
     /**
      * Exibe um alerta na interface.
      *
-     * @param titulo Título do alerta
+     * @param titulo   Título do alerta
      * @param mensagem Mensagem do alerta
      */
     private void mostrarAlerta(String titulo, String mensagem) {
