@@ -3,6 +3,7 @@ package com.agendastudy.DAO;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,17 +18,18 @@ import com.agendastudy.model.StatusAula;
  * Simula um banco de dados de aulas em memória.
  *
  * @author VINICIUS ALVES RIBEIRO SILVA
- * @version 1.0
+ * @version 1.1
  */
 public class AulaDAO {
-    
-    /** * 
+
+    /**
+     * 
      * Trocado para 'ConcurrentHashMap'
      * para que o SCRUM-114 (Notificações) e o SCRUM-35 (Agendamento)
      * possam acessar o mapa ao mesmo tempo sem quebrar a aplicação.
      */
     private static Map<String, Aula> aulas = new ConcurrentHashMap<>();
-    private static int proximoId = 1; //contagem de id
+    private static int proximoId = 1; // contagem de id
 
     /**
      * Busca uma aula pelo seu ID.
@@ -43,10 +45,10 @@ public class AulaDAO {
         if (aula.getIdAula() == null || aula.getIdAula().isEmpty()) {
             aula.setIdAula("AULA_" + proximoId++);
         }
-        aulas.put(aula.getIdAula(), aula); 
+        aulas.put(aula.getIdAula(), aula);
         return aula;
     }
-    
+
     /**
      * Busca todas as aulas de um professor específico.
      * Filtra apenas aulas que não foram canceladas.
@@ -60,26 +62,39 @@ public class AulaDAO {
                 .filter(aula -> aula.getProfessor().getId().equals(professor.getId()) && !aula.isCancelada())
                 .collect(Collectors.toList());
     }
-    
+
     /**
-     * Marca uma aula como cancelada no sistema.
+     * Busca aulas agendadas para um usuário (Professor ou Estudante) DENTRO de um
+     * período específico.
+     *
+     * @param usuarioId O ID do Professor ou Estudante.
+     * @param inicio    O início do período de busca.
+     * @param fim       O fim do período de busca.
+     * @return Lista de Aulas ativas em que o usuário está envolvido no período.
      */
-    public void cancelarAula(String idAula){
-        Aula aula = aulas.get(idAula);
-
-        if (aula == null){
-            throw new NoSuchElementException("Aula de ID: " + idAula + "não encontrada!");
+    public List<Aula> findAulasPorPeriodo(String usuarioId, LocalDateTime inicio, LocalDateTime fim) {
+        if (usuarioId == null || inicio == null || fim == null) {
+            return new ArrayList<>();
         }
 
-        if ((aula.getStatus() == StatusAula.CANCELADA_ALUNO) || (aula.getStatus() == StatusAula.CANCELADA_PROFESSOR)){
-            throw new IllegalStateException("Aula de ID: " + idAula + "já está cancelada!");
-        }
-        aula.setStatus(StatusAula.CANCELADA_ALUNO);
-        System.out.println("Aula: " + idAula + " cancelada com sucesso.");
+        return aulas.values().stream()
+                .filter(aula ->
+                // 1. O usuário é o Professor OU o Estudante
+                (aula.getProfessor().getId().equals(usuarioId) ||
+                        (aula.getEstudante() != null && aula.getEstudante().getId().equals(usuarioId))) &&
+
+                // 2. A aula não está cancelada
+                        !aula.isCancelada() &&
+
+                        // 3. Checa se a aula se sobrepõe ao período de busca:
+                        aula.getDataHora().isBefore(fim) &&
+                        aula.getFimAula().isAfter(inicio))
+                .collect(Collectors.toList());
     }
 
     /**
      * Retorna todas as aulas cadastradas no sistema.
+     * 
      * @return Lista de todas as aulas
      */
     public List<Aula> buscarTodasAulas() {
