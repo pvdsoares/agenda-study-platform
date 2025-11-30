@@ -36,25 +36,35 @@ import java.util.List;
  */
 public class TelaSuasAulasController {
 
-    @FXML private Label btnVoltar;
+    @FXML
+    private Label btnVoltar;
 
     private Estudante estudante;
     private final EstudanteDAO estudanteDAO = new EstudanteDAO(new AvaliacaoDAO());
 
-    @FXML private VBox cardAulaPrincipal;
-    @FXML private HBox containerRestantes;
-    @FXML private Label labelStatusAula;
+    @FXML
+    private VBox cardAulaPrincipal;
+    @FXML
+    private HBox containerRestantes;
+    @FXML
+    private Label labelStatusAula;
 
-    @FXML private VBox containerAulasConcluidas;
+    @FXML
+    private VBox containerAulasConcluidas;
 
-    @FXML private VBox containerHistorico;
-    @FXML private VBox vboxHistorico;
+    @FXML
+    private VBox containerHistorico;
+    @FXML
+    private VBox vboxHistorico;
 
-    @FXML private Label btnHome;
-    @FXML private Label btnSuasAulas;
-    @FXML private Label btnBuscarAulas;
-    @FXML private Label btnPerfil;
-
+    @FXML
+    private Label btnHome;
+    @FXML
+    private Label btnSuasAulas;
+    @FXML
+    private Label btnBuscarAulas;
+    @FXML
+    private Label btnPerfil;
 
     /**
      * Configura o estudante atual e recarrega todas as seções da tela.
@@ -292,7 +302,6 @@ public class TelaSuasAulasController {
         }
     }
 
-
     // SEÇÃO: HISTÓRICO
     /**
      * Carrega os 3 cards mais recentes de aulas concluídas.
@@ -353,7 +362,6 @@ public class TelaSuasAulasController {
     private void abrirResumoAula(Aula aula) {
         System.out.println("Abrir resumo: " + aula.getTitulo());
     }
-
 
     /**
      * Abre a tela de Menu.

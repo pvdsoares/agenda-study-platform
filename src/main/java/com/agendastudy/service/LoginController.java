@@ -36,7 +36,8 @@ public class LoginController {
     private void handleCadastro() {
         // Transição para a Tela 2 (Seleção de Tipo)
         try {
-            // Carrega o FXML da próxima tela (ou uma parte do mesmo FXML, se for um único arquivo)
+            // Carrega o FXML da próxima tela (ou uma parte do mesmo FXML, se for um único
+            // arquivo)
             // Aqui, vamos assumir que navegamos para a seleção de tipo
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/CadastroTipo.fxml"));
             Parent cadastroTipoRoot = loader.load();

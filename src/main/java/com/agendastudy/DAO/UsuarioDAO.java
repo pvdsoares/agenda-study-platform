@@ -32,12 +32,14 @@ public abstract class UsuarioDAO {
      * 
      * @param usuario O Usuário (Estudante, Professor, Admin) a ser salvo.
      */
-    public void salvar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) {
         if (usuario.getId() == null || usuario.getId().isEmpty()) {
             usuario.setId("USER_" + proximoId++);
         }
         usuarios.put(usuario.getId(), usuario);
         System.out.println("Usuário salvo: " + usuario.getNome());
+
+        return usuario;
     }
 
     /**

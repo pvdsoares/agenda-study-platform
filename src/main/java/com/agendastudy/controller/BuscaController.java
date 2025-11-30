@@ -1,8 +1,8 @@
-package com.agendastud.controller;
+package com.agendastudy.controller;
 
-import com.agendastud.model.Professor;
-import com.agendastud.service.BuscaService;
-import com.agendastud.service.CriteriosBusca;
+import com.agendastudy.model.Professor;
+import com.agendastudy.service.BuscaService;
+import com.agendastudy.service.CriteriosBusca;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +17,10 @@ import java.util.List;
 
 public class BuscaController {
 
-    @FXML private TextField txtBuscaLivre;
-    @FXML private VBox resultsContainer; // Contêiner onde os cards dos professores serão adicionados
+    @FXML
+    private TextField txtBuscaLivre;
+    @FXML
+    private VBox resultsContainer; // Contêiner onde os cards dos professores serão adicionados
 
     private final BuscaService buscaService;
     private CriteriosBusca criteriosAtuais = new CriteriosBusca();
@@ -27,10 +29,10 @@ public class BuscaController {
     private final List<Professor> professoresIniciais = List.of(
             new Professor("Ana Souza", "Matemática", 80.0, "Centro", 2.5, 4.8),
             new Professor("Beto Alves", "Física", 120.0, "Bairro A", 5.0, 4.2),
-            new Professor("Carla Lima", "História", 55.0, "Bairro B", 0.8, 4.9)
-    );
+            new Professor("Carla Lima", "História", 55.0, "Bairro B", 0.8, 4.9));
 
-    // Construtor (o JavaFX pode precisar do construtor padrão ou de um inicializador)
+    // Construtor (o JavaFX pode precisar do construtor padrão ou de um
+    // inicializador)
     public BuscaController() {
         this.buscaService = new BuscaService(professoresIniciais);
     }
@@ -59,7 +61,7 @@ public class BuscaController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/TelaFiltros.fxml"));
         Parent root = loader.load();
 
-        com.agendastud.controller.FiltrosController controller = loader.getController();
+        com.agendastudy.controller.FiltrosController controller = loader.getController();
 
         // Cria a nova janela (modal)
         Stage stage = new Stage();
@@ -114,7 +116,8 @@ public class BuscaController {
             return;
         }
 
-        // Simplesmente cria e adiciona um Label por professor (substituir por um card FXML real)
+        // Simplesmente cria e adiciona um Label por professor (substituir por um card
+        // FXML real)
         for (Professor p : professores) {
             String info = String.format("%s (%s) - R$%.2f/h - Avaliação: %.1f",
                     p.getNome(), p.getDisciplina(), p.getPrecoHora(), p.getAvaliacao());
@@ -122,7 +125,8 @@ public class BuscaController {
             // Aqui você deve carregar o "card" do professor (como na Tela 4)
             // Exemplo de como ficaria o card visualmente (usando um Label):
             javafx.scene.control.Label card = new javafx.scene.control.Label(info);
-            card.setStyle("-fx-background-color: #2c3e50; -fx-padding: 15px; -fx-text-fill: white; -fx-max-width: infinity;");
+            card.setStyle(
+                    "-fx-background-color: #2c3e50; -fx-padding: 15px; -fx-text-fill: white; -fx-max-width: infinity;");
 
             resultsContainer.getChildren().add(card);
         }

@@ -1,6 +1,6 @@
-package com.agendastud.controller;
+package com.agendastudy.controller;
 
-import com.agendastud.service.CriteriosBusca;
+import com.agendastudy.service.CriteriosBusca;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -11,14 +11,21 @@ import java.util.function.Consumer;
 
 public class FiltrosController {
 
-    @FXML private CheckBox cbMatematica;
-    @FXML private CheckBox cbPortugues;
-    @FXML private CheckBox cbQuimica;
-    @FXML private CheckBox cbHistoria;
+    @FXML
+    private CheckBox cbMatematica;
+    @FXML
+    private CheckBox cbPortugues;
+    @FXML
+    private CheckBox cbQuimica;
+    @FXML
+    private CheckBox cbHistoria;
 
-    @FXML private TextField txtPrecoMin;
-    @FXML private TextField txtPrecoMax;
-    @FXML private TextField txtDistanciaMax;
+    @FXML
+    private TextField txtPrecoMin;
+    @FXML
+    private TextField txtPrecoMax;
+    @FXML
+    private TextField txtDistanciaMax;
 
     private CriteriosBusca criterios = new CriteriosBusca();
     private Stage stage; // Para fechar a janela
@@ -35,10 +42,14 @@ public class FiltrosController {
     protected void aplicarFiltros() {
         // 1. Coleta Disciplinas
         List<String> disciplinas = new ArrayList<>();
-        if (cbMatematica.isSelected()) disciplinas.add("Matemática");
-        if (cbPortugues.isSelected()) disciplinas.add("Português");
-        if (cbQuimica.isSelected()) disciplinas.add("Química");
-        if (cbHistoria.isSelected()) disciplinas.add("História");
+        if (cbMatematica.isSelected())
+            disciplinas.add("Matemática");
+        if (cbPortugues.isSelected())
+            disciplinas.add("Português");
+        if (cbQuimica.isSelected())
+            disciplinas.add("Química");
+        if (cbHistoria.isSelected())
+            disciplinas.add("História");
         criterios.disciplinasSelecionadas = disciplinas;
 
         // 2. Coleta Preço e trata conversão

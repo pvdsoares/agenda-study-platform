@@ -1,11 +1,15 @@
 package com.agendastudy.DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.agendastudy.model.Professor;
 import com.agendastudy.model.Usuario;
 
 /**
  * Gerencia as operações de acesso a dados (DAO) para a entidade Professor.
- * Inclui lógica de negócio para manipulação de dados do professor.
+ * 
  *
  * @author PAULO VITOR DIAS SOARES
  * @version 1.1
@@ -44,5 +48,29 @@ public class ProfessorDAO extends UsuarioDAO {
     public Professor buscarPorEmail(String email) {
         Usuario usuario = super.buscarPorEmail(email); // Assumindo que este método existe em UsuarioDAO
         return (usuario instanceof Professor) ? (Professor) usuario : null;
+    }
+
+    /**
+     * Busca todos os Professores que têm a disciplina específica em sua lista.
+     * Necessário para o ProfessorRankingService.
+     * * @param nomeDisciplina O nome da disciplina (como String) a ser filtrada.
+     * 
+     * @return Uma lista de Professores qualificados.
+     */
+    public List<Professor> findByDisciplina(String nomeDisciplina) {
+        if (nomeDisciplina == null || nomeDisciplina.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Acesso direto ao mapa estático de 'usuarios' assumido no UsuarioDAO
+        return usuarios.values().stream()
+                // Filtra apenas objetos que são instâncias de Professor
+                .filter(usuario -> usuario instanceof Professor)
+                .map(usuario -> (Professor) usuario)
+                // Filtra onde a lista de disciplinas do Professor contém a disciplina buscada
+                // (ignorando case)
+                .filter(professor -> professor.getDisciplinas().stream()
+                        .anyMatch(d -> d.equalsIgnoreCase(nomeDisciplina.trim())))
+                .collect(Collectors.toList());
     }
 }

@@ -24,24 +24,39 @@ import javafx.scene.shape.Circle;
 public class PerfilProfessorController {
 
     // --- Componentes FXML (Baseados nos fx:id) ---
-    @FXML private Button btnVoltar;
-    @FXML private ImageView imgProfessor;
-    @FXML private Label labelNome;
-    @FXML private Label labelSobre1;
-    @FXML private Label labelSobre2;
-    @FXML private Label labelDisciplinas;
-    @FXML private Label labelPreco;
-    @FXML private Label labelLocalizacao;
-    @FXML private Button btnVerHorario;
-    
+    @FXML
+    private Button btnVoltar;
+    @FXML
+    private ImageView imgProfessor;
+    @FXML
+    private Label labelNome;
+    @FXML
+    private Label labelSobre1;
+    @FXML
+    private Label labelSobre2;
+    @FXML
+    private Label labelDisciplinas;
+    @FXML
+    private Label labelPreco;
+    @FXML
+    private Label labelLocalizacao;
+    @FXML
+    private Button btnVerHorario;
+
     // --- Componentes da SUA TAREFA (0.txt) ---
-    @FXML private Label labelMediaEstrelas;
-    @FXML private Label labelMediaNum;
-    @FXML private Circle imgAluno; // (Está como Circle no FXML)
-    @FXML private Label labelAlunoNome;
-    @FXML private Label labelAlunoComentario;
-    @FXML private Button btnVerTodas;
-    
+    @FXML
+    private Label labelMediaEstrelas;
+    @FXML
+    private Label labelMediaNum;
+    @FXML
+    private Circle imgAluno; // (Está como Circle no FXML)
+    @FXML
+    private Label labelAlunoNome;
+    @FXML
+    private Label labelAlunoComentario;
+    @FXML
+    private Button btnVerTodas;
+
     // (O DAO real não pode ser usado pois o build está quebrado)
     // private ProfessorDAO professorDAO;
     // private Professor professorAtual;
@@ -55,9 +70,9 @@ public class PerfilProfessorController {
     public void initialize() {
         // this.professorDAO = new ProfessorDAO();
         // this.professorAtual = professorDAO.buscarPorId("P1"); // Lógica real
-        
+
         // --- DADOS FALSOS (para teste visual) ---
-        
+
         // Tenta carregar a imagem de professor (se falhar, ignora)
         try {
             Image profImg = new Image(getClass().getResourceAsStream("/com/agendastudy/image/professor.png"));
@@ -109,16 +124,23 @@ public class PerfilProfessorController {
     }
 
     // --- Handlers da Barra de Navegação ---
-    @FXML private void handleNavInicio(MouseEvent event) {
+    @FXML
+    private void handleNavInicio(MouseEvent event) {
         System.out.println("Nav: Início");
     }
-    @FXML private void handleNavAulas(MouseEvent event) {
+
+    @FXML
+    private void handleNavAulas(MouseEvent event) {
         System.out.println("Nav: Suas Aulas");
     }
-    @FXML private void handleNavBuscar(MouseEvent event) {
+
+    @FXML
+    private void handleNavBuscar(MouseEvent event) {
         System.out.println("Nav: Buscar (Atual)");
     }
-    @FXML private void handleNavPerfil(MouseEvent event) {
+
+    @FXML
+    private void handleNavPerfil(MouseEvent event) {
         System.out.println("Nav: Perfil");
     }
 }
