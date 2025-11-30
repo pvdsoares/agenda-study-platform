@@ -1,6 +1,6 @@
-package com.agendastud.service;
+package com.agendastudy.service;
 
-import com.agendastud.model.Professor;
+import com.agendastudy.model.Professor;
 
 import java.util.List;
 import java.util.stream.Collectors;

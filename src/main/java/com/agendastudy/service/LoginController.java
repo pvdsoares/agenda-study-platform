@@ -1,4 +1,4 @@
-package com.agendastudy;
+package com.agendastudy.service;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

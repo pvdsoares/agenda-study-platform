@@ -1,4 +1,4 @@
-package com.agendastud.service;
+package com.agendastudy.service;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.agendastudy;
+package com.agendastudy.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
