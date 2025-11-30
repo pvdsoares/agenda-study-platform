@@ -62,7 +62,8 @@ public class Avaliacao {
      * Define a nota, garantindo que esteja entre 1 e 5.
      *
      * @param nota A nota (1-5).
-     * @throws IllegalArgumentException se a nota estiver fora do intervalo permitido.
+     * @throws IllegalArgumentException se a nota estiver fora do intervalo
+     *                                  permitido.
      */
     public void setNota(int nota) {
         if (nota < 1 || nota > 5)

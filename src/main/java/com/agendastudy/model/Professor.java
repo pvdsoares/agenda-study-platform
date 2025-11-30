@@ -18,7 +18,8 @@ public class Professor extends Usuario {
     private byte[] fotoPerfil;
     private String tipoImagem;
     private boolean perfilVerificado;
-    
+    private double taxaCancelamento;
+
     /**
      * Lista de avaliações recebidas pelo professor.
      * Esta lista é preenchida pelo AvaliacaoDAO e lida pelo ProfessorDAO.
@@ -42,7 +43,7 @@ public class Professor extends Usuario {
     }
 
     // --- Getters e Setters ---
-    
+
     public List<String> getDisciplinas() {
         return disciplinas;
     }
@@ -112,7 +113,6 @@ public class Professor extends Usuario {
         return fotoPerfil != null && fotoPerfil.length > 0;
     }
 
-
     /**
      * Retorna a lista bruta de avaliações do professor.
      * O processamento (média, ordenação) é feito pelo ProfessorDAO.
@@ -145,4 +145,60 @@ public class Professor extends Usuario {
                 ", verificado=" + perfilVerificado +
                 '}';
     }
+
+    /**
+     * Retorna a principal disciplina do professor (ou todas, unidas).
+     * Necessário para o método de busca que espera uma String.
+     *
+     * @return A primeira disciplina da lista ou null/vazio se não houver.
+     */
+    public String getDisciplina() {
+        if (this.disciplinas == null || this.disciplinas.isEmpty()) {
+            return "";
+        }
+        // Retorna a primeira disciplina como a principal para a busca,
+        // ou considere concatenar todas elas (ex: "Matemática, Física").
+        return this.disciplinas.get(0);
+    }
+
+    // Adicione este campo (para a localização do professor)
+    private String localizacao;
+
+    // Adicione este campo (este valor deve ser preenchido/calculado pelo seu
+    // Service/DAO)
+    private double distanciaKm;
+
+    // --- Getters e Setters (adicionar) ---
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    /**
+     * Retorna a distância em Km até o local do estudante.
+     * Este é o método que o BuscaService está procurando.
+     */
+    public double getDistanciaKm() {
+        return distanciaKm;
+    }
+
+    /**
+     * Usado para setar o valor antes de ser filtrado.
+     */
+    public void setDistanciaKm(double distanciaKm) {
+        this.distanciaKm = distanciaKm;
+    }
+
+    public double getTaxaCancelamento() {
+        return this.taxaCancelamento;
+    }
+
+    public void setTaxaCancelamento(double taxaCancelamento) {
+        this.taxaCancelamento = taxaCancelamento;
+    }
+
 }

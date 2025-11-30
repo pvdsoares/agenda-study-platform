@@ -1,9 +1,10 @@
-package com.agendastud.service;
+package com.agendastudy.service;
 
 import java.util.List;
 
 /**
- * Objeto DTO (Data Transfer Object) para carregar todos os filtros da interface.
+ * Objeto DTO (Data Transfer Object) para carregar todos os filtros da
+ * interface.
  */
 public class CriteriosBusca {
     public List<String> disciplinasSelecionadas;

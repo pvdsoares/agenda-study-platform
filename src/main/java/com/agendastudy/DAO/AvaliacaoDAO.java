@@ -1,5 +1,10 @@
 package com.agendastudy.DAO;
-import com.agendastudy.model.*;
+
+import com.agendastudy.model.Estudante;
+import com.agendastudy.model.Professor;
+import com.agendastudy.model.Avaliacao;
+import com.agendastudy.model.Aula;
+import com.agendastudy.model.StatusAula;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,9 +23,10 @@ public class AvaliacaoDAO {
 
     /**
      * Método público para avaliar uma aula (com comentário).
-     * @param estudante O estudante que está avaliando.
-     * @param aula A aula a ser avaliada.
-     * @param nota A nota de 1 a 5.
+     * 
+     * @param estudante  O estudante que está avaliando.
+     * @param aula       A aula a ser avaliada.
+     * @param nota       A nota de 1 a 5.
      * @param comentario O feedback em texto.
      * @return true se a avaliação foi realizada com sucesso, false caso contrário.
      */
@@ -33,9 +39,10 @@ public class AvaliacaoDAO {
 
     /**
      * Método público para avaliar uma aula (sem comentário).
+     * 
      * @param estudante O estudante que está avaliando.
-     * @param aula A aula a ser avaliada.
-     * @param nota A nota de 1 a 5.
+     * @param aula      A aula a ser avaliada.
+     * @param nota      A nota de 1 a 5.
      * @return true se a avaliação foi realizada com sucesso, false caso contrário.
      */
     public boolean avaliar(Estudante estudante, Aula aula, int nota) {
@@ -46,24 +53,25 @@ public class AvaliacaoDAO {
      * Lógica interna para criar e armazenar a avaliação.
      * Verifica se a aula pode ser avaliada antes de salvar.
      *
-     * @param estudante O estudante que está avaliando.
-     * @param aula A aula a ser avaliada.
-     * @param nota A nota de 1 a 5.
+     * @param estudante  O estudante que está avaliando.
+     * @param aula       A aula a ser avaliada.
+     * @param nota       A nota de 1 a 5.
      * @param comentario O feedback em texto.
-     * @return true se a avaliação foi criada e armazenada com sucesso, false caso contrário.
+     * @return true se a avaliação foi criada e armazenada com sucesso, false caso
+     *         contrário.
      */
     private boolean avaliarInterno(Estudante estudante, Aula aula, int nota, String comentario) {
         boolean avaliado;
         if (podeAvaliar(estudante, aula)) {
-            String idAvaliacao = UUID.randomUUID().toString(); //Gera novo ID para cada avaliação
+            String idAvaliacao = UUID.randomUUID().toString(); // Gera novo ID para cada avaliação
             Avaliacao avaliacao = new Avaliacao(idAvaliacao, estudante, aula, nota, comentario);
 
-            //Se não existir uma lista para o professor, cria uma nova
+            // Se não existir uma lista para o professor, cria uma nova
             avaliacoesPorProfessor.putIfAbsent(aula.getProfessor(), new LinkedList<>());
 
-            //Adiciona a avaliação à lista do professor no DAO
+            // Adiciona a avaliação à lista do professor no DAO
             avaliacoesPorProfessor.get(aula.getProfessor()).add(avaliacao);
-            
+
             // Adiciona também na lista interna do Model Professor
             // (ESSENCIAL PARA OS MÉTODOS 'get' do ProfessorDAO)
             aula.getProfessor().getAvaliacoes().add(avaliacao);
@@ -84,26 +92,26 @@ public class AvaliacaoDAO {
      * e não pode ter sido avaliada pelo mesmo estudante antes.
      *
      * @param estudante O estudante que está tentando avaliar.
-     * @param aula A aula a ser verificada.
+     * @param aula      A aula a ser verificada.
      * @return true se a aula pode ser avaliada, false caso contrário.
      */
     public boolean podeAvaliar(Estudante estudante, Aula aula) {
-        //se aula ainda não aconteceu, não pode ser avaliada
+        // se aula ainda não aconteceu, não pode ser avaliada
         if (aula.getDataHora().isAfter(LocalDateTime.now())) {
             return false;
         }
 
-        //se aula cancelada, não pode ser avaliada
+        // se aula cancelada, não pode ser avaliada
         if ((aula.getStatus() == StatusAula.CANCELADA_ALUNO)
                 || (aula.getStatus() == StatusAula.CANCELADA_PROFESSOR)) {
             return false;
         }
 
-        //pega as avaliações do professor da aula (ou lista vazia, se não existir)
+        // pega as avaliações do professor da aula (ou lista vazia, se não existir)
         List<Avaliacao> avaliacoesDoProfessor = avaliacoesPorProfessor
                 .getOrDefault(aula.getProfessor(), Collections.emptyList());
 
-        //Se a aula já foi avaliada por este estudante, não pode avaliar de novo
+        // Se a aula já foi avaliada por este estudante, não pode avaliar de novo
         for (Avaliacao a : avaliacoesDoProfessor) {
             if (a.getAula().getIdAula().equals(aula.getIdAula()) &&
                     a.getEstudante().getId().equals(estudante.getId())) {
@@ -122,7 +130,7 @@ public class AvaliacaoDAO {
      */
     public List<Avaliacao> getAvaliacaoPorEstudante(Estudante estudante) {
         List<Avaliacao> resultado = new ArrayList<>();
-        
+
         // Itera por todas as listas de avaliação de todos os professores
         for (List<Avaliacao> lista : avaliacoesPorProfessor.values()) {
             for (Avaliacao a : lista) {

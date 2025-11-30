@@ -17,25 +17,29 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-
 /* @author Luara gabrielli guimarães araujo
  * @version 1.0
  * @since 2025
   */
 public class RelatorioController {
 
-    @FXML private TextField dataInicioField;
-    @FXML private TextField dataFimField;
-    @FXML private Label totalAulasLabel;
-    @FXML private Label taxaCancelamentoTutorLabel;
-    @FXML private Label taxaCancelamentoAlunoLabel;
-    @FXML private VBox alunoCancelamentoList;
+    @FXML
+    private TextField dataInicioField;
+    @FXML
+    private TextField dataFimField;
+    @FXML
+    private Label totalAulasLabel;
+    @FXML
+    private Label taxaCancelamentoTutorLabel;
+    @FXML
+    private Label taxaCancelamentoAlunoLabel;
+    @FXML
+    private VBox alunoCancelamentoList;
 
     private RelatoriodeRendimento relatorioService;
     private Professor professorAtual;
 
-    private static final DateTimeFormatter DATE_FORMAT =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     @FXML
     public void initialize() {
@@ -86,7 +90,7 @@ public class RelatorioController {
         int totalAulas = relatorioService.calcularTotalAulas(professorAtual, inicio, fim);
         double taxaTutor = relatorioService.calcularTaxaCancelamentoProfessor(professorAtual);
         double taxaAluno = relatorioService.calcularTaxaCancelamentoAluno(professorAtual);
-        Map<String,Integer> cancelamentos = relatorioService.calcularCancelamentosPorAluno(professorAtual);
+        Map<String, Integer> cancelamentos = relatorioService.calcularCancelamentosPorAluno(professorAtual);
 
         totalAulasLabel.setText(String.valueOf(totalAulas));
         taxaCancelamentoTutorLabel.setText(String.format("%.1f%%", taxaTutor));
@@ -102,7 +106,7 @@ public class RelatorioController {
     }
 
     @FXML
- 
+
     private void voltarParaPerfil(javafx.event.ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/com/agendastudy/view/administrador_dashboard.fxml"));
@@ -116,36 +120,37 @@ public class RelatorioController {
             System.out.println("Erro ao voltar para a tela inicial");
         }
     }
-private void trocarTela(String caminhoFXML, MouseEvent event) {
-    try {
-        Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-        System.out.println("Erro ao trocar de tela: " + caminhoFXML);
+
+    private void trocarTela(String caminhoFXML, MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao trocar de tela: " + caminhoFXML);
+        }
     }
-}
 
-@FXML
-private void handleNavInicio(MouseEvent event) {
-    trocarTela("/com/agendastudy/view/administrador_dashboard.fxml", event);
-}
+    @FXML
+    private void handleNavInicio(MouseEvent event) {
+        trocarTela("/com/agendastudy/view/administrador_dashboard.fxml", event);
+    }
 
-@FXML
-private void handleNavAlunos(MouseEvent event) {
-    trocarTela("/com/agendastudy/view/admin_total_usuariosfxml", event);
-}
+    @FXML
+    private void handleNavAlunos(MouseEvent event) {
+        trocarTela("/com/agendastudy/view/admin_total_usuariosfxml", event);
+    }
 
-@FXML
-private void handleNavProfessores(MouseEvent event) {
-    trocarTela("/com/agendastudy/view/AdminRelatoriosController.fxml", event);
-}
+    @FXML
+    private void handleNavProfessores(MouseEvent event) {
+        trocarTela("/com/agendastudy/view/AdminRelatoriosController.fxml", event);
+    }
 
-@FXML
-private void handleNavAulas(MouseEvent event) {
-    trocarTela("/com/agendastudy/view/administrador_aulas.fxml", event);
-}
+    @FXML
+    private void handleNavAulas(MouseEvent event) {
+        trocarTela("/com/agendastudy/view/administrador_aulas.fxml", event);
+    }
 
 }

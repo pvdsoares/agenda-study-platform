@@ -1,4 +1,4 @@
-package com.agendastud.controller;
+package com.agendastudy.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Carrega o FXML da tela inicial (Tela 2)
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/com/agendastudy/view/TelaBusca.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                MainApplication.class.getResource("/com/agendastudy/view/TelaBusca.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 380, 700); // Defina um tamanho adequado
         stage.setTitle("AgendaStudy - Buscar Aulas");
         stage.setScene(scene);
