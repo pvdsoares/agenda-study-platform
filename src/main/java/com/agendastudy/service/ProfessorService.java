@@ -8,6 +8,10 @@ import com.agendastudy.model.Professor;
 /**
  * Serviço responsável pela lógica de negócio e regras de cadastro e perfil
  * do Professor. Orquestra a persistência através do ProfessorDAO.
+ *
+ * @author Paulo Vitor Dias Soares
+ * @version 1.3
+ * @since 2025-11-30
  */
 public class ProfessorService {
     private final ProfessorDAO professorDAO;
@@ -17,7 +21,8 @@ public class ProfessorService {
 
     /**
      * Construtor que recebe o DAO por Injeção de Dependência.
-     * * @param professorDAO O objeto DAO responsável pela persistência do Professor.
+     *
+     * @param professorDAO O objeto DAO responsável pela persistência do Professor
      */
     public ProfessorService(ProfessorDAO professorDAO) {
         this.professorDAO = professorDAO;
@@ -27,11 +32,11 @@ public class ProfessorService {
 
     /**
      * Valida e salva um novo professor no sistema.
-     * * @param professor O objeto Professor a ser cadastrado.
-     * 
-     * @throws IllegalArgumentException Se o e-mail já estiver em uso.
+     *
+     * @param professor O objeto Professor a ser cadastrado
+     * @throws IllegalArgumentException Se o e-mail já estiver em uso
      * @throws IllegalStateException    Se faltarem dados essenciais para o cadastro
-     *                                  inicial.
+     *                                  inicial
      */
     public void cadastrarProfessor(Professor professor) {
         // Validação de unicidade de e-mail (regra de negócio)
@@ -54,9 +59,9 @@ public class ProfessorService {
 
     /**
      * Busca um professor por ID.
-     * * @param id O ID do professor.
-     * 
-     * @return O Professor encontrado ou null.
+     *
+     * @param id O ID do professor
+     * @return O Professor encontrado ou null
      */
     public Professor buscarPorId(String id) {
         return professorDAO.buscarPorId(id);
@@ -64,7 +69,8 @@ public class ProfessorService {
 
     /**
      * Atualiza os dados de um professor.
-     * * @param professor O objeto Professor com os dados atualizados.
+     *
+     * @param professor O objeto Professor com os dados atualizados
      */
     public void atualizarProfessor(Professor professor) {
         // Lógica de pré-atualização, como garantir que o ID exista.
@@ -82,10 +88,9 @@ public class ProfessorService {
     /**
      * Valida se o professor possui qualificações válidas preenchidas.
      * (Esta lógica foi movida do ProfessorDAO para cá).
-     * * @param professor O professor a ser validado.
-     * 
-     * @return true se houver ao menos uma qualificação válida, false caso
-     *         contrário.
+     *
+     * @param professor O professor a ser validado
+     * @return true se houver ao menos uma qualificação válida, false caso contrário
      */
     public boolean validarQualificacoes(Professor professor) {
         List<String> qualificacoes = professor.getQualificacoes();
@@ -106,9 +111,9 @@ public class ProfessorService {
      * Negócio).
      * Requisitos: ter qualificações, disciplinas e foto.
      * (Esta lógica foi movida do ProfessorDAO para cá).
-     * * @param professor O professor a ser verificado.
-     * 
-     * @return true se o professor pode ser verificado, false caso contrário.
+     *
+     * @param professor O professor a ser verificado
+     * @return true se o professor pode ser verificado, false caso contrário
      */
     public boolean podeSerVerificado(Professor professor) {
         return validarQualificacoes(professor) &&
@@ -119,9 +124,9 @@ public class ProfessorService {
 
     /**
      * Define o status de verificação do perfil, se os requisitos forem atendidos.
-     * * @param professor O professor a ter o perfil verificado.
-     * 
-     * @throws IllegalStateException se os requisitos mínimos não forem atendidos.
+     *
+     * @param professor O professor a ter o perfil verificado
+     * @throws IllegalStateException se os requisitos mínimos não forem atendidos
      */
     public void verificarPerfil(Professor professor) {
         if (podeSerVerificado(professor)) {
@@ -137,9 +142,9 @@ public class ProfessorService {
 
     /**
      * Calcula e retorna a nota média das avaliações de um professor.
-     * * @param professor O objeto Professor.
-     * 
-     * @return A média (double) das notas das avaliações.
+     *
+     * @param professor O objeto Professor
+     * @return A média (double) das notas das avaliações
      */
     public double getMediaAvaliacoes(Professor professor) {
         List<com.agendastudy.model.Avaliacao> avaliacoes = professor.getAvaliacoes();
