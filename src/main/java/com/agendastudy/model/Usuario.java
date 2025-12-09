@@ -1,6 +1,7 @@
 package com.agendastudy.model;
 
 
+import java.io.Serializable;
 
 /**
  * Classe abstrata que representa um Usuário genérico no sistema.
@@ -10,7 +11,7 @@ package com.agendastudy.model;
  * @version 1.0
  * @since 2025-11-09
  */
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
     private String id;
     private String nome;
     private String email;

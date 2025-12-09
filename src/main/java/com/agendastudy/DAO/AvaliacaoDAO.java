@@ -6,6 +6,7 @@ import com.agendastudy.model.Avaliacao;
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.StatusAula;
 
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,6 +21,14 @@ import java.util.*;
 public class AvaliacaoDAO {
     // Simula uma tabela de avaliações, agrupada por professor
     private Map<Professor, List<Avaliacao>> avaliacoesPorProfessor = new HashMap<>();
+
+    /**
+     * Construtor sem parâmetros que chama o método que faz a leitura de arquivos, para resgatar as avaliações
+     * que já houvessem sido feitas.
+     */
+    public AvaliacaoDAO () {
+        lerArquivo();
+    }
 
     /**
      * Método público para avaliar uma aula (com comentário).
@@ -77,6 +86,7 @@ public class AvaliacaoDAO {
             aula.getProfessor().getAvaliacoes().add(avaliacao);
 
             avaliado = true;
+            salvarArquivo();
 
         } else {
             System.err.println("Erro: Aula " + aula.getIdAula() + " não pode ser avaliada.");
@@ -140,5 +150,48 @@ public class AvaliacaoDAO {
             }
         }
         return resultado;
+    }
+
+    /**
+     * Ler os dados das avaliações feitas que foram salvas em arquivo.
+     */
+    private void lerArquivo() {
+        try {
+            FileInputStream fluxoArquivo = new FileInputStream("src/main/resources/data/avaliacoes.ser");
+            ObjectInputStream fluxoObjetos = new ObjectInputStream(fluxoArquivo);
+
+            avaliacoesPorProfessor = (Map<Professor, List<Avaliacao>>) fluxoObjetos.readObject();
+
+            fluxoArquivo.close();
+            fluxoObjetos.close();
+
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Salava as avaliações feitas em um arquivo.
+     */
+    private void salvarArquivo() {
+        if (avaliacoesPorProfessor.isEmpty()) {
+            return;
+        } else {
+            try {
+                FileOutputStream fluxoArquivo = new FileOutputStream("src/main/resources/data/avaliacoes.ser");
+                ObjectOutputStream fluxoObjetos = new ObjectOutputStream(fluxoArquivo);
+
+                fluxoObjetos.writeObject(avaliacoesPorProfessor);
+
+                fluxoArquivo.close();
+                fluxoObjetos.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.agendastudy.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
  * @version 1.0
  * @since 2025-11-11
  */
-public class Aula {
+public class Aula implements Serializable {
     private String idAula;
     private String titulo;
     private String descricao;
