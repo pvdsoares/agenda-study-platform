@@ -7,7 +7,6 @@ import com.agendastudy.model.Estudante;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
@@ -25,16 +24,24 @@ public class AvaliacaoModalController {
 
     private int notaSelecionada = 0;
 
-    @FXML private Label star1;
-    @FXML private Label star2;
-    @FXML private Label star3;
-    @FXML private Label star4;
-    @FXML private Label star5;
+    @FXML
+    private Label star1;
+    @FXML
+    private Label star2;
+    @FXML
+    private Label star3;
+    @FXML
+    private Label star4;
+    @FXML
+    private Label star5;
 
-    @FXML private TextArea fieldComentario;
-    @FXML private Button btnEnviar;
+    @FXML
+    private TextArea fieldComentario;
+    @FXML
+    private Button btnEnviar;
 
-    @FXML private Label btnVoltar;
+    @FXML
+    private Label btnVoltar;
 
     @FXML
     private void initialize() {
@@ -71,7 +78,7 @@ public class AvaliacaoModalController {
     }
 
     private void atualizarEstrelas() {
-        Label[] estrelas = {star1, star2, star3, star4, star5};
+        Label[] estrelas = { star1, star2, star3, star4, star5 };
 
         for (int i = 0; i < estrelas.length; i++) {
             if (i < notaSelecionada) {
@@ -103,8 +110,7 @@ public class AvaliacaoModalController {
                 estudante,
                 aula,
                 notaSelecionada,
-                fieldComentario.getText().trim()
-        );
+                fieldComentario.getText().trim());
 
         if (sucesso) {
             fechar();

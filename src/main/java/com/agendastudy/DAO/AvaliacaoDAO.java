@@ -23,10 +23,11 @@ public class AvaliacaoDAO {
     private Map<Professor, List<Avaliacao>> avaliacoesPorProfessor = new HashMap<>();
 
     /**
-     * Construtor sem parâmetros que chama o método que faz a leitura de arquivos, para resgatar as avaliações
+     * Construtor sem parâmetros que chama o método que faz a leitura de arquivos,
+     * para resgatar as avaliações
      * que já houvessem sido feitas.
      */
-    public AvaliacaoDAO () {
+    public AvaliacaoDAO() {
         lerArquivo();
     }
 
@@ -153,11 +154,45 @@ public class AvaliacaoDAO {
     }
 
     /**
+     * Calcula a média das avaliações de um professor.
+     * 
+     * @param idProfessor O ID do professor.
+     * @return A média das notas (0.0 a 5.0) ou 0.0 se não houver avaliações.
+     */
+    public double getMediaAvaliacoes(String idProfessor) {
+        // Encontra a lista de avaliacoes do professor procurando nas chaves do mapa
+        // (Isso é um pouco ineficiente dado que a chave é o Objeto Professor, mas
+        // compatível com a estrutura atual)
+        List<Avaliacao> avaliacoes = null;
+        for (Map.Entry<Professor, List<Avaliacao>> entry : avaliacoesPorProfessor.entrySet()) {
+            if (entry.getKey().getId().equals(idProfessor)) {
+                avaliacoes = entry.getValue();
+                break;
+            }
+        }
+
+        if (avaliacoes == null || avaliacoes.isEmpty()) {
+            return 0.0;
+        }
+
+        double soma = 0;
+        for (Avaliacao a : avaliacoes) {
+            soma += a.getNota();
+        }
+        return soma / avaliacoes.size();
+    }
+
+    /**
      * Ler os dados das avaliações feitas que foram salvas em arquivo.
      */
+    @SuppressWarnings("unchecked")
     private void lerArquivo() {
+        File file = new File("src/main/resources/data/avaliacoes.ser");
+        if (!file.exists()) {
+            return;
+        }
         try {
-            FileInputStream fluxoArquivo = new FileInputStream("src/main/resources/data/avaliacoes.ser");
+            FileInputStream fluxoArquivo = new FileInputStream(file);
             ObjectInputStream fluxoObjetos = new ObjectInputStream(fluxoArquivo);
 
             avaliacoesPorProfessor = (Map<Professor, List<Avaliacao>>) fluxoObjetos.readObject();
@@ -165,10 +200,9 @@ public class AvaliacaoDAO {
             fluxoArquivo.close();
             fluxoObjetos.close();
 
-        } catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

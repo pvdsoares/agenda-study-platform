@@ -106,25 +106,16 @@ public class RelatorioController {
     }
 
     @FXML
-
     private void voltarParaPerfil(javafx.event.ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/agendastudy/view/administrador_dashboard.fxml"));
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Erro ao voltar para a tela inicial");
-        }
+        // Logout logic or return to main menu
+        trocarTela("/com/agendastudy/view/Login.fxml", (Node) event.getSource());
     }
 
-    private void trocarTela(String caminhoFXML, MouseEvent event) {
+    private void trocarTela(String caminhoFXML, Node node) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoFXML));
+            Parent root = loader.load();
+            Stage stage = (Stage) node.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -135,22 +126,47 @@ public class RelatorioController {
 
     @FXML
     private void handleNavInicio(MouseEvent event) {
-        trocarTela("/com/agendastudy/view/administrador_dashboard.fxml", event);
+        // Já estamos na tela de início (Dashboard)
+        calcularEExibirRelatorio();
     }
 
     @FXML
     private void handleNavAlunos(MouseEvent event) {
-        trocarTela("/com/agendastudy/view/admin_total_usuariosfxml", event);
+        mostrarAlerta("Em Breve", "Funcionalidade de Alunos em desenvolvimento.");
     }
 
     @FXML
     private void handleNavProfessores(MouseEvent event) {
-        trocarTela("/com/agendastudy/view/AdminRelatoriosController.fxml", event);
+        // Talvez mostrar o perfil público do próprio professor?
+        // Por enquanto, alerta.
+        mostrarAlerta("Em Breve", "Funcionalidade de Professores em desenvolvimento.");
     }
 
     @FXML
     private void handleNavAulas(MouseEvent event) {
-        trocarTela("/com/agendastudy/view/administrador_aulas.fxml", event);
+        // Ir para Agendamento (Gerenciar Aulas)
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/agendamento.fxml"));
+            Parent root = loader.load();
+
+            // Configurar AgendamentoController com o professor atual
+            AgendamentoController controller = loader.getController();
+            controller.setProfessorLogado(this.professorAtual);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    private void mostrarAlerta(String titulo, String mensagem) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 }

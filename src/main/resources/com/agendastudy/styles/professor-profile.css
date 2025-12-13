@@ -25,7 +25,7 @@
 }
 
 .calendar-icon {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
 }
 
 .logo-text {
@@ -40,7 +40,7 @@
     -fx-background: transparent;
 }
 
-.content-scroll > .viewport {
+.content-scroll>.viewport {
     -fx-background-color: transparent;
 }
 
@@ -63,11 +63,11 @@
 
 .photo-circle {
     -fx-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
 }
 
 .professor-photo {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
     -fx-clip: circle(60px at center);
 }
 
@@ -110,7 +110,7 @@
     -fx-padding: 12 30;
     -fx-background-radius: 5;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
 }
 
 .schedule-button:hover {
@@ -125,7 +125,7 @@
 .reviews-card {
     -fx-background-color: white;
     -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 14, 0, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 14, 0, 0, 6);
     -fx-padding: 0;
     -fx-spacing: 0;
     -fx-margin: 20 20 24 20;
@@ -192,7 +192,7 @@
     -fx-padding: 10 20;
     -fx-spacing: 15;
     -fx-alignment: center;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, -2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, -2);
     -fx-min-height: 70;
 }
 

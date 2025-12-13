@@ -9,10 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-/**P
+/**
+ * P
  * Controller (JavaFX) responsável pela interface de cadastro de estudantes.
  * Implementa as funcionalidades de validação, coleta de dados
  * e interação com o EstudanteDAO.
@@ -24,37 +24,43 @@ import javafx.scene.control.TextField;
 public class CadastroEstudanteController {
 
     /** DAO para operações de persistência de estudantes */
-    // ATENÇÃO: Esta linha causará erro pois EstudanteDAO agora requer AvaliacaoDAO no construtor.
+    // ATENÇÃO: Esta linha causará erro pois EstudanteDAO agora requer AvaliacaoDAO
+    // no construtor.
     private EstudanteDAO estudanteDAO = new EstudanteDAO();
 
     // --- Campos FXML ---
-    @FXML private TextField fieldNome;
-    @FXML private TextField fieldEmail;
-    @FXML private PasswordField fieldSenha;
-    @FXML private TextField fieldNovoInteresse;
-    @FXML private ListView<String> listInteresses;
+    @FXML
+    private TextField fieldNome;
+    @FXML
+    private TextField fieldEmail;
+    @FXML
+    private PasswordField fieldSenha;
+    @FXML
+    private TextField fieldNovoInteresse;
+    @FXML
+    private ListView<String> listInteresses;
 
     /** lista temporária de interesses antes de salvar */
     private List<String> interesses = new ArrayList<>();
 
-    /** * Método de inicialização automática do JavaFX.
+    /**
+     * * Método de inicialização automática do JavaFX.
      * Configura o estado inicial da interface.
      */
     @FXML
     private void initialize() {
-        // TODO: Corrigir a inicialização do estudanteDAO
-        // Ex: this.estudanteDAO = new EstudanteDAO(new com.agendastudy.DAO.AvaliacaoDAO());
         atualizarLista();
     }
 
-    /** * Manipulador do evento de clique no botão "Salvar".
+    /**
+     * * Manipulador do evento de clique no botão "Salvar".
      * Valida os campos e salva o novo estudante.
      */
     @FXML
     private void handleSalvar() {
         try {
-            if(estudanteDAO == null) {
-                 mostrarAlerta("Erro Crítico", "EstudanteDAO não foi inicializado.");
+            if (estudanteDAO == null) {
+                mostrarAlerta("Erro Crítico", "EstudanteDAO não foi inicializado.");
                 return;
             }
 
@@ -74,16 +80,17 @@ public class CadastroEstudanteController {
         }
     }
 
-    /** * Cria um objeto Estudante com os dados preenchidos no formulário.
+    /**
+     * * Cria um objeto Estudante com os dados preenchidos no formulário.
+     * 
      * @return O novo objeto Estudante.
      */
     private Estudante criarEstudanteComDadosFormulario() {
         Estudante estudante = new Estudante(
-            null, // ID será gerado pelo DAO
-            fieldNome.getText(),
-            fieldEmail.getText(),
-            fieldSenha.getText()
-        );
+                null, // ID será gerado pelo DAO
+                fieldNome.getText(),
+                fieldEmail.getText(),
+                fieldSenha.getText());
 
         interesses.forEach(estudante::adicionarInteresse);
 
@@ -117,7 +124,9 @@ public class CadastroEstudanteController {
         }
     }
 
-    /** * Valida os campos obrigatórios do formulário.
+    /**
+     * * Valida os campos obrigatórios do formulário.
+     * 
      * @return true se os campos básicos são válidos, false caso contrário.
      */
     private boolean validarCamposBasicos() {
@@ -144,13 +153,15 @@ public class CadastroEstudanteController {
         return true;
     }
 
-    /** * Atualiza a ListView de interesses na interface.
+    /**
+     * * Atualiza a ListView de interesses na interface.
      */
     private void atualizarLista() {
         listInteresses.getItems().setAll(interesses);
     }
 
-    /** * Manipulador do evento de clique no botão "Cancelar".
+    /**
+     * * Manipulador do evento de clique no botão "Cancelar".
      * Limpa todos os campos.
      */
     @FXML
@@ -170,8 +181,10 @@ public class CadastroEstudanteController {
         atualizarLista();
     }
 
-    /** * Exibe um pop-up de alerta padrão.
-     * @param titulo O título da janela de alerta.
+    /**
+     * * Exibe um pop-up de alerta padrão.
+     * 
+     * @param titulo   O título da janela de alerta.
      * @param mensagem A mensagem a ser exibida.
      */
     private void mostrarAlerta(String titulo, String mensagem) {

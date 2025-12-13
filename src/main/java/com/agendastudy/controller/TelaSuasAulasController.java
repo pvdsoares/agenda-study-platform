@@ -3,7 +3,6 @@ package com.agendastudy.controller;
 import com.agendastudy.DAO.AvaliacaoDAO;
 import com.agendastudy.DAO.EstudanteDAO;
 import com.agendastudy.model.Aula;
-import com.agendastudy.model.Avaliacao;
 import com.agendastudy.model.Estudante;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Controller da tela "Suas Aulas", onde mostra as aulas agendadas do estudante,
@@ -58,13 +60,13 @@ public class TelaSuasAulasController {
     private VBox vboxHistorico;
 
     @FXML
-    private Label btnHome;
+    private ImageView btnHome;
     @FXML
-    private Label btnSuasAulas;
+    private ImageView btnSuasAulas;
     @FXML
-    private Label btnBuscarAulas;
+    private ImageView btnBuscarAulas;
     @FXML
-    private Label btnPerfil;
+    private ImageView btnPerfil;
 
     /**
      * Configura o estudante atual e recarrega todas as seções da tela.
@@ -190,7 +192,34 @@ public class TelaSuasAulasController {
      * @param aula Aula clicada
      */
     private void abrirDetalhesAula(Aula aula) {
-        System.out.println("Abrir detalhes da aula: " + aula.getTitulo());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/cancelar-aula.fxml"));
+            Parent root = loader.load();
+
+            CancelarAulaController controller = loader.getController();
+
+            // Configurar dependências
+            com.agendastudy.DAO.AulaDAO aulaDAO = new com.agendastudy.DAO.AulaDAO();
+            com.agendastudy.DAO.DisponibilidadeDAO dispDAO = new com.agendastudy.DAO.DisponibilidadeDAO();
+            com.agendastudy.service.ServicoAgendamento service = new com.agendastudy.service.ServicoAgendamento(aulaDAO,
+                    dispDAO);
+
+            controller.setServicoAgendamento(service);
+            controller.carregarAula(aula, this.estudante);
+
+            Stage stage = new Stage();
+            stage.setTitle("Detalhes da Aula");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloquear janela pai
+            stage.showAndWait();
+
+            // Recarregar dados após voltar (caso tenha cancelado)
+            configurarEstudante(this.estudante);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao abrir detalhes da aula: " + e.getMessage());
+        }
     }
 
     // SEÇÃO: A AVALIAR
@@ -364,11 +393,14 @@ public class TelaSuasAulasController {
     }
 
     /**
-     * Abre a tela de Menu.
+     * Abre a tela de Menu (Home).
+     * Como estamos na tela principal (Suas Aulas), apenas recarrega os dados.
      */
     @FXML
     private void abrirHome() {
-        trocarTela("/view/TelaMenu.fxml");
+        if (this.estudante != null) {
+            configurarEstudante(this.estudante);
+        }
     }
 
     /**
@@ -376,40 +408,34 @@ public class TelaSuasAulasController {
      */
     @FXML
     private void abrirSuasAulas() {
-        trocarTela("/view/TelaSuasAulas.fxml");
+        if (this.estudante != null) {
+            configurarEstudante(this.estudante);
+        }
     }
 
     /**
      * Vai para a tela de busca de aulas.
+     * (Funcionalidade em desenvolvimento)
      */
     @FXML
     private void abrirBuscarAulas() {
-        trocarTela("/view/TelaBuscar.fxml");
+        mostrarAlerta(AlertType.INFORMATION, "Em Desenvolvimento", "A busca de aulas estará disponível em breve!");
     }
 
     /**
      * Vai para o perfil do estudante.
+     * (Funcionalidade em desenvolvimento)
      */
     @FXML
     private void abrirPerfil() {
-        trocarTela("/view/TelaPerfil.fxml");
+        mostrarAlerta(AlertType.INFORMATION, "Em Desenvolvimento", "O perfil do estudante estará disponível em breve!");
     }
 
-    /**
-     * Troca a cena atual pela FXML informada.
-     *
-     * @param caminho caminho do arquivo FXML desejado
-     */
-    private void trocarTela(String caminho) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) vboxHistorico.getScene().getWindow();
-            stage.setScene(new Scene(root));
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    private void mostrarAlerta(AlertType tipo, String titulo, String mensagem) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 }

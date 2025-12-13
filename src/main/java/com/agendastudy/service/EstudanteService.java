@@ -1,11 +1,8 @@
 package com.agendastudy.service;
 
 import com.agendastudy.DAO.EstudanteDAO;
-import com.agendastudy.DAO.AvaliacaoDAO; // Embora o EstudanteDAO o use, é bom ter acesso direto se precisar.
 import com.agendastudy.model.Estudante;
 import com.agendastudy.model.Aula;
-import com.agendastudy.model.StatusAula;
-import com.agendastudy.model.Usuario; // Necessário para herdar as funcionalidades de agendamento/cancelamento
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -17,33 +17,54 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        
+
+        // --- INICIALIZAÇÃO DE DADOS DE TESTE ---
+        com.agendastudy.DAO.UsuarioDAO dao = new com.agendastudy.DAO.UsuarioDAO() {
+        };
+
+        // Estudante
+        if (dao.buscarPorEmail("estudante@email.com") == null) {
+            com.agendastudy.model.Estudante est = new com.agendastudy.model.Estudante("EST_01", "Estudante Teste",
+                    "estudante@email.com", "123456");
+            est.adicionarInteresse("Matemática");
+            dao.salvar(est);
+        }
+
+        // Professor
+        if (dao.buscarPorEmail("professor@email.com") == null) {
+            com.agendastudy.model.Professor prof = new com.agendastudy.model.Professor("PROF_01", "Professor Teste",
+                    "professor@email.com", "123456");
+            prof.adicionarDisciplina("Matemática");
+            prof.setBiografia("Professor experiente.");
+            dao.salvar(prof);
+        }
+        // ---------------------------------------
+
         // --- IMPORTANTE: Coloque aqui o FXML que você quer testar ---
-        
-        // String fxmlFile = "view/ProfessorProfile.fxml";
-        String fxmlFile = "view/AllReviewsScreen.fxml";
-        // String fxmlFile = "view/admin-login.fxml";
-        
+
+        String fxmlFile = "view/Login.fxml";
+
         // -----------------------------------------------------------
 
-        System.out.println("Carregando FXML de teste: " + fxmlFile);
-        
+        System.out.println("Carregando FXML: " + fxmlFile);
+
         FXMLLoader fxmlLoader = new FXMLLoader();
-        
-        // O getClass().getResource() busca o arquivo dentro de 'src/main/resources/com/agendastudy/'
+
+        // O getClass().getResource() busca o arquivo dentro de
+        // 'src/main/resources/com/agendastudy/'
         URL fxmlUrl = getClass().getResource(fxmlFile);
-        
+
         if (fxmlUrl == null) {
             System.err.println("ERRO CRÍTICO: Não foi possível encontrar o arquivo FXML.");
             System.err.println("Verifique o caminho: src/main/resources/com/agendastudy/" + fxmlFile);
             return;
         }
-        
+
         fxmlLoader.setLocation(fxmlUrl);
         Parent root = fxmlLoader.load();
-        
+
         Scene scene = new Scene(root);
-        stage.setTitle("Teste de Tela Isolada (AgendaStudy)");
+        stage.setTitle("AgendaStudy - Login");
         stage.setScene(scene);
         stage.show();
     }

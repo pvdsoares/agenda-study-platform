@@ -19,9 +19,8 @@ import java.util.NoSuchElementException;
  */
 public class ServicoAgendamento {
     private final AulaDAO aulaDAO;
-    private final DisponibilidadeDAO dispDAO;
-
-    private static final int DURACAO_PADRAO_MINUTOS = 60;
+    // private final DisponibilidadeDAO dispDAO; // REMOVED unused
+    // private static final int DURACAO_PADRAO_MINUTOS = 60; // REMOVED unused
 
     /**
      * Construtor do serviço. Recebe o AulaDAO por injeção de dependência.
@@ -31,7 +30,7 @@ public class ServicoAgendamento {
      */
     public ServicoAgendamento(AulaDAO aulaDAO, DisponibilidadeDAO dispDAO) {
         this.aulaDAO = aulaDAO;
-        this.dispDAO = dispDAO;
+        // this.dispDAO = dispDAO;
     }
 
     // --- FUNÇÕES AUXILIARES DE VALIDAÇÃO ---

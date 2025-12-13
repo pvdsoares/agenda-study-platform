@@ -1,7 +1,6 @@
 package com.agendastudy.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 
 /**
  * Controlador para a tela inicial da aplicação AgendaStudy.

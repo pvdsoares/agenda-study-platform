@@ -1,7 +1,6 @@
 package com.agendastudy.DAO;
 
 import com.agendastudy.model.Usuario;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap; // ADICIONADO (Para SCRUM-114)
 import java.util.List; // Adicionado

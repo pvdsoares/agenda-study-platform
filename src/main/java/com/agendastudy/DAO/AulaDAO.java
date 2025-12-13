@@ -1,8 +1,6 @@
 package com.agendastudy.DAO;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap; // Adicionado
 
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Professor;
-import com.agendastudy.model.StatusAula;
 
 /**
  * Gerencia as operações de acesso a dados (DAO) para a entidade Aula.

@@ -37,6 +37,14 @@ public class AllReviewsController {
 
     // A lista agora usa o modelo REAL "Avaliacao"
     private ObservableList<Avaliacao> reviews;
+    private Professor professor;
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+        // Recarregar reviews se necessário, ou filtrar visualmente
+        // Por enquanto, apenas recarrega os dados fictícios
+        loadReviews();
+    }
 
     @FXML
     public void initialize() {
@@ -49,6 +57,9 @@ public class AllReviewsController {
      * Como o backend está quebrado, usamos "Dados Falsos" (dummy data).
      */
     private void loadReviews() {
+        if (this.professor != null) {
+            System.out.println("Carregando avaliações para o professor: " + this.professor.getNome());
+        }
         reviews = FXCollections.observableArrayList();
 
         // --- DADOS FALSOS ---
@@ -57,32 +68,29 @@ public class AllReviewsController {
         Estudante est1 = new Estudante("E1", "Aluno Falso 1", "e1@email.com", "123");
         Estudante est2 = new Estudante("E2", "Aluno Falso 2", "e2@email.com", "123");
         Professor prof = new Professor("P1", "Professor Falso", "p1@email.com", "123");
-        Aula aula1 = new Aula("A1", "Aula Falsa 1", "...", prof, est1, LocalDateTime.now());
-        Aula aula2 = new Aula("A2", "Aula Falsa 2", "...", prof, est2, LocalDateTime.now());
+        Aula aula1 = new Aula("A1", "Aula Falsa 1", "...", prof, est1, LocalDateTime.now(), 60);
+        Aula aula2 = new Aula("A2", "Aula Falsa 2", "...", prof, est2, LocalDateTime.now(), 60);
 
         reviews.add(new Avaliacao(
-            "AV1", 
-            est1, 
-            aula1, 
-            5, 
-            "Aula boa, professora explica o assunto de forma leve e didática."
-        ));
+                "AV1",
+                est1,
+                aula1,
+                5,
+                "Aula boa, professora explica o assunto de forma leve e didática."));
 
         reviews.add(new Avaliacao(
-            "AV2", 
-            est2, 
-            aula2, 
-            4, 
-            "Professor(a) domina o conteúdo e tem ótima didática."
-        ));
-        
+                "AV2",
+                est2,
+                aula2,
+                4,
+                "Professor(a) domina o conteúdo e tem ótima didática."));
+
         reviews.add(new Avaliacao(
-            "AV3", 
-            est1, 
-            aula1, 
-            3, 
-            "Achei um pouco confuso no começo, mas depois melhorou."
-        ));
+                "AV3",
+                est1,
+                aula1,
+                3,
+                "Achei um pouco confuso no começo, mas depois melhorou."));
         // --- FIM DOS DADOS FALSOS ---
 
         // Agora, renderiza os dados
@@ -108,7 +116,7 @@ public class AllReviewsController {
      * @return Um VBox pronto para ser adicionado à tela.
      */
     private VBox createReviewSection(Avaliacao review) {
-        
+
         // --- Card Principal ---
         VBox reviewCard = new VBox();
         reviewCard.getStyleClass().add("review-card");
@@ -116,10 +124,10 @@ public class AllReviewsController {
         // --- Header (Título e Estrelas) ---
         HBox reviewHeader = new HBox();
         reviewHeader.getStyleClass().add("review-header");
-        
+
         Label titleLabel = new Label("Avaliações");
         titleLabel.getStyleClass().add("review-label");
-        
+
         HBox ratingDisplay = new HBox();
         ratingDisplay.getStyleClass().add("rating-display");
         ratingDisplay.getProperties().put("HBox.hgrow", "ALWAYS"); // HBox.hgrow="ALWAYS"
@@ -128,17 +136,17 @@ public class AllReviewsController {
         String stars = "★★★★★".substring(0, review.getNota());
         Label starsLabel = new Label(stars);
         starsLabel.getStyleClass().add("stars-filled");
-        
-        Label ratingScore = new Label(String.format("%.1f", (double)review.getNota()));
+
+        Label ratingScore = new Label(String.format("%.1f", (double) review.getNota()));
         ratingScore.getStyleClass().add("rating-score");
-        
+
         ratingDisplay.getChildren().addAll(starsLabel, ratingScore);
         reviewHeader.getChildren().addAll(titleLabel, ratingDisplay);
 
         // --- Seção do Avaliador (Foto e Nome) ---
         HBox reviewerSection = new HBox();
         reviewerSection.getStyleClass().add("reviewer-section");
-        
+
         // --- Avatar (Mantido como você pediu) ---
         Avatar avatar = new Avatar();
         avatar.setRadius(25.0); // Raio 25 como no seu FXML original
@@ -160,10 +168,10 @@ public class AllReviewsController {
         Label commentLabel = new Label(review.getComentario());
         commentLabel.getStyleClass().add("review-comment-line");
         commentLabel.setWrapText(true);
-        
+
         reviewContent.getChildren().addAll(studentNameLabel, commentLabel);
         reviewerSection.getChildren().addAll(avatar, reviewContent);
-        
+
         // Adiciona tudo ao card
         reviewCard.getChildren().addAll(reviewHeader, reviewerSection);
 

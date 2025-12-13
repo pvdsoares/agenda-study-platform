@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import com.agendastudy.DAO.ProfessorDAO;
 import com.agendastudy.model.Estudante;
 import com.agendastudy.model.Professor;
-import com.agendastudy.service.DisponibilidadeService;
-import com.agendastudy.service.AvaliacaoService;
 
 /**
  * TutorRakingService (SCRUM-76).

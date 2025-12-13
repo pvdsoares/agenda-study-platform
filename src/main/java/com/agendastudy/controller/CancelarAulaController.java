@@ -1,6 +1,5 @@
 package com.agendastudy.controller;
 
-import com.agendastudy.DAO.AulaDAO;
 import com.agendastudy.model.Aula;
 import com.agendastudy.model.Usuario;
 import com.agendastudy.service.ServicoAgendamento;
@@ -10,8 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
 
 public class CancelarAulaController {
 
@@ -36,14 +33,16 @@ public class CancelarAulaController {
         this.servicoAgendamento = servicoAgendamento;
     }
 
-    public void carregarAula(Aula aula) {
+    public void carregarAula(Aula aula, Usuario usuarioLogado) {
         this.aula = aula;
         this.usuarioLogado = usuarioLogado;
 
-        labelDisciplina.setText(aula.getTitulo());
-        labelProfessor.setText("Prof: " + aula.getProfessor().getNome());
-        labelDataHora.setText(aula.getDataHora().toString());
-
+        if (aula != null) {
+            labelDisciplina.setText(aula.getTitulo());
+            labelProfessor.setText("Prof: " + (aula.getProfessor() != null ? aula.getProfessor().getNome() : "N/A"));
+            labelDataHora.setText(aula.getDataHora().toString());
+            // Preencher outros campos se existirem no FXML (duracao, local)
+        }
     }
 
     @FXML

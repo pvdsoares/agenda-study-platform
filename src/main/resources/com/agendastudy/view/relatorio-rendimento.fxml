@@ -64,14 +64,20 @@
 
             <VBox alignment="CENTER" styleClass="metric-card-total">
                 <Label styleClass="metric-label" text="Total de aulas ministradas: " />
-                <Label styleClass="metric-value-large" text=" " /> 
+                <Label fx:id="totalAulasLabel" styleClass="metric-value-large" text=" " /> 
             </VBox>
 
             <Label styleClass="subsection-title" text="Taxa de cancelamento" />
 
             <VBox alignment="CENTER" styleClass="metric-card-tutor">
                 <Label styleClass="metric-label" text="Iniciada pelo professor:  " />
+                <Label fx:id="taxaCancelamentoTutorLabel" styleClass="metric-value-small-tutor" text=" " />
                 </VBox>
+
+            <VBox alignment="CENTER" styleClass="metric-card-aluno">
+                <Label styleClass="metric-label" text="Iniciada pelo aluno:  " />
+                <Label fx:id="taxaCancelamentoAlunoLabel" styleClass="metric-value-small-aluno" text=" " />
+            </VBox>
 
             <VBox styleClass="aluno-cancellation-box">
                 <Label styleClass="aluno-cancellation-title" text="Por aluno:" />

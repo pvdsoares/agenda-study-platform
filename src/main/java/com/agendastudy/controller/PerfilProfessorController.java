@@ -8,10 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 
-// (Imports do seu modelo - COMENTADOS pois o backend não compila)
-// import com.agendastudy.DAO.ProfessorDAO;
-// import com.agendastudy.model.Professor;
+import com.agendastudy.model.Professor;
+
+import java.io.IOException;
 
 /**
  * Controller para a tela de Perfil do Professor (ProfessorProfile.fxml).
@@ -57,9 +62,7 @@ public class PerfilProfessorController {
     @FXML
     private Button btnVerTodas;
 
-    // (O DAO real não pode ser usado pois o build está quebrado)
-    // private ProfessorDAO professorDAO;
-    // private Professor professorAtual;
+    private Professor professorAtual;
 
     /**
      * Método de inicialização.
@@ -68,9 +71,6 @@ public class PerfilProfessorController {
      */
     @FXML
     public void initialize() {
-        // this.professorDAO = new ProfessorDAO();
-        // this.professorAtual = professorDAO.buscarPorId("P1"); // Lógica real
-
         // --- DADOS FALSOS (para teste visual) ---
 
         // Tenta carregar a imagem de professor (se falhar, ignora)
@@ -82,7 +82,10 @@ public class PerfilProfessorController {
         }
 
         // Preenche os labels com dados falsos
-        labelNome.setText("Prof. (Falso) da Silva");
+        if (professorAtual == null) {
+            labelNome.setText("Prof. (Falso) da Silva");
+        }
+
         labelSobre1.setText("Formado em Ciência da Computação (Falso).");
         labelSobre2.setText("10 anos de experiência.");
         labelDisciplinas.setText("Estrutura de Dados, JavaFX");
@@ -95,6 +98,14 @@ public class PerfilProfessorController {
         labelAlunoNome.setText("Aluno Falso");
         labelAlunoComentario.setText("Aula muito boa, explicação direta ao ponto!");
         // --- Fim dos Dados Falsos ---
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professorAtual = professor;
+        if (this.professorAtual != null) {
+            labelNome.setText(professor.getNome());
+            // Aqui você poderia preencher outros campos reais se o model tivesse
+        }
     }
 
     /**
@@ -112,26 +123,43 @@ public class PerfilProfessorController {
     @FXML
     private void handleVerTodasAvaliacoes() {
         System.out.println("Botão 'Ver Todas Avaliações' clicado.");
-        // TODO: Adicionar lógica para carregar a tela 'AllReviewsScreen.fxml'
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/agendastudy/view/AllReviewsScreen.fxml"));
+            Parent root = loader.load();
+
+            // Obter o controller da tela de reviews para passar o professor
+            AllReviewsController controller = loader.getController();
+            controller.setProfessor(this.professorAtual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Todas as Avaliações");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erro ao abrir tela de avaliações: " + e.getMessage());
+        }
     }
 
     /**
      * Manipulador do clique no botão "Voltar".
      */
     @FXML
-    private void handleVoltar() {
-        System.out.println("Botão 'Voltar' clicado.");
+    private void handleVoltar(javafx.event.ActionEvent event) {
+        trocarTela("/com/agendastudy/view/Login.fxml", (Node) event.getSource());
     }
 
     // --- Handlers da Barra de Navegação ---
     @FXML
     private void handleNavInicio(MouseEvent event) {
-        System.out.println("Nav: Início");
+        // Redireciona para o Dashboard do Professor (Relatório)
+        trocarTela("/com/agendastudy/view/relatorio-rendimento.fxml", (Node) event.getSource());
     }
 
     @FXML
     private void handleNavAulas(MouseEvent event) {
-        System.out.println("Nav: Suas Aulas");
+        trocarTela("/com/agendastudy/view/agendamento.fxml", (Node) event.getSource());
     }
 
     @FXML
@@ -141,6 +169,38 @@ public class PerfilProfessorController {
 
     @FXML
     private void handleNavPerfil(MouseEvent event) {
-        System.out.println("Nav: Perfil");
+        // Já estamos no perfil
+    }
+
+    private void trocarTela(String caminhoFXML, Node node) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoFXML));
+            Parent root = loader.load();
+
+            // Se estiver indo para Relatório ou Agendamento, precisamos passar o professor
+            if (caminhoFXML.contains("relatorio-rendimento.fxml")) {
+                RelatorioController controller = loader.getController();
+                controller.setProfessorAtual(this.professorAtual);
+
+                // Inicializar Serviço para o relatório (Simulado ou Real)
+                com.agendastudy.DAO.AulaDAO aulaDAO = new com.agendastudy.DAO.AulaDAO();
+                java.util.List<com.agendastudy.model.Aula> aulas = aulaDAO.buscarAulasDoProfessor(this.professorAtual);
+                java.util.Map<Professor, java.util.List<com.agendastudy.model.Aula>> map = new java.util.HashMap<>();
+                map.put(this.professorAtual, aulas);
+                controller.setRelatorioService(new com.agendastudy.service.RelatoriodeRendimento(map));
+                controller.initialize();
+
+            } else if (caminhoFXML.contains("agendamento.fxml")) {
+                AgendamentoController controller = loader.getController();
+                controller.setProfessorLogado(this.professorAtual);
+            }
+
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erro ao navegar para: " + caminhoFXML);
+        }
     }
 }
